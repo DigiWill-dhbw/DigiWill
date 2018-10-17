@@ -25,11 +25,11 @@
 
 - [1. Introduction](#1-Introduction)         
 
-  - [1.1 Purpose](#11-Purpose)     
+  - [1.1 Purpose](#11-purpose)     
 
-  - [1.2 Scope](#12-Scope)     
+  - [1.2 Scope](#12-scope)     
 
-  - [1.3 Definitions, Acronyms and Abbreviations](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#1.3%20%20%20%20%20Definitions,%20Acronyms%20and%20Abbreviations)     
+  - [1.3 Definitions, Acronyms and Abbreviations](#13-definitions-acronyms-and-abbreviations)     
 
   - [1.4 References](#14-References)     
 
