@@ -21,74 +21,45 @@
 | <dd/mmm/yy> | <x.x>   | <+details>  | <+name> |
 | <dd/mmm/yy> | <x.x>   | <+details>  | <+name> |
 
+
 ### Table of Contents
 
-- [1. Introduction](#1-Introduction)         
-
+- [1. Introduction](#1-introduction)         
   - [1.1 Purpose](#11-purpose)     
-
   - [1.2 Scope](#12-scope)     
-
   - [1.3 Definitions, Acronyms and Abbreviations](#13-definitions-acronyms-and-abbreviations)     
-
-  - [1.4 References](#14-References)     
-
-  - [1.5 Overview](#15-Overview)     
-
-- [2. Overall Description](#2-Overall-Description)    
-
-- [3. Specific Requirements](#3-Specific-Requirements)
-
-  - [3.1 Functionality     ](#Functionality)
-
-    - [3.1.1 <+Functional Requirement One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.1.1%20%20%20%20%20%3CFunctional%20Requirement%20One%3E)        
-
-  - [3.2 Usability  ](#Usability)   
-
-    - [3.2.1 <+Usability Requirement One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.2.1%20%20%20%20%20%20%20%20%20%20%3CUsability%20Requirement%20One%3E)           
-
-  - [3.3 Reliability](#Reliability)     
-
-      - [3.3.1 <+Reliability Requirement One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.3.1%20%20%20%20%20%20%20%20%20%20%3CReliability%20Requirement%20One%3E)           
-
-  - [3.4 Performance](#Performance)     
-
-      - [3.4.1 <+Performance Requirement One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.4.1%20%20%20%20%20%20%20%20%20%20%3CPerformance%20Requirement%20One%3E)           
-
-  - [3.5 Supportability](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.5%20%20%20%20%20Supportability)     
-
-      - [3.5.1 <Supportability Requirement One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.5.1%20%20%20%20%20%20%20%20%20%20%3CSupportability%20Requirement%20One%3E)           
-
-  - [3.6 Design Constraints](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.6%20%20%20%20%20Design%20Constraints)     
-
-    - [3.6.1 <Design Constraint One>](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.6.1%20%20%20%20%20%20%20%20%20%20%3CDesign%20Constraint%20One%3E)           
-
-  - [3.7 Online User Documentation and Help System Requirements](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.7%20%20%20%20%20On-line%20User%20Documentation%20and%20Help%20System%20Requirements)     
-
-  - [3.8 Purchased Components](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.8%20%20%20%20%20Purchased%20Components)     
-
-  - [3.9 Interfaces](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.9%20%20%20%20%20Interfaces)     
-
-    - [3.9.1 User Interfaces ](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.9.1%20%20%20%20%20%20%20%20%20%20User%20Interfaces)          
-
-    - [3.9.2 Hardware Interfaces](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.9.2%20%20%20%20%20%20%20%20%20%20Hardware%20Interfaces)           
-
-    - [3.9.3 Software Interfaces](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.9.3%20%20%20%20%20%20%20%20%20%20Software%20Interfaces)           
-
-    - [3.9.4 Communications Interfaces](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.9.4%20%20%20%20%20%20%20%20%20%20Communications%20Interfaces)           
-
-    - [3.10 Licensing Requirements ](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.10%20%20%20%20%20Licensing%20Requirements)    
-
-    - [3.11 Legal, Copyright and Other Notices](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.11%20%20%20%20%20Legal,%20Copyright,%20and%20Other%20Notices)     
-
-    - [3.12 Applicable Standards](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#3.12%20%20%20%20%20Applicable%20Standards)     
-
-- [4. Supporting Information](http://sce.uhcl.edu/helm/RationalUnifiedProcess/webtmpl/templates/req/rup_srs.htm#4.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Supporting%20Information)    
+  - [1.4 References](#14-references)     
+  - [1.5 Overview](#15-overview)     
+- [2. Overall Description](#2-overall-description)    
+- [3. Specific Requirements](#3-specific-requirements)
+  - [3.1 Functionality](#31-functionality)
+    - [3.1.1 Functional Requirement One](#311-functional-requirement-one)     
+  - [3.2 Usability  ](#32-usability)   
+    - [3.2.1 Usability Requirement One](#321-usability-requirement-one)          
+  - [3.3 Reliability](#33-reliability)     
+      - [3.3.1 Reliability Requirement One](#331-reliability-requirement-one)          
+  - [3.4 Performance](#34-performance)     
+      - [3.4.1 Performance Requirement One](#341-performance-requirement-one)           
+  - [3.5 Supportability](#35-supportability)     
+      - [3.5.1 Supportability Requirement One](#351-supportability-requirement-one)         
+  - [3.6 Design Constraints](#36-design-constraints)     
+    - [3.6.1 Design Constraint One](#361-design-constraint-one)           
+  - [3.7 Online User Documentation and Help System Requirements](#37-online-user-documentation-and-help-system-requirements)     
+  - [3.8 Purchased Components](#38-purchased-components)     
+  - [3.9 Interfaces](#39-interfaces)     
+    - [3.9.1 User Interfaces](#391-user-interfaces)
+    - [3.9.2 Hardware Interfaces](#392-hardware-interfaces)
+    - [3.9.3 Software Interfaces](#393-software-interfaces)
+    - [3.9.4 Communications Interfaces](#394-communications-interfaces)          
+    - [3.10 Licensing Requirements](#310-licensing-requirements)    
+    - [3.11 Legal, Copyright and Other Notices](#311-legal-copyright-and-other-notices)     
+    - [3.12 Applicable Standards](#312-applicable-standards)     
+- [4. Supporting Information](#4-supporting-information)    
 
 
 ## Software Requirements Specification
 
-1. Introduction
+1 Introduction
 ===============
 
 \[The introduction of the **Software Requirements Specification (SRS)** should provide an overview of the entire **SRS**. It should include the purpose, scope, definitions, acronyms, abbreviations, references, and overview of the **SRS**.\]
@@ -122,7 +93,7 @@
 
 \[This subsection should describe what the rest of the **SRS** contains and explain how the document is organized.\]
 
-2. Overall Description
+2 Overall Description
 ======================
 
 \[This section of the **SRS** should describe the general factors that affect the product and its requirements.  This section does not state specific requirements.  Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand. Include such items as:
@@ -139,7 +110,7 @@
 
 •               requirements subsets\]
 
-3. Specific Requirements
+3 Specific Requirements
 ========================
 
 \[This section of the **SRS** should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.\]
@@ -151,7 +122,7 @@
 
 Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.\]
 
-### 3.1.1 <Functional Requirement One>
+### 3.1.1 Functional Requirement One
 
 \[The requirement description.\]
 
@@ -166,7 +137,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 •               specify requirement to conform to common usability standards, such as IBM’s CUA standards Microsoft’s GUI standards\]
 
-### 3.2.1 <Usability Requirement One>
+### 3.2.1 Usability Requirement One
 
 \[The requirement description goes here.\]
 
@@ -187,7 +158,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 •               Bugs or Defect Rate—categorized in terms of minor, significant, and critical bugs: the requirement(s) must define what is meant by a “critical” bug; for example, complete loss of data or a complete inability to use certain parts of the system’s functionality.\]
 
-### 3.3.1 <Reliability Requirement One>
+### 3.3.1 Reliability Requirement One
 
 \[The requirement description.\]
 
@@ -206,7 +177,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 •               resource utilization, such as memory, disk, communications, etc.
 
-### 3.4.1 <Performance Requirement One>
+### 3.4.1 Performance Requirement One
 
 \[The requirement description goes here.\]
 
@@ -215,7 +186,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 \[This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.\]
 
-### 3.5.1 <Supportability Requirement One>
+### 3.5.1 Supportability Requirement One
 
 \[The requirement description goes here.\]
 
@@ -224,7 +195,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 \[This section should indicate any design constraints on the system being built. Design constraints represent design decisions that have been mandated and must be adhered to.  Examples include software languages, software process requirements, prescribed use of developmental tools, architectural and design constraints, purchased components, class libraries, etc.\]
 
-### 3.6.1 <Design Constraint One>
+### 3.6.1 Design Constraint One
 
 \[The requirement description goes here.\]
 
@@ -274,7 +245,7 @@ Where application development tools, such as requirements tools, modeling tools,
 
 \[This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.\]
 
-4. Supporting Information
+4 Supporting Information
 =========================
 
 \[The supporting information makes the **SRS** easier to use.  It includes:
