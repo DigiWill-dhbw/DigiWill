@@ -1,4 +1,4 @@
-µ# Software Requirements Specification
+# Software Requirements Specification
 
 
 **DigiWill**
@@ -20,6 +20,8 @@
 | <dd/mmm/yy> | <x.x>   | <+details>  | <+name> |
 | <dd/mmm/yy> | <x.x>   | <+details>  | <+name> |
 | <dd/mmm/yy> | <x.x>   | <+details>  | <+name> |
+
+
 
 
 ### Table of Contents
@@ -80,6 +82,7 @@ This document is designed for internal use only and acts as the primary requirem
 |Term|Definition|
 |-|-|
 |**SRS**|Software Requirements Specification|
+|**[IFTTT](https://ifttt.com/)**|If This Than That|
 
 1.4 References
 --------------
@@ -98,19 +101,26 @@ This document is designed for internal use only and acts as the primary requirem
 2 Overall Description
 ======================
 
-\[This section of the **SRS** should describe the general factors that affect the product and its requirements.  This section does not state specific requirements.  Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand. Include such items as:
+## 2.1 Vision
+DigiWill is going to be a digital will-keeper that helps you maintain your will and execute it in the event of your death.
 
-•               product perspective
+DigiWill will give you the ability to specify actions the tool should take in the event of your death. These actions could range from sending pre-written emails to specified recipients to deleting messages and/or accounts from social media sites. More exotic features like automatically transferring money to the bank account of specified heirs and integration with services such as IFTTT are also under consideration.
 
-•               product functions
+## 2.2 Product perspective
 
-•             user characteristics
+*use case diagram*
 
-•               constraints
+## 2.3 Constraints
+Due to laws on inheritance some actions such as redistributing funds to heirs can only be carried out be actual notaries. Depending on the jurisdiction of our client we won't be able to provide certain services. Some actions such as deleting someones social media account might not be automatable since the social media services don't allow it or don't provide the functionality.
 
-•               assumptions and dependencies
+## 2.4 User characteristics
+Our target group consists of individuals who want to make a conscious decision about their will. They want to be able to decide what happens to their belongings after they die and want to be able to send people messages in the event of their death. e.g. someone has kept a secret from a loved on for ages and wants to let them know after the're dead.
 
-•               requirements subsets\]
+Our users want to be certain that the service actually carries out the actions specified in their digital will.
+
+## 2.5 Dependencies
+The main function of the service, detecting someones death and carrying out actions in the event of their death, depends on the reliable detection of signs of life / signs of death. For the current plan this means there is a huge dependencie on the users reliability to periodically notify the service of still being alive.
+
 
 3 Specific Requirements
 ========================
