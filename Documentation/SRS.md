@@ -7,10 +7,7 @@
 
 **For DigiWill**
 
-**Version 0.1**
-
-\[Note: The following template is provided for use with the Rational Unified Process. Text enclosed in square brackets and displayed in blue italics (style=InfoBlue) is included to provide guidance to the author and should be deleted before publishing the document. A paragraph entered following this style will automatically be set to normal (style=Body Text).\]
-
+**Version 0.2**
 
 
 ### Revision History
@@ -18,6 +15,7 @@
 | Date        | Version | Description | Author  |
 |-------------|---------|-------------|---------|
 | 21/Oct/18 | 0.1   | First draft  | Jannik Möll |
+| 23/Oct/18 | 0.2   | Second draft  | Jannik Möll |
 
 
 ### Table of Contents
@@ -148,7 +146,7 @@ n/a
 \[This subsection should provide a complete list of all documents referenced elsewhere in the **SRS**.  Each document should be identified by title, report number (if applicable), date, and publishing organization.  Specify the sources from which the references can be obtained. This information may be provided by reference to an appendix or to another document.\]--->
 
 ### 1.5 Overview
-This document describes the specification for the DigiWill serivice and project. It outlines our vision and plan, explains requirements and functionalities and provides specifications for usability, reliability, performance and interfaces of the service.
+This document describes the specification for the DigiWill service and project. It outlines our vision and plan, explains requirements and functionalities and provides specifications for usability, reliability, performance and interfaces of the service.
 
 <!--\[This subsection should describe what the rest of the **SRS** contains and explain how the document is organized.\]--->
 
@@ -169,12 +167,12 @@ DigiWill will give you the ability to specify actions the tool should take in th
 Due to laws on inheritance some actions such as redistributing funds to heirs can only be carried out be actual notaries. Depending on the jurisdiction of our client we won't be able to provide certain services. Some actions such as deleting someones social media account might not be automatable since the social media services don't allow it or don't provide the functionality.
 
 ### 2.4 User characteristics
-Our target group consists of individuals who want to make a conscious decision about their will. They want to be able to decide what happens to their belongings after they die and want to be able to send people messages in the event of their death. e.g. someone has kept a secret from a loved on for ages and wants to let them know after the're dead.
+Our target group consists of individuals who want to make a conscious decision about their will. They want to be able to decide what happens to their belongings after they die and want to be able to send people messages in the event of their death. e.g. someone has kept a secret from a loved on for ages and wants to let them know after they're dead.
 
 Our users want to be certain that the service actually carries out the actions specified in their digital will.
 
 ### 2.5 Dependencies
-The main function of the service, detecting someones death and carrying out actions in the event of their death, depends on the reliable detection of signs of life / signs of death. For the current plan this means there is a huge dependencie on the users reliability to periodically notify the service of still being alive.
+The main function of the service, detecting someones death and carrying out actions in the event of their death, depends on the reliable detection of signs of life / signs of death. For the current plan this means there is a huge dependency on the users reliability to periodically notify the service of still being alive.
 
 
 ## 3 Specific Requirements
@@ -187,7 +185,7 @@ The main function of the service, detecting someones death and carrying out acti
 The sign of life daemon periodically checks the the duration since the last sign of life for every users and if necessary initiates actions the user wants the service to take after a certain duration. (e.g. Sends a task to the Email daemon to send out specified emails)
 
 #### 3.1.2 Email daemon
-The email dameon sends out emails to specified recipients when notified by the sign of life daemon. It can also send emails when a new user creates and account, forgets theis password or updates their information.
+The email daemon sends out emails to specified recipients when notified by the sign of life daemon. It can also send emails when a new user creates and account, forgets their password or updates their information.
 
 <!--\[This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the **SRS** Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
 
@@ -196,7 +194,7 @@ Where application development tools, such as requirements tools, modeling tools,
 ### 3.2 Functionality - Browser based Frontend
 
 #### 3.2.1 Log in
-The user can log into the web interface using an alias / email adress and a password. If the user enabled 2FA he/she will also need a 2FA code.
+The user can log into the web interface using an alias / email address and a password. If the user enabled 2FA he/she will also need a 2FA code.
 
 #### 3.2.2 Reset password
 The user can reset their password by clicking a "Rest password" button on the log in page. He/she will then receive an email with instructions to set up a new password.
@@ -205,7 +203,7 @@ The user can reset their password by clicking a "Rest password" button on the lo
 The user can specify after how many days of not receiving a sign of life the service should send an email / notification / call to remind the user. The user can also specify after how many days the service should presume the user is dead. He/she can edit their email address, physical address, country of residence and maintain connections / log in credentials for social media or other services DigiWill should interact with.
 
 #### 3.2.4 Prepare email
-The user can write emails and specifiy recipients. He/she can also specify how long after the presumed death the emails shuld be send out.
+The user can write emails and specify recipients. He/she can also specify how long after the presumed death the emails should be send out.
 
 #### 3.2.5 Set up 2FA
 The user can set up two factor authentication using an app like Google Authenticator or Authy.
@@ -214,10 +212,10 @@ The user can set up two factor authentication using an app like Google Authentic
 The user can send a sign of life to the service by pressing a button. If the user has enabled 2FA in addition to the button a text input field will appear. Pressing the button will check the entered 2FA code. If the code was correct this counts as a sign of life.
 
 ### 3.3 Functionality - Android App
-Since the Android app is just a strech goal these functions might not be implemented
+Since the Android app is just a stretch goal these functions might not be implemented
 
 #### 3.3.1 Log in
-The user can log into the app using an alias / email adress and a password.
+The user can log into the app using an alias / email address and a password.
 
 #### 3.2.2 Send sign of life
 The user can send a sign of life to the service by simply pressing a button. If the user has enabled 2FA in addition to the button a text input field will appear. Pressing the button will check the entered 2FA code. If the code was correct this counts as a sign of life.
@@ -234,7 +232,7 @@ The user can send a sign of life to the service by simply pressing a button. If 
 
 #### 3.2.1 Ease of use - Setting up
 
-The service should be intuitive and easy to use. It shouldn't require any training and shouldn't require the user to read a long manual. Setting up an acount and specifying actions in ones will should be easy and straight forward.
+The service should be intuitive and easy to use. It shouldn't require any training and shouldn't require the user to read a long manual. Setting up an account and specifying actions in ones will should be easy and straight forward.
 
 #### 3.2.2 Signs of life
 
@@ -257,10 +255,10 @@ Letting the service know that you're still alive should be as easy as possible a
 •               Bugs or Defect Rate—categorized in terms of minor, significant, and critical bugs: the requirement(s) must define what is meant by a “critical” bug; for example, complete loss of data or a complete inability to use certain parts of the system’s functionality.\]--->
 
 #### 3.5.1 Sign of life uptime
-The ability to send a sign of life to the service should be available 95% of the time. And should never be unavailible for longer than 3 hours at a time (MTTR).
+The ability to send a sign of life to the service should be available 95% of the time. And should never be unavailable for longer than 3 hours at a time (MTTR).
 
 #### 3.5.2 Initiation of actions
-Actions the user specified for the event of their death should be carried out as fast as possible after they're triggered. 95% of all actions should be initiated withing 15 minutes of the time our client specified. Every action should be completed within 5h of the specified time.
+Actions the user specified for the event of their death should be carried out as fast as possible after they're triggered. 95% of all actions should be initiated within 15 minutes of the time our client specified. Every action should be completed within 5 hours of the specified time.
 
 ### 3.6 Performance
 <!--\[The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
@@ -279,8 +277,8 @@ Actions the user specified for the event of their death should be carried out as
 Any changes the user makes to his/her data (settings, actions, etc.) should be saved to the database instantaneously. This should only be delayed by network delays.
 
 ### 3.6.2 Emails
-Emails related to client administation should reach the client within 5 minutes.
-Emails realted to actions the user planned for the event of their death should be sent out within 15min. If the service is degraded these emails should be sent out as soon as possible but within 5 hours.
+Emails related to client administration should reach the client within 5 minutes.
+Emails related to actions the user planned for the event of their death should be sent out within 15 minutes. If the service is degraded these emails should be sent out as soon as possible but within 5 hours.
 
 ### 3.7 Supportability
 
@@ -309,7 +307,7 @@ Passwords should never be transmitted or stored in plain text.
 SQL injections or similar malicious actions should be prevented.
 
 ### 3.9 Online User Documentation and Help System Requirements
-The website should contain well maintained documentation on how to use the service. It should include information about the basic principle of the service but also go in depth about how to set up actions ushc as sending emails.
+The website should contain well maintained documentation on how to use the service. It should include information about the basic principle of the service but also go in depth about how to set up actions such as sending emails.
 
 <!--\[Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.\]--->
 
@@ -325,18 +323,18 @@ n/a
 
 ##### 3.11.1.1 Website
 
-The website should provide multible interfaces to the user. The landing page should contain general information about the service, buttons to `log in` and `register` and links to an `About`, `FAQ` and `Help` page.
+The website should provide multiple interfaces to the user. The landing page should contain general information about the service, buttons to `log in` and `register` and links to an `About`, `FAQ` and `Help` page.
 
 The register page should ask for the users *email address*, an optional *alias*, a *password* and general information about the user such as their *real name*, *birthday*, *address* and *phone number*. The end of the page should contain a `register` button which. Clicking it should check all input field for valid inputs and send a request to the server to register a new user. In turn the server sends an email to the new user to verify their email address.
 
-The log in page should contan input fields for a *username/email address* and *password* and a button to `log in`. If the credentials were correct it should forward the user to their account page. If the users has 2FA enabled it should first ask for the 2FA code (and allow retries) befor forwaring to the account page. If the credentials were wrong the user should be notified and asked to enter them again.
+The log in page should contain input fields for a *username/email address* and *password* and a button to `log in`. If the credentials were correct it should forward the user to their account page. If the users has 2FA enabled it should first ask for the 2FA code (and allow retries) before forwarding to the account page. If the credentials were wrong the user should be notified and asked to enter them again.
 
 The users account page should contain an overview about the actions they set up, the services their account is connected to and a button to edit their data (e.g. address, phone number, etc.). Depending on when the user send their last sign of life a big button should appear on the top of the page to send a sign of life. Depending on the uses settings the account page should contain a countdown which counts down to the moment the service presumes they are dead. This countdown will reset with every sign of life the service receives.
 
-Clicking the action preview on the account page should open the action maintenance page. Here the user can manage the actions the service should take in the event of their dead.
-It should contain a table tha lists all actions the user specified. The table should contain information about the actions such as a *title*, *state* (activated, deactivated, draft), *category* (e.g. email, social media, etc) and *trigger time* after the presumed time of death. Every table item should have an `Edit` button to change the details of the action. The top of the page should have a `Create new action` button which opens a dialog that asks the user what kind of action they want to create (email, social media, etc) and guides them through creating that new action.
+Clicking the action preview on the account page should open the action maintenance page. Here the user can manage the actions the service should take in the event of their death.
+It should contain a table that lists all actions the user specified. The table should contain information about the actions such as a *title*, *state* (activated, deactivated, draft), *category* (e.g. email, social media, etc) and *trigger time* after the presumed time of death. Every table item should have an `Edit` button to change the details of the action. The top of the page should have a `Create new action` button which opens a dialog that asks the user what kind of action they want to create (email, social media, etc) and guides them through creating that new action.
 
-The dialog to create a new email action should remind the user of a normal email client and contain a *recipients* and *subject* line and a text field for the *body* of the email. Additionaly the dialog should also provide the user with a text fiel to set a *title* for the action, specify a *trigger time* in relation to the presumed time of death and a *state* (activated, deactivated, draft, etc.). Finally the dialog should have a `Save` button which checks all field for valid inputs and submits the new action to the server and adds it to the table.
+The dialog to create a new email action should remind the user of a normal email client and contain a *recipients* and *subject* line and a text field for the *body* of the email. Additionally the dialog should also provide the user with a text field to set a *title* for the action, specify a *trigger time* in relation to the presumed time of death and a *state* (activated, deactivated, draft, etc.). Finally the dialog should have a `Save` button which checks all field for valid inputs and submits the new action to the server and adds it to the table.
 
 Dialog for other actions should contain similar options and be overall similar to the email dialog.
 
@@ -357,7 +355,7 @@ The backend will interact with a MongoDB database via SQL. The database will be 
 tbd
 
 ##### 3.11.3.3 IFTTT
-tbd
+IFTTT is a service that allows users to setup triggers and correlate them with actions. e.g. their home thermostat reaches a certain threshold so the service sends them an email. We are planning to interface with IFTT to provide a "death trigger". That way the user can trigger loads of diverse actions when DigiWill detects they died. That way we won't have to build interfaces for thousands of services but can simply rely on IFTT to connect to loads of other services and trigger nearly any action the user can imagine. 
 
 <!--\[This section describes software interfaces to other components of the software system. These may be purchased components, components reused from another application or components being developed for subsystems outside of the scope of this **SRS** but with which this software application must interact.\]--->
 
