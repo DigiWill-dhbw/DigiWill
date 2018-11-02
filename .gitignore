@@ -1,9 +1,13 @@
 # IDE Files
 .idea
+<<<<<<< HEAD
+
+=======
 target/
+>>>>>>> master
 # Compiled class file
 *.class
-
+target/
 # Log file
 *.log
 
