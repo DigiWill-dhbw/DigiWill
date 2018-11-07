@@ -1,4 +1,7 @@
 Feature: Sign of life daemon
+  As the Server
+  I want to make sure all actions are triggered when necessary
+  and all reminders are sent out when necessary
 
   Background:
     Given The user is logged in
