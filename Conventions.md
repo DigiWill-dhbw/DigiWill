@@ -11,4 +11,7 @@
 ### Git - Commit Conventions
 - The summary should start with `[Backend]`, `[Frontend]`, `[Documentation]` or whatever area the commit is relevant to
 - This should be followed by one of the following tags: `[Bug]`(Bug Fix), `[Feat]`(Feature), `[Misc]`(Miscellaneous)
+- Afterwards add the corrosponding issue number
 - After that you should add your actual commit message and fill the description with relevant details
+
+- **Example commit message:** `[Backend][Feat] DW-33 Added some new features`
