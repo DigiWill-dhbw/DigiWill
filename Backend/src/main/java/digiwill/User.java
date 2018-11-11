@@ -19,6 +19,10 @@ public class User {
     private String emailAddress;
     private String alias;
 
+    public boolean isValidNewUser(){
+        return false; //TODO implement
+    }
+
     public long getLastSignOfLife() {
         return lastSignOfLife;
     }

@@ -14,14 +14,14 @@ public class EmailResponseHandle {
         this.type = type;
     }
 
-    public static EmailResponseHandle getRegistrationHandle(User user) {
+    public static EmailResponseHandle getRegistrationHandle(User user) { //TODO implement
         if (user.isVerified()) {
             return null;
         }
         return null;
     }
 
-    public static EmailResponseHandle getResetHandle(User user) {
+    public static EmailResponseHandle getResetHandle(User user) { //TODO implement
         return null;
     }
 

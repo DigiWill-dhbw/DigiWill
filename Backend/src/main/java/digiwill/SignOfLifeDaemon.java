@@ -9,10 +9,10 @@ public class SignOfLifeDaemon {
         this.systemHandle = systemHandle;
     }
 
-    public void start() {
+    public void start() { //TODO implement
     }
 
-    public void check(List<User> users) {
+    public void check(List<User> users) { //TODO implement
     }
 
     public SystemHandle getSystemHandle() {

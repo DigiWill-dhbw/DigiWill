@@ -6,6 +6,9 @@ public class SystemHandle {
     private EmailDispatcher emailDispatcher;
     private Logger logger;
 
+    public SystemHandle() { //TODO implement
+    }
+
     public EmailDispatcher getEmailDispatcher() {
         return emailDispatcher;
     }

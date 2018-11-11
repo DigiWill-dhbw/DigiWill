@@ -3,7 +3,7 @@ package digiwill;
 import java.util.List;
 
 public class EmailDispatcher {
-    public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {
+    public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {//TODO implement
 
         try {
             sendEmail(null, null, true, null);
@@ -12,11 +12,11 @@ public class EmailDispatcher {
         }
     }
 
-    public void sendEmail(List<String> recipients, String subject, boolean htmlContentFlag, String content) throws EmailException {
+    public void sendEmail(List<String> recipients, String subject, boolean htmlContentFlag, String content) throws EmailException {//TODO implement
 
     }
 
-    public void sendResetEmail(EmailResponseHandle responseHandle) throws EmailException {
+    public void sendResetEmail(EmailResponseHandle responseHandle) throws EmailException {//TODO implement
 
         try {
             sendEmail(null, null, true, null);
@@ -25,7 +25,7 @@ public class EmailDispatcher {
         }
     }
 
-    public void sendReminderEmail(User user) throws EmailException {
+    public void sendReminderEmail(User user) throws EmailException {//TODO implement
 
         try {
             sendEmail(null, null, true, null);
