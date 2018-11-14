@@ -12,7 +12,7 @@ public class LoginData {
         return passwordHash;
     }
 
-    public User getRelatedUser(){
+    public UserHandle getRelatedUser(){
 
         return null;
     }
