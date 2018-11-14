@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
+    private long UID;
     /**
      * UTC timestamp
      */
@@ -21,6 +23,10 @@ public class User {
 
     public boolean isValidNewUser(){
         return false; //TODO implement
+    }
+
+    public long getUID() {
+        return UID;
     }
 
     public long getLastSignOfLife() {

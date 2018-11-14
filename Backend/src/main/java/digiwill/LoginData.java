@@ -11,4 +11,9 @@ public class LoginData {
     public String getPasswordHash() {
         return passwordHash;
     }
+
+    public User getRelatedUser(){
+
+        return null;
+    }
 }
