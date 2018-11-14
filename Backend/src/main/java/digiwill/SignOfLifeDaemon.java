@@ -12,7 +12,7 @@ public class SignOfLifeDaemon {
     public void start() { //TODO implement
     }
 
-    public void check(List<User> users) { //TODO implement
+    public void check(List<UserHandle> userHandles) { //TODO implement
     }
 
     public SystemHandle getSystemHandle() {
