@@ -27,7 +27,7 @@ public class EmailDispatcher {
         }
     }
 
-    public void sendReminderEmail(User user) throws EmailException {//TODO implement
+    public void sendReminderEmail(UserHandle userHandle) throws EmailException {//TODO implement
 
         try {
             sendEmail(null, null, true, null);

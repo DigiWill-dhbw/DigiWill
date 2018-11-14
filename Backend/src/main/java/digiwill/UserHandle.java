@@ -3,7 +3,7 @@ package digiwill;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class UserHandle {
 
     private long UID;
     /**

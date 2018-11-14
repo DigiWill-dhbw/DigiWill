@@ -6,8 +6,8 @@ public class RegistrationController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public String register(@ModelAttribute("newUser") User newUser ) { //TODO implement
-        if(newUser.isValidNewUser()){
+    public String register(@ModelAttribute("newUser") UserHandle newUserHandle) { //TODO implement
+        if(newUserHandle.isValidNewUser()){
 
         }
         //System.out.println(loginData.getUsername());
