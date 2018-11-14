@@ -1,8 +1,8 @@
 package digiwill;
 
 public class EmailResponseHandle {
-    public static int REGISTER_HANDLE = 0;
-    public static int RESET_HANDLE = 0;
+    public static final int REGISTER_HANDLE = 0;
+    public static final int RESET_HANDLE = 1;
 
     private User user;
     private String handle;
