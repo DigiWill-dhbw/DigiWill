@@ -1,6 +1,7 @@
 package digiwill;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 public abstract class BaseAction {
 
