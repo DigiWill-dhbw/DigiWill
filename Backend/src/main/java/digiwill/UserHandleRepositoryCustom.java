@@ -7,8 +7,6 @@ import org.bson.types.ObjectId;
  */
 public interface UserHandleRepositoryCustom {
 
-    Iterable<BaseAction> findBaseActionsBy(ObjectId UserHandleUID);
-
-    Iterable<BaseAction> findBaseActionsBy(String emailAddress);
+    boolean checkLogin();
 
 }
