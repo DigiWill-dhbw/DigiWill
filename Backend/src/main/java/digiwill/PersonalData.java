@@ -1,5 +1,9 @@
 package digiwill;
 
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.TypeAlias;
+
+@TypeAlias("data")
 public class PersonalData {
     private String firstName;
     private String surname;
@@ -9,14 +13,15 @@ public class PersonalData {
     private String streetAddress;
     private String country;
 
+    @PersistenceConstructor
     public PersonalData(String firstName, String surname) {
         this.firstName = firstName;
         this.surname = surname;
     }
 
+    @PersistenceConstructor
     public PersonalData(String firstName, String surname, long dateOfBirth, String zipCode, String city, String streetAddress, String country) {
-        this.firstName = firstName;
-        this.surname = surname;
+        this(firstName, surname);
         this.dateOfBirth = dateOfBirth;
         this.zipCode = zipCode;
         this.city = city;
