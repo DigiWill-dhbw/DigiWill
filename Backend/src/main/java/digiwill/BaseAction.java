@@ -4,7 +4,7 @@ public abstract class BaseAction {
 
     private long UID;
     public static final int EMAIL_ACTION = 0;
-    private boolean wasCompleted = false;
+    protected boolean wasCompleted = false;
     private int type;
 
     void execute(SystemHandle systemHandle){
