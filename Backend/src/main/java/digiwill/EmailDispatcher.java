@@ -10,11 +10,27 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 public class EmailDispatcher {
+    Session session;
+
+    EmailDispatcher() {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", System.getProperty("mail.smtp.host"));
+        props.put("mail.smtp.port", System.getProperty("mail.smtp.port"));
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(System.getProperty("mail.adress"), System.getProperty("mail.password"));
+            }
+        });
+    }
     public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {
         String subject = "Confirm your registration!";
         String content = "Hello "+responseHandle.getUserHandle().getAlias()+"<br/><br/>"+
@@ -58,18 +74,7 @@ public class EmailDispatcher {
         sendEmail(String.join(",", recipients), subject, htmlContentFlag, content);
     }
     public void sendEmail(String recipient, String subject, boolean htmlContentFlag, String content) throws EmailException {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", System.getProperty("mail.smtp.host"));
-        props.put("mail.smtp.port", System.getProperty("mail.smtp.port"));
-
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(System.getProperty("mail.adress"), System.getProperty("mail.password"));
-            }
-        });
-        Message msg = new MimeMessage(session);
+        Message msg = new MimeMessage(this.session);
         try {
             msg.setFrom(new InternetAddress(System.getProperty("mail.adress"),false));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient, true));
