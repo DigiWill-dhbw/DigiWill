@@ -3,7 +3,7 @@ package digiwill;
 public abstract class BaseAction {
 
     private long UID;
-    public static int EMAIL_ACTION = 0;
+    public static final int EMAIL_ACTION = 0;
     private boolean wasCompleted = false;
     private int type;
 
