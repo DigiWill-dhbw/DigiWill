@@ -25,5 +25,7 @@ public class EmailResponseHandle {
         return null;
     }
 
-
+    public UserHandle getUserHandle() {
+        return userHandle;
+    }
 }
