@@ -11,7 +11,8 @@ public class MongoConfig {
 
     public @Bean
     MongoDbFactory mongoDbFactory() {
-        return new SimpleMongoDbFactory(new MongoClient(), "digiwill");
+        //TODO move constants to property files
+        return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "digiwill");
     }
 
 }
