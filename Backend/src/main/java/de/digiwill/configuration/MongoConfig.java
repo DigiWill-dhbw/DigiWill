@@ -12,7 +12,7 @@ public class MongoConfig {
     public @Bean
     MongoDbFactory mongoDbFactory() {
         //TODO move constants to property files
-        return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "de/digiwill");
+        return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "digiwill");
     }
 
 }
