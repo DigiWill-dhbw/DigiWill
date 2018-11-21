@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.model;
 
 public enum ActionType {
 

@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.configuration;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ public class MongoConfig {
     public @Bean
     MongoDbFactory mongoDbFactory() {
         //TODO move constants to property files
-        return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "digiwill");
+        return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "de/digiwill");
     }
 
 }

@@ -1,4 +1,7 @@
-package digiwill;
+package de.digiwill.util;
+
+import de.digiwill.exception.EmailException;
+import de.digiwill.model.UserHandle;
 
 import java.util.List;
 
