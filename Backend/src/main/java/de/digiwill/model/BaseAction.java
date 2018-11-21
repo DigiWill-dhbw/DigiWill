@@ -1,5 +1,6 @@
-package digiwill;
+package de.digiwill.model;
 
+import de.digiwill.SystemHandle;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Field;
 

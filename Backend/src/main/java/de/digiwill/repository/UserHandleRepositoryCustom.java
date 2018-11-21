@@ -1,6 +1,4 @@
-package digiwill;
-
-import org.bson.types.ObjectId;
+package de.digiwill.repository;
 
 /**
  * Custom db operations

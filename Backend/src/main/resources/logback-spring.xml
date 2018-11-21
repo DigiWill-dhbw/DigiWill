@@ -38,8 +38,8 @@
         <appender-ref ref="Console" />
     </root>
 
-    <!-- LOG "digiwill*" at TRACE level -->
-    <logger name="digiwill" level="trace" additivity="false">
+    <!-- LOG "de.digiwill*" at TRACE level -->
+    <logger name="de.digiwill" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>

@@ -11,7 +11,7 @@ Feature: Login
 
   Examples:
   | email | password |
-  | admin@digiwill.de | adminpassword |
+  | admin@de.digiwill.de | adminpassword |
 
   Scenario Outline: Login failed
     When Enter Email "<email>", password "<password>" and click "Login"
@@ -19,7 +19,7 @@ Feature: Login
 
   Examples:
   | email | password |
-  | admin@digiwill.de | adminpassword1 |
+  | admin@de.digiwill.de | adminpassword1 |
 
   Scenario Outline: Store login session
     When Enter Email "<email>", password "<password>", check checkbox and click "Login"
@@ -30,4 +30,4 @@ Feature: Login
 
   Examples:
   | email | password |
-  | admin@digiwill.de | adminpassword |
+  | admin@de.digiwill.de | adminpassword |

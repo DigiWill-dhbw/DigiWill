@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
