@@ -1,9 +1,13 @@
 package digiwill;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class UserHandle {
+public class UserHandle extends User {
 
     private long UID;
     /**
@@ -20,6 +24,15 @@ public class UserHandle {
     private List<BaseAction> actions = new ArrayList<>();
     private String emailAddress;
     private String alias;
+
+    public UserHandle(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
+    }
+
+    public UserHandle(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    }
+
 
     public boolean isValidNewUser(){
         return false; //TODO implement
