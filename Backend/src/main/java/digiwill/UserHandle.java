@@ -6,10 +6,24 @@ import org.springframework.security.core.userdetails.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+@Document(collection = "users")
+@TypeAlias("user")
 public class UserHandle extends User {
+    @Id
+    @Field("_id")
+    private ObjectId UID;
 
-    private long UID;
+    private String emailAddress;
+    private String alias;
+    private PersonalData personalData;
+
     /**
      * UTC timestamp
      */
@@ -19,11 +33,28 @@ public class UserHandle extends User {
     private long deltaDeathTime;
     private boolean isDead;
     private boolean isVerified;
-    private PersonalData personalData;
 
-    private List<BaseAction> actions = new ArrayList<>();
-    private String emailAddress;
-    private String alias;
+    private Iterable<BaseAction> actions;
+
+    @PersistenceConstructor
+    public UserHandle(ObjectId UID, String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
+        this(emailAddress, personalData, alias, lastSignOfLife, lastReminder, deltaReminder, deltaDeathTime, isDead, isVerified, actions);
+        this.UID = UID;
+    }
+
+    public UserHandle(String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
+        this.emailAddress = emailAddress;
+        this.alias = alias;
+        this.personalData = personalData;
+        this.lastSignOfLife = lastSignOfLife;
+        this.lastReminder = lastReminder;
+        this.deltaReminder = deltaReminder;
+        this.deltaDeathTime = deltaDeathTime;
+        this.isDead = isDead();
+        this.isVerified = isVerified;
+        this.actions = actions;
+    }
+
 
     public UserHandle(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -38,7 +69,7 @@ public class UserHandle extends User {
         return false; //TODO implement
     }
 
-    public long getUID() {
+    public ObjectId getUID() {
         return UID;
     }
 
@@ -96,5 +127,9 @@ public class UserHandle extends User {
 
     public String getAlias() {
         return alias;
+    }
+
+    public Iterable<BaseAction> getActions() {
+        return actions;
     }
 }
