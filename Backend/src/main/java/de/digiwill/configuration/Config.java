@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.configuration;
 
 
 import org.slf4j.Logger;
@@ -18,10 +18,6 @@ public class Config {
     Logger logger = LoggerFactory.getLogger(Config.class);
     @Bean("emailconfig")
     public EmailConfig getEmailConfig(){
-        logger.error(env.getProperty("mail.host")+
-                env.getProperty("mail.port")+
-                env.getProperty("mail.user")+
-                env.getProperty("mail.password"));
        return new EmailConfig(env.getProperty("mail.host"),
                env.getProperty("mail.port"),
                env.getProperty("mail.user"),

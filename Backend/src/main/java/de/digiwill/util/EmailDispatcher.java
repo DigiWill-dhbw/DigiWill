@@ -1,5 +1,6 @@
 package de.digiwill.util;
 
+import de.digiwill.configuration.EmailConfig;
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.UserHandle;
 
@@ -28,7 +29,6 @@ public class EmailDispatcher {
     private Session session;
     public EmailDispatcher(EmailConfig emailconfig) {
         this.emailconfig = emailconfig;
-        logger.debug(emailconfig.getHost()+emailconfig.getPort()+emailconfig.getUser()+emailconfig.getPassword());
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -97,6 +97,7 @@ public class EmailDispatcher {
         } catch (Exception e) {
             logger.error("Error creating mail.");
             e.printStackTrace();
+            throw new EmailException(e.getMessage());
         }
 
         try {
@@ -104,8 +105,10 @@ public class EmailDispatcher {
         } catch (MessagingException e) {
             logger.error("Error sending mail.");
             e.printStackTrace();
+            throw new EmailException(e.getMessage());
         }
 
+        logger.debug("Mail sent.");
     }
 
 }

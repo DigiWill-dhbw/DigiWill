@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.configuration;
 
 public class EmailConfig {
     private String host,port,user,password;
