@@ -1,4 +1,6 @@
-package digiwill;
+package de.digiwill;
+
+import de.digiwill.util.EmailDispatcher;
 
 import java.util.logging.Logger;
 

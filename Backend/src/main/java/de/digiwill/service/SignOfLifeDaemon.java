@@ -1,4 +1,7 @@
-package digiwill;
+package de.digiwill.service;
+
+import de.digiwill.SystemHandle;
+import de.digiwill.model.UserHandle;
 
 import java.util.List;
 

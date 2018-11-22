@@ -1,4 +1,7 @@
-package digiwill;
+package de.digiwill.util;
+
+import de.digiwill.exception.EmailException;
+import de.digiwill.model.UserHandle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,6 @@
-package digiwill;
+package de.digiwill;
+
+import de.digiwill.model.UserHandle;
 
 public class LoginData {
     private String username;
@@ -13,7 +15,7 @@ public class LoginData {
     }
 
     public UserHandle getRelatedUser(){
-
+        //TODO implement
         return null;
     }
 }
