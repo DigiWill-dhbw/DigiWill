@@ -1,21 +1,18 @@
 package de.digiwill;
 
 import de.digiwill.util.EmailDispatcher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.logging.Logger;
-
+@Component
 public class SystemHandle {
+    @Autowired
     private EmailDispatcher emailDispatcher;
-    private Logger logger;
 
-    public SystemHandle() { //TODO implement
+    public SystemHandle() {
     }
 
     public EmailDispatcher getEmailDispatcher() {
         return emailDispatcher;
-    }
-
-    public Logger getLogger() {
-        return logger;
     }
 }
