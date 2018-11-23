@@ -12,7 +12,7 @@ import java.io.IOException;
 @ActiveProfiles({ "fongo", "test", "unit" })
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = { UnitTestApplicationConfig.class })
-public abstract class SpringUnitTest {
+public class SpringUnitTest {
 
     protected void importJSON(String collection, String file) {
         try {
