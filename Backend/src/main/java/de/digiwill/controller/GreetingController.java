@@ -1,15 +1,24 @@
 package de.digiwill.controller;
+import de.digiwill.exception.EmailException;
+import de.digiwill.util.EmailDispatcher;
 
+import org.apache.catalina.core.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.beans.beancontext.BeanContext;
+
 @Controller
 public class GreetingController {
+    @Autowired
+    private EmailDispatcher emailDispatcher;
 
+    private static ApplicationContext app;
     Logger logger = LoggerFactory.getLogger(GreetingController.class);
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -21,7 +30,7 @@ public class GreetingController {
         logger.info("An INFO Message");
         logger.warn("A WARN Message");
         logger.error("An ERROR Message");
-        
+
         return "greeting";
 
     }
