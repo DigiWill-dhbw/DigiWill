@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-@Service
+@Service("emailDispatcher")
 public class EmailDispatcher {
 
     private Logger logger = LoggerFactory.getLogger(EmailDispatcher.class);

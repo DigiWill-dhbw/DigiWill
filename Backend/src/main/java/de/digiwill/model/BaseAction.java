@@ -11,7 +11,7 @@ public class BaseAction {
     protected boolean wasCompleted;
     protected ActionType type;
 
-    public void execute(SystemHandle systemHandle){ }
+    public abstract int execute(SystemHandle systemHandle);
 
     public ObjectId getUID() {
         return UID;
