@@ -30,8 +30,7 @@ public class UserHandleRepositoryTest {
     @Before
     public void setup() {
         repository.insert(createUserHandle(5, Arrays.asList(
-                new EmailAction("Hey there!", false, "blalbalbla"),
-                new EmailAction("Now I am death!", true, "blablalbla")
+                new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
         )));
     }
 

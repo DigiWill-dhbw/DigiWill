@@ -4,7 +4,7 @@ import de.digiwill.SystemHandle;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public class BaseAction {
+public abstract class BaseAction {
 
     @Field("_id")
     protected ObjectId UID;
