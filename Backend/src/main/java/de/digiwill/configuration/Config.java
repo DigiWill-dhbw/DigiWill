@@ -28,9 +28,8 @@ public class Config {
     }
 
     @Bean("mongodbfactory")
-    MongoDbFactory mongoDbFactory() {
+    public MongoDbFactory mongoDbFactory() {
         return new SimpleMongoDbFactory(new MongoClient(env.getProperty("database.host"), Integer.parseInt(env.getProperty("database.port"))),
                 env.getProperty("database.name"));
     }
-
 }

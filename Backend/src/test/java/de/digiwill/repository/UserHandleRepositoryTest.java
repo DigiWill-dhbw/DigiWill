@@ -1,56 +1,53 @@
 package de.digiwill.repository;
 
-import com.lordofthejars.nosqlunit.mongodb.InMemoryMongoDb;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
-import de.digiwill.util.SpringUnitTest;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static com.lordofthejars.nosqlunit.mongodb.InMemoryMongoDb.InMemoryMongoRuleBuilder.newInMemoryMongoDbRule;
-import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-public class UserHandleRepositoryTest extends SpringUnitTest {
-
-    @ClassRule
-    public static InMemoryMongoDb inMemoryMongoDb = newInMemoryMongoDbRule().build();
-
-    @Rule
-    public MongoDbRule mongoDbRule = newMongoDbRule().defaultSpringMongoDb("digiwill_test");
+@RunWith(SpringRunner.class)
+@DataMongoTest
+public class UserHandleRepositoryTest {
 
     @Autowired
-    private ApplicationContext applicationContext;
+    protected MongoTemplate mongoTemplate;
 
     @Autowired
-    UserHandleRepository repository;
+    private UserHandleRepository repository;
 
     @Before
     public void setup() {
-        setupTestUsers();
+        repository.insert(createUserHandle(5, Arrays.asList(
+                new EmailAction("Hey there!", false, "blalbalbla"),
+                new EmailAction("Now I am death!", true, "blablalbla")
+        )));
     }
 
     @Test
     public void findUserHandleByEmailAddressTest() {
-        Assert.assertEquals("nobody", repository.findUserHandleByEmailAddress("nobody@digiwill.de").getAlias());
+        Assert.assertEquals("nobody1", repository.findUserHandleByEmailAddress("nobody1@digiwill.de").getAlias());
     }
 
-    protected void setupTestUsers() {
-        List<BaseAction> list = new ArrayList<>();
-        list.add(new EmailAction("Hey there!", false, "blalbalbla"));
-        UserHandle userHandle1 = new UserHandle("nobody@digiwill.de", new PersonalData("No", "Body"),
-                "nobody", 0, 0, 0, 0, false, true, list);
-        repository.insert(userHandle1);
+    private Iterable<UserHandle> createUserHandle(int amount, List<BaseAction> actions) {
+        List<UserHandle> users = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", new PersonalData("No", "Body" + i),
+                    "nobody" + i, 0, 0, 0, 0, false, true, actions);
+            users.add(userHandle);
+        }
+        return users;
     }
+
 }
