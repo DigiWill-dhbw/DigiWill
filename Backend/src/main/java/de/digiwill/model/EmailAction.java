@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @TypeAlias("EmailAction")
 public class EmailAction extends BaseAction {
 
+    @Transient
     private Logger logger = LoggerFactory.getLogger(EmailAction.class);
 
     private List<String> recipients = new ArrayList<>();
