@@ -30,7 +30,7 @@ public class PersonalData {
     }
 
     public String getAddress() {
-        return streetAddress + "\n" + zipCode + " " + streetAddress + "\n" + country;
+        return streetAddress + "\n" + zipCode + " " + city + "\n" + "\n" + country;
     }
 
     public String getFullName() {
