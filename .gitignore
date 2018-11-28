@@ -1,10 +1,6 @@
 # IDE Files
 .idea
-<<<<<<< HEAD
-
-=======
 target/
->>>>>>> master
 # Compiled class file
 *.class
 target/
@@ -37,4 +33,5 @@ hs_err_pid*
 .Trashes
 ehthumbs.db
 Thumbs.db
-Backend/digiwill.iml
+Backend/digiwill.properties
+Backend/src/main/resources/secrets-dev.properties

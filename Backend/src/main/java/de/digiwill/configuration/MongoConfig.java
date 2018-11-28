@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.configuration;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;

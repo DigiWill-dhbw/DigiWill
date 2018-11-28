@@ -1,5 +1,6 @@
-package digiwill;
+package de.digiwill.repository;
 
+import de.digiwill.model.UserHandle;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

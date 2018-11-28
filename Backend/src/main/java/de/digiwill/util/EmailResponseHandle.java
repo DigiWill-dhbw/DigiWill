@@ -1,14 +1,14 @@
-package digiwill;
+package de.digiwill.util;
+
+import de.digiwill.model.UserHandle;
 
 public class EmailResponseHandle {
-    public static final int REGISTER_HANDLE = 0;
-    public static final int RESET_HANDLE = 1;
 
     private UserHandle userHandle;
     private String handle;
-    private int type;
+    private EmailResponseType type;
 
-    private EmailResponseHandle(UserHandle userHandle, String handle, int type) {
+    private EmailResponseHandle(UserHandle userHandle, String handle, EmailResponseType type) {
         this.userHandle = userHandle;
         this.handle = handle;
         this.type = type;
@@ -25,5 +25,7 @@ public class EmailResponseHandle {
         return null;
     }
 
-
+    public UserHandle getUserHandle() {
+        return userHandle;
+    }
 }

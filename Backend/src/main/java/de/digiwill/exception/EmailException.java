@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.exception;
 
 public class EmailException extends Exception {
     public EmailException(String message) {

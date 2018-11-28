@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.model;
 
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.TypeAlias;

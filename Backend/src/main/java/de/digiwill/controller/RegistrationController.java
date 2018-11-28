@@ -1,5 +1,6 @@
-package digiwill;
+package de.digiwill.controller;
 
+import de.digiwill.model.UserHandle;
 import org.springframework.web.bind.annotation.*;
 
 public class RegistrationController {
