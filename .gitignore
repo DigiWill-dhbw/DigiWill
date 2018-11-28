@@ -39,3 +39,4 @@ ehthumbs.db
 Thumbs.db
 Backend/digiwill.properties
 Backend/src/main/resources/secrets-dev.properties
+*.iml
