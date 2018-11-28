@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.model;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

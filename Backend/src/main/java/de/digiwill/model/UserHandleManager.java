@@ -1,5 +1,7 @@
-package digiwill;
+package de.digiwill.model;
 
+import de.digiwill.model.UserHandle;
+import de.digiwill.repository.UserHandleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

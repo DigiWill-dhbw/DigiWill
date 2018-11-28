@@ -1,4 +1,4 @@
-package digiwill;
+package de.digiwill.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;

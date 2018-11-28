@@ -160,6 +160,14 @@ public class UserHandle implements UserDetails {
         return actions;
     }
 
+    public String getAlias(){
+        return getUsername();
+    }
+
+    public String getEmailAddress(){
+      return getUsername();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
