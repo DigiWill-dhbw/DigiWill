@@ -1,6 +1,5 @@
 package de.digiwill.model;
 
-import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +11,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserHandleManager implements UserDetailsManager {
 
-    @Autowired UserHandleRepository userHandleRepository;
+    @Autowired
+    UserHandleRepository userHandleRepository;
 
     public UserHandleManager() {
 
+    }
+
+    /**
+     * constructor for tests
+     * @param userHandleRepository
+     */
+    public UserHandleManager(UserHandleRepository userHandleRepository) {
+        if (this.userHandleRepository == null) {
+            this.userHandleRepository = userHandleRepository;
+        }
     }
 
     @Override
@@ -32,7 +42,7 @@ public class UserHandleManager implements UserDetailsManager {
 
     @Override
     public void deleteUser(String username) {
-        userHandleRepository.deleteByUsername(username);
+        userHandleRepository.deleteUserHandleBy(username);
     }
 
     @Override
@@ -46,7 +56,7 @@ public class UserHandleManager implements UserDetailsManager {
         try {
             UserDetails user = loadUserByUsername(username);
             return true;
-        }catch(UsernameNotFoundException e){
+        } catch (UsernameNotFoundException e) {
             return false;
         }
     }
@@ -54,12 +64,20 @@ public class UserHandleManager implements UserDetailsManager {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserHandle user = userHandleRepository.findUserHandleByUsername(username);
-        if(user == null){
+        if (user == null) {
             user = userHandleRepository.findUserHandleByUsername(username);
         }
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         return user;
+    }
+
+    public void createUsers(Iterable<UserHandle> users) {
+        userHandleRepository.insert(users);
+    }
+
+    public UserHandle loadUserByUserName(String username) {
+        return (UserHandle) loadUserByUsername(username);
     }
 }

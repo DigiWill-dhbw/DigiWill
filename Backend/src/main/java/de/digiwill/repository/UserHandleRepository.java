@@ -17,7 +17,7 @@ public interface UserHandleRepository extends MongoRepository<UserHandle, Object
 
     UserHandle findUserHandleByUsername(String username);
 
-    UserHandle deleteByUsername(String username);
+    UserHandle deleteUserHandleBy(String username);
 
     UserHandle findAllBy();
 
