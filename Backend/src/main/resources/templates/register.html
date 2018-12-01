@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>DigiWill registration</title>
+</head>
+<body>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<div th:if="${failure}">
+    <h2 th:text="${responseText}"></h2>
+</div>
+
+<form th:action="@{/registerNewUser}" method="post">
+    <div><label> Email address : <input id="emailInput" type="email" name="email"/> </label></div>
+    <div><label> Password: <input id="passwordInput" type="password" name="password"/> </label></div>
+    <div><label> Repeat password: <input id="passwordInput_rep" type="password" name="password_rep"/> </label></div>
+    <div><label> First name : <input id="firstName" type="text" name="firstName"/> </label></div>
+    <div><label> Surname : <input id="surName" type="text" name="surName"/> </label></div>
+    <div><label> Birthday : <input id="birthday" type="date" name="birthday" /> </label></div>
+    <div><input id="registerButton" type="submit" value="Register"/>
+</form>
+</body>
+</html>

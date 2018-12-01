@@ -1,4 +1,4 @@
-package digiwill.Security;
+package de.digiwill.model.Security;
 
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
