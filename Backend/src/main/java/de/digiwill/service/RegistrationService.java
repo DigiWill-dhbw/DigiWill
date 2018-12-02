@@ -14,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class RegistrationService {
     private static final int BIRTHDAY_INVALID = -8;
 
     private static final String emailRegex = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    private static final int minimumAge = 13;
     private static final DateFormat df = new SimpleDateFormat("yyyy-dd-MM");
 
     @Autowired
@@ -84,12 +86,19 @@ public class RegistrationService {
         return REGISTRATION_SUCCESSFUL;
     }
 
-    public boolean isOldEnough(Date date) {
-        return true; //TODO
+    private boolean isOldEnough(Date date) {
+        //TODO replace with DateTime implementation
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.add(Calendar.YEAR, -minimumAge);
+        return today.getTime().compareTo(date) >= 0;
     }
 
     public boolean doesPasswordFitRequirements(String password) {
-        return true; //TODO
+        return password.length() >= 8 &&
+                password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)");
     }
 
     public boolean isValidEmailAdress(String email) {
@@ -97,10 +106,7 @@ public class RegistrationService {
     }
 
     public boolean wasRegistrationSuccesful(int returnCode) {
-        if (returnCode == REGISTRATION_SUCCESSFUL) {
-            return true;
-        }
-        return false;
+        return returnCode == REGISTRATION_SUCCESSFUL;
     }
 
     public String codeToText(int returnCode) {
