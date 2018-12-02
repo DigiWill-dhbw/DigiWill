@@ -23,7 +23,7 @@ public class UserHandle implements UserDetails {
      */
     private String username;
     private String password;
-    private Set<GrantedAuthority> authorities; //TODO final?
+    private List<GrantedAuthority> authorities; //TODO final?
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
@@ -70,12 +70,10 @@ public class UserHandle implements UserDetails {
 
   }
 
-    public UserHandle(String username, String password, Set<GrantedAuthority> authorities) {
-        this(username, password, authorities, true, true, true,
+    public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
+        this(emailAddress, password, authorities, true, true, true,
                 true /*TODO false*/, -1, -1, -1, -1, false,
-                new PersonalData("User", "Userson"), new ArrayList<BaseAction>());
-
-
+                personalData, new ArrayList<BaseAction>());
     }
     public UserHandle(String username, String password, Set<GrantedAuthority> authorities,
                       boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
@@ -84,7 +82,17 @@ public class UserHandle implements UserDetails {
                       PersonalData personalData, List<BaseAction> actions) {
         //user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
-        this.username = username;
+    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
+        this(emailAddress, password, null, authorities);
+
+    }
+    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
+                      boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
+                      boolean isVerified, long lastSignOfLife, long lastReminder, long deltaReminder,
+                      long deltaDeathTime, boolean isDead,
+                      PersonalData personalData, List<BaseAction> actions) {
+
+        this.username = emailAddress;
         this.password = password;
         this.authorities = authorities;//Collections.unmodifiableSet(UserHelper.sortAuthorities(authorities));
         this.accountNonExpired = accountNonExpired;
@@ -160,12 +168,17 @@ public class UserHandle implements UserDetails {
         return actions;
     }
 
+    @Deprecated
     public String getAlias(){
         return getUsername();
     }
 
     public String getEmailAddress(){
       return getUsername();
+    }
+
+    public PersonalData getPersonalData() {
+        return personalData;
     }
 
     @Override

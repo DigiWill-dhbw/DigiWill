@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -36,14 +38,15 @@ public class UserHandleRepositoryTest {
 
     @Test
     public void findUserHandleByEmailAddressTest() {
-        Assert.assertEquals("nobody1", repository.findUserHandleByEmailAddress("nobody1@digiwill.de").getAlias());
+        Assert.assertEquals("nobody1", repository.findUserHandleByUsername("nobody1@digiwill.de").getAlias());
     }
 
     private Iterable<UserHandle> createUserHandle(int amount, List<BaseAction> actions) {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", new PersonalData("No", "Body" + i),
-                    "nobody" + i, 0, 0, 0, 0, false, true, actions);
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", "nobody" + i + "@digiwill.de", null);
+            //UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", new PersonalData("No", "Body" + i),
+            //        "nobody" + i, 0, 0, 0, 0, false, true, actions);
             users.add(userHandle);
         }
         return users;
