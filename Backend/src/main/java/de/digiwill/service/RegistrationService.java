@@ -56,17 +56,19 @@ public class RegistrationService {
 
         Date birthdayDate;
         try {
-            birthdayDate = df.parse("birthday");
+            birthdayDate = df.parse(formData.getFirst("birthday"));
         } catch (ParseException e) {
             return BIRTHDAY_INVALID;
         }
-        if(!isOldEnough(birthdayDate)){
+        if (!isOldEnough(birthdayDate)) {
             return TO_YOUNG;
         }
-        try{
-            userHandleManager.loadUserByUsername(formData.getFirst("email"));
-        }catch(UsernameNotFoundException e){
-            return EMAIL_ALREADY_IN_USE;
+        try {
+            UserHandle uH = (UserHandle) userHandleManager.loadUserByUsername(formData.getFirst("email"));
+            if (uH != null) {
+                return EMAIL_ALREADY_IN_USE;
+            }
+        } catch (UsernameNotFoundException e) {
         }
         PersonalData personalData = new PersonalData(formData.getFirst("firstName"),
                 formData.getFirst("surName"),
@@ -82,7 +84,7 @@ public class RegistrationService {
         return REGISTRATION_SUCCESSFUL;
     }
 
-    public boolean isOldEnough(Date date){
+    public boolean isOldEnough(Date date) {
         return true; //TODO
     }
 
@@ -102,8 +104,8 @@ public class RegistrationService {
     }
 
     public String codeToText(int returnCode) {
-        switch (returnCode){
-            case  REGISTRATION_SUCCESSFUL:
+        switch (returnCode) {
+            case REGISTRATION_SUCCESSFUL:
                 return "Everything went great, you shouldn't be seeing this";
             case PASSWORD_MISMATCH:
                 return "The entered passwords don't match";
@@ -112,9 +114,9 @@ public class RegistrationService {
             case INVALID_EMAIL_ADDRESS:
                 return "Please enter a valid email address";
             case NO_FIRST_NAME:
-                return "Please entere a first name";
+                return "Please enter a first name";
             case NO_SURNAME:
-                return "Please enter a surnma";
+                return "Please enter a surname";
             case TO_YOUNG:
                 return "You must be at least XXX years old to register for this service";
             case EMAIL_ALREADY_IN_USE:
@@ -122,9 +124,7 @@ public class RegistrationService {
             case BIRTHDAY_INVALID:
                 return "Please enter a valid date of birth";
         }
-        if (returnCode == REGISTRATION_SUCCESSFUL) {
-
-        }
-        return "Not implemented yet";
+        return "Not implemented yet, please contact the support team and let them know you experience return code "
+                + returnCode + " during registration or try again";
     }
 }
