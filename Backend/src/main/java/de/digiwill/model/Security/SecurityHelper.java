@@ -10,4 +10,8 @@ public class SecurityHelper {
     public static String encodePassword(String password){
         return encoder.encode(password);
     }
+
+    public static PasswordEncoder getEncoder() {
+        return encoder;
+    }
 }

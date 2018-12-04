@@ -32,9 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userHandleManager)
+                .passwordEncoder(SecurityHelper.getEncoder());
+    }
+
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userHandleManager);
+        //builder.userDetailsService(userHandleManager);
     }
 
     @Bean
