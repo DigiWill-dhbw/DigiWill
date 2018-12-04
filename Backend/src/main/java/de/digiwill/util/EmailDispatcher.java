@@ -26,7 +26,7 @@ public class EmailDispatcher {
         this.emailTransportWrapper = emailTransportWrapper;
 
     }
-
+    //TODO refactor Registration and Reset Email into a single method for system emails
     public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {
         logger.debug("Initiating sendRegistrarionConfirmation");
         String subject = REGISTRATION_EMAIL_SUBJECT;
