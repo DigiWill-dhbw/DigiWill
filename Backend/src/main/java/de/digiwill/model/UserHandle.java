@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
@@ -49,9 +50,9 @@ public class UserHandle implements UserDetails {
     }
 */
 
-  public UserHandle(){
+    public UserHandle() {
 
-  }
+    }
 
     public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
         this(emailAddress, password, authorities, true, true, true,
@@ -84,7 +85,7 @@ public class UserHandle implements UserDetails {
         this.actions = actions;
     }
 
-    public boolean isValidNewUser(){
+    public boolean isValidNewUser() {
         return false; //TODO implement
     }
 
@@ -149,8 +150,9 @@ public class UserHandle implements UserDetails {
         return getUsername();
     }
 
-    public String getEmailAddress(){
-      return getUsername();
+    @Deprecated
+    public String getEmailAddress() {
+        return getUsername();
     }
 
     public PersonalData getPersonalData() {

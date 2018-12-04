@@ -1,29 +1,25 @@
 package de.digiwill.StepDefinitons;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
+import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class loginTest {
 
-    private String pathToChromeDriver = "src\\test\\resources\\chromedriver.exe";
     private WebDriver driver;
 
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
-        System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
+        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get(url);

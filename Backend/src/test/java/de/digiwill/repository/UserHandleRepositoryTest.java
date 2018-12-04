@@ -1,9 +1,6 @@
 package de.digiwill.repository;
 
-import de.digiwill.model.BaseAction;
-import de.digiwill.model.EmailAction;
-import de.digiwill.model.PersonalData;
-import de.digiwill.model.UserHandle;
+import de.digiwill.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,24 +26,25 @@ public class UserHandleRepositoryTest {
     @Autowired
     private UserHandleRepository repository;
 
+    private UserHandleManager userHandleManager;
+
     @Before
     public void setup() {
-        repository.insert(createUserHandle(5, Arrays.asList(
+        userHandleManager = new UserHandleManager(repository);
+        userHandleManager.createUsers(createUserHandle(5, Arrays.asList(
                 new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
         )));
     }
 
     @Test
     public void findUserHandleByEmailAddressTest() {
-        Assert.assertEquals("nobody1", repository.findUserHandleByUsername("nobody1@digiwill.de").getAlias());
+        Assert.assertEquals("nobody1@digiwill.de", userHandleManager.findUserHandleByUsername("nobody1@digiwill.de").getUsername());
     }
 
     private Iterable<UserHandle> createUserHandle(int amount, List<BaseAction> actions) {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", "nobody" + i + "@digiwill.de", null);
-            //UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", new PersonalData("No", "Body" + i),
-            //        "nobody" + i, 0, 0, 0, 0, false, true, actions);
             users.add(userHandle);
         }
         return users;
