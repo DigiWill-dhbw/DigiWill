@@ -38,7 +38,7 @@ public class UserHandleRepositoryTest {
 
     @Test
     public void findUserHandleByEmailAddressTest() {
-        Assert.assertEquals("nobody1@digiwill.de", userHandleManager.findUserHandleByUsername("nobody1@digiwill.de").getUsername());
+        Assert.assertEquals("nobody1@digiwill.de", userHandleManager.loadUserByUsername("nobody1@digiwill.de").getUsername());
     }
 
     private Iterable<UserHandle> createUserHandle(int amount, List<BaseAction> actions) {
