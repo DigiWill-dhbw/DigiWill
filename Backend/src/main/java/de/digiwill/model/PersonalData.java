@@ -3,26 +3,28 @@ package de.digiwill.model;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.TypeAlias;
 
-@TypeAlias("data")
+import java.util.Date;
+
+@TypeAlias("personalData")
 public class PersonalData {
     private String firstName;
     private String surname;
-    private long dateOfBirth;
+    private Date dateOfBirth;
     private String zipCode;
     private String city;
     private String streetAddress;
     private String country;
 
     @PersistenceConstructor
-    public PersonalData(String firstName, String surname) {
+    public PersonalData(String firstName, String surname, Date dateOfBirth) {
         this.firstName = firstName;
         this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
     }
 
     @PersistenceConstructor
-    public PersonalData(String firstName, String surname, long dateOfBirth, String zipCode, String city, String streetAddress, String country) {
-        this(firstName, surname);
-        this.dateOfBirth = dateOfBirth;
+    public PersonalData(String firstName, String surname, Date dateOfBirth, String zipCode, String city, String streetAddress, String country) {
+        this(firstName, surname, dateOfBirth);
         this.zipCode = zipCode;
         this.city = city;
         this.streetAddress = streetAddress;
@@ -49,7 +51,7 @@ public class PersonalData {
         return surname;
     }
 
-    public long getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 }

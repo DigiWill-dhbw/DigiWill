@@ -45,7 +45,7 @@ public class loginTest {
 
     @And("^Close Session$")
     public void closeSession() {
-        //driver.close();
+        driver.quit();
     }
 
     @Then("^Login for \"([^\"]*)\", \"([^\"]*)\"$")

@@ -9,7 +9,7 @@ Feature: Login
     Given A user with email "<email>" and password "<password>" "exists"
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "succeeds"
-    #And Close Session
+    And Close Session
 
   Examples:
   | email | password |
@@ -19,7 +19,7 @@ Feature: Login
     Given A user with email "<email>" and password "<password>" "doesn't exist"
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "fails"
-    #And Close Session
+    And Close Session
 
   Examples:
   | email | password |

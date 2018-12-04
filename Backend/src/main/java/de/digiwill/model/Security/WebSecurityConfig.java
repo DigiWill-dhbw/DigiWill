@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/",  "/greeting").permitAll()
+                .antMatchers("/",  "/greeting", "/register").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -32,9 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userHandleManager)
+                .passwordEncoder(SecurityHelper.getEncoder());
+    }
+
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userHandleManager);
+        //builder.userDetailsService(userHandleManager);
     }
 
     @Bean
