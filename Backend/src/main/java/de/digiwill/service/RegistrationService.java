@@ -1,9 +1,12 @@
 package de.digiwill.service;
 
+import de.digiwill.controller.RegisterController;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -36,6 +39,8 @@ public class RegistrationService {
 
     @Autowired
     UserHandleManager userHandleManager;
+
+    Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     public int addNewUser(MultiValueMap<String, String> formData) {
 
@@ -97,8 +102,7 @@ public class RegistrationService {
     }
 
     public boolean doesPasswordFitRequirements(String password) {
-        return password.length() >= 8 &&
-                password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)");
+       return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=ß!\"§~'`<>|;:,.\\-\\\\\\/\\?])(?=\\S+$).{8,}$");
     }
 
     public boolean isValidEmailAdress(String email) {
