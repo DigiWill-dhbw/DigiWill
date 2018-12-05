@@ -31,11 +31,20 @@ public class UserHandle implements UserDetails {
     private boolean isVerified;
 
     /**
-     * UTC timestamp
+     * Unix timestamp in seconds
      */
     private long lastSignOfLife;
+    /**
+     * Unix timestamp in seconds
+     */
     private long lastReminder;
+    /**
+     * Time interval in seconds
+     */
     private long deltaReminder;
+    /**
+     * Time interval in seconds
+     */
     private long deltaDeathTime;
     private boolean isDead;
     private boolean allActionsCompleted;
