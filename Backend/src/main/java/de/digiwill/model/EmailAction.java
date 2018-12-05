@@ -1,10 +1,11 @@
 package de.digiwill.model;
 
-import de.digiwill.SystemHandle;
 import de.digiwill.exception.EmailException;
+import de.digiwill.util.EmailDispatcher;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @TypeAlias("EmailAction")
 public class EmailAction extends BaseAction {
+
+    @Autowired
+    private EmailDispatcher emailDispatcher;
 
     @Transient
     private Logger logger = LoggerFactory.getLogger(EmailAction.class);
@@ -38,13 +42,13 @@ public class EmailAction extends BaseAction {
     }
 
     @Override
-    public int execute(SystemHandle systemHandle) {
+    public ActionSuccess executeAction() {
         try {
-           systemHandle.getEmailDispatcher().sendEmail(recipients, subject, isHTMLContent, content);
+            emailDispatcher.sendEmail(recipients, subject, isHTMLContent, content);
         } catch (EmailException e) {
             logger.error(e.getMessage());
-            return 1;
+            return ActionSuccess.FAILURE;
         }
-        return 0;
+        return ActionSuccess.SUCCESS;
     }
 }

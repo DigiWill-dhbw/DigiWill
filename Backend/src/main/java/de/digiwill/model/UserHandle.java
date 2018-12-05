@@ -38,6 +38,7 @@ public class UserHandle implements UserDetails {
     private long deltaReminder;
     private long deltaDeathTime;
     private boolean isDead;
+    private boolean allActionsCompleted;
 
     private PersonalData personalData;
 
@@ -141,7 +142,15 @@ public class UserHandle implements UserDetails {
         isVerified = verified;
     }
 
-    public Iterable<BaseAction> getActions() {
+    public boolean areAllActionsCompleted() {
+        return allActionsCompleted;
+    }
+
+    public void setAllActionsCompleted(boolean allActionsCompleted) {
+        this.allActionsCompleted = allActionsCompleted;
+    }
+
+    public List<BaseAction> getActions() {
         return actions;
     }
 
