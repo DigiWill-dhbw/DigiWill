@@ -141,8 +141,16 @@ public class UserHandle implements UserDetails {
         isVerified = verified;
     }
 
-    public Iterable<BaseAction> getActions() {
+    public List<BaseAction> getActions() {
         return actions;
+    }
+
+    public void setActions(List<BaseAction> actions) {
+        this.actions = actions;
+    }
+
+    public void addAction(BaseAction action) {
+        this.actions.add(action);
     }
 
     @Deprecated
