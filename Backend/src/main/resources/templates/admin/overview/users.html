@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>DigiWill user overview</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:if="${not #lists.isEmpty(userhandles)}">
+    <h2>User List</h2>
+    <table class="glyphicon glyphicon-calendar">
+        <tr>
+            <th>Name</th>
+        </tr>
+        <tr th:each="userhandle : ${userhandles}">
+            <td th:text="${userhandle.username}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

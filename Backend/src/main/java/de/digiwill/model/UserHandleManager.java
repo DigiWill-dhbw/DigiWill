@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
 public class UserHandleManager implements UserDetailsManager {
@@ -79,5 +81,9 @@ public class UserHandleManager implements UserDetailsManager {
 
     public UserHandle loadUserByUserName(String username) {
         return (UserHandle) loadUserByUsername(username);
+    }
+
+    public List<UserHandle> findAll(){
+        return userHandleRepository.findAll();
     }
 }
