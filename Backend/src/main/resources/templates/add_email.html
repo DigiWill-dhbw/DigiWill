@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>New Email</title>
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
+    <script src="js/email_check.js"></script>
 </head>
 <body>
     <form th:action="@{/addEmail}" method="post" id="gui">
@@ -14,7 +15,7 @@
                     Recipient(s)
                 </td>
                 <td>
-                    <input type="text" class="input-fields" name="recipients">
+                    <input type="text" class="input-fields" name="recipients" id="adressfield" onchange="checkEmail(document.getElementById('adressfield').value)">
                 </td>
             </tr>
             <tr>
@@ -38,7 +39,7 @@
                     <div><input type="submit" class="button"></div>
                 </td>
                 <td>
-                    <div class="right"><a href="get_emails.html" class="button">Cancel</a></div>
+                    <div class="right"><a href="getEmails" class="button">Cancel</a></div>
                 </td>
             </tr>
         </table>
