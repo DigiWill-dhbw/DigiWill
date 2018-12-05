@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head (title)">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="digiwill">
+
+    <title th:text="${title}">Page Title</title>
+
+    <link rel="stylesheet" type="text/css" href="css/startpage.css"/>
+    <link rel="stylesheet" type="text/css" href="css/register.css"/>
+</head>
+<body>
+<div th:fragment="header">
+    <header>
+        <img src="../images/digiwill_logo.png">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <!-- user not logged in -->
+            <li th:if="${#httpServletRequest.remoteUser == null}"><a onclick="document.getElementById('login').style.display='block'" style="width:auto;" class="button">Login</a></li>
+            <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" class="button">Register</a></li>
+            <!-- user logged in -->
+            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" th:text="${#httpServletRequest.remoteUser}"></a></li>
+            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>
+        </ul>
+    </header>
+</div>
+</body>
+
+</html>

@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example </title>
+<head th:include="fragments/header :: head (title='DigiWill - Login')">
+    <title>DigiWill - Login</title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input id="usernameInput" type="text" name="username"/> </label></div>
-    <div><label> Password: <input id="passwordInput" type="password" name="password"/> </label></div>
-    <div><input id="loginButton" type="submit" value="Sign In"/></div>
-</form>
+    <div th:include="fragments/header :: header"></div>
+    <div th:fragment= "login" id="content">
+        <div th:if="${param.error}" class="panel">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="panel">
+            You have been logged out.
+        </div>
+        <div class="panel">
+        <div  class = "form" >
+            <form th:action="@{/login}" method="post">
+                <table>
+                    <tr>
+                        <td>Username:</td>
+                        <td><input id="usernameInput" type="text" name="username"/></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input id="passwordInput" type="password" name="password"/></td>
+                    </tr>
+                    <tr>
+                        <td><button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button></td>
+                        <td><input id="loginButton" type="submit" value="Sign In"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        </div>
+    </div>
 </body>
 </html>
