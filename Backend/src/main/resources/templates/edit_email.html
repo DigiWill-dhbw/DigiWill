@@ -5,6 +5,7 @@
     <title>Edit Email</title>
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="js/email_check.js"></script>
     <script>
         var span;
         var modal;
@@ -36,7 +37,7 @@
             document.getElementById("index").value = qs.idx;
             modal = document.getElementById('deleteModal');
             // When the user clicks on <span> (x), close the modal
-            span = document.getElementsById("closeButton");
+            span = document.getElementById("closeButton");
             span.onclick = function() {
                 modal.style.display = "none";
             }
@@ -73,7 +74,7 @@
                 </td>
                 <td>
                     <input type="hidden" id="index" name="index" value="">
-                    <input type="text" class="input-fields" name="recipients" id="adressfield" th:value="${email.getRecipientString()}">
+                    <input type="text" class="input-fields" name="recipients" id="adressfield" th:value="${email.getRecipientString()}" onchange="checkEmail(document.getElementById('adressfield').value)">
                 </td>
             </tr>
             <tr>
