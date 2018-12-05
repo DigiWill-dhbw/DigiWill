@@ -32,3 +32,35 @@ h3 {
     margin-top: 20px;
     box-shadow: 3px 5px 10px rgba(123,123,123,0.5);
 }
+.button {
+    border: 0;
+    border-radius: 4px;
+    padding: 7px;
+    margin: 5px;
+    margin-right: 13px;
+    color: white;
+    background-color: blue;
+    box-shadow: 1px 2px 3px rgba(123,123,123,0.5);
+    transition: box-shadow 0.5s;
+    text-decoration: none;
+    cursor: pointer;
+}
+.button:hover{
+    text-decoration: none;
+    box-shadow: 1px 2px 3px rgba(123,123,123,0.8);
+}
+.input-fields {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px;
+    box-shadow: 1px 2px 3px rgba(123,123,123,0.5);
+}
+.input-fields:hover, .input-fields:focus {
+    box-shadow: 1px 2px 3px rgba(123,123,123,0.8);
+}
+.left {
+    float:left;
+}
+.right {
+    float: right;
+}
