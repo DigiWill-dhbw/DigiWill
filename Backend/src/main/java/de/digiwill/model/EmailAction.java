@@ -33,6 +33,56 @@ public class EmailAction extends BaseAction {
         this.wasCompleted = wasCompleted;
     }
 
+    public List<String> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(List<String> recipients) {
+        this.recipients = recipients;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public boolean isHTMLContent() {
+        return isHTMLContent;
+    }
+
+    public void setHTMLContent(boolean HTMLContent) {
+        isHTMLContent = HTMLContent;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getRecipientString() {
+        String str = "";
+        for (String s :
+                this.recipients) {
+            str += s + " ";
+        }
+        return str;
+    }
+
+    public String getSkipedContent() {
+        if (this.content.length() > 20) {
+            return this.content.substring(0, 20) + "...";
+        } else {
+            return this.content;
+        }
+
+    }
+
     public EmailAction(List<String> recipients, String subject, boolean isHTMLContent, String content) {
         this.recipients = recipients;
         this.subject = subject;

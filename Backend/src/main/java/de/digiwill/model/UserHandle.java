@@ -163,6 +163,14 @@ public class UserHandle implements UserDetails {
         return actions;
     }
 
+    public void setActions(List<BaseAction> actions) {
+        this.actions = actions;
+    }
+
+    public void addAction(BaseAction action) {
+        this.actions.add(action);
+    }
+
     @Deprecated
     public String getAlias(){
         return getUsername();
