@@ -3,17 +3,29 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>DigiWill user overview</title>
+    <link rel="stylesheet" type="text/css" href="../../css/admin/overview.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div th:if="${not #lists.isEmpty(userhandles)}">
     <h2>User List</h2>
-    <table class="glyphicon glyphicon-calendar">
+    <table class="listing">
         <tr>
             <th>Name</th>
+            <th>Email address</th>
+            <th>Address</th>
+            <th>Is dead</th>
+            <th>Actions completed</th>
+            <th>Authorities</th>
         </tr>
         <tr th:each="userhandle : ${userhandles}">
+            <td th:text="${userhandle.personalData.getFullName()}"></td>
             <td th:text="${userhandle.username}"></td>
+            <td th:text="${userhandle.personalData.getAddress()}"></td>
+            <td><img th:src="${userhandle.isDead()} ? '../../images/check_true.png' : '../../images/check_false.png'" alt="isDead" height="32" width="32"></td>
+            <td><img th:src="${userhandle.areAllActionsCompleted()} ? '../../images/check_true.png' : '../../images/check_false.png'" alt="actionsCompleted" height="32" width="32"></td>
+            <td th:text="${userhandle.getAuthoritiesAsString()}"></td>
         </tr>
     </table>
 </div>
