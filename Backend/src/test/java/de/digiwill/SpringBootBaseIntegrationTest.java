@@ -1,6 +1,7 @@
 package de.digiwill;
 
 import de.digiwill.model.BaseAction;
+import de.digiwill.model.PersonalData;
 import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
@@ -13,6 +14,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -37,8 +39,9 @@ public abstract class SpringBootBaseIntegrationTest {
         }
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de",
-                    SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), null);
+            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), null,
+                    true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
             users.add(userHandle);
         }
         userHandleManager.createUsers(users);
