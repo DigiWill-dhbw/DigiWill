@@ -4,13 +4,13 @@ pipeline {
     stage('Build') {
       steps {
         sh '''cd Backend
-mvn package'''
+mvn clean install -DskipTests'''
       }
     }
     stage('Test') {
       steps {
         sh '''cd Backend
-mvn test'''
+mvn test -DenvTarget=test'''
       }
     }
   }
