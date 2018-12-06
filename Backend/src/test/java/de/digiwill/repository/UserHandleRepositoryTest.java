@@ -1,15 +1,15 @@
 package de.digiwill.repository;
 
-import de.digiwill.model.*;
+import de.digiwill.model.BaseAction;
+import de.digiwill.model.EmailAction;
+import de.digiwill.model.UserHandle;
+import de.digiwill.model.UserHandleManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -19,9 +19,6 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataMongoTest
 public class UserHandleRepositoryTest {
-
-    @Autowired
-    protected MongoTemplate mongoTemplate;
 
     @Autowired
     private UserHandleRepository repository;

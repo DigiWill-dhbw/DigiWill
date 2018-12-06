@@ -3,23 +3,22 @@ Feature: Login
   I want to login with my registered account
 
   Background:
-    Given "http://localhost:8080/login" is open
+    Given "/login" is open
 
   Scenario Outline: Login successful
     Given A user with email "<email>" and password "<password>" "exists"
+    And "1" Users are created
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "succeeds"
-    And Close Session
 
   Examples:
   | email | password |
-  | user  | password |
+  | nobody0@digiwill.de  | nobody0@digiwill.de |
 
   Scenario Outline: Login failed
     Given A user with email "<email>" and password "<password>" "doesn't exist"
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "fails"
-    And Close Session
 
   Examples:
   | email | password |
