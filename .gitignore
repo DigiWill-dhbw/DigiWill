@@ -35,3 +35,4 @@ ehthumbs.db
 Thumbs.db
 Backend/src/main/resources/secrets-dev.properties
 Backend/src/test/resources/secrets-test.properties
+*.iml
