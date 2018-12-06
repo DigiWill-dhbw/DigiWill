@@ -14,12 +14,16 @@
         <h1>TEST</h1>
     </footer>
 
-    <div id="login" class="modal">
+    <div th:if="${#httpServletRequest.remoteUser == null}" id="login" class="modal">
         <div th:include="login :: login" class="modal-content">
         </div>
     </div>
-
-    <script>
+    <script th:if="${#httpServletRequest.remoteUser == null and param.login != null}">
+        window.onload = function(ev) {
+            document.getElementById('login').style.display = 'block';
+        }
+    </script>
+    <script th:if="${#httpServletRequest.remoteUser == null}">
         // Get the modal
         var modal = document.getElementById('login');
 
@@ -27,6 +31,7 @@
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+                window.history.replaceState(null,null,window.location.pathname)
             }
         }
     </script>

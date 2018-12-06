@@ -23,11 +23,18 @@
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
             <!-- user not logged in -->
-            <li th:if="${#httpServletRequest.remoteUser == null}"><a onclick="document.getElementById('login').style.display='block'" style="width:auto;" class="button">Login</a></li>
+            <li th:if="${#httpServletRequest.remoteUser == null}">
+                <a onclick="document.getElementById('login').style.display='block';
+                window.history.replaceState(null,null,window.location.href+'?login')"
+                   style="width:auto;" class="button">Login</a>
+            </li>
             <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" class="button">Register</a></li>
             <!-- user logged in -->
             <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" th:text="${#httpServletRequest.remoteUser}"></a></li>
-            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>
+            <!--<li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>-->
+            <li><form th:if="${#httpServletRequest.remoteUser != null}" th:action="@{/logout}" method="post">
+                <input class="button" type="submit" value="Logout"/>
+            </form></li>
         </ul>
     </header>
 </div>
