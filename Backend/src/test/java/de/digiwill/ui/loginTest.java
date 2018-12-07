@@ -1,35 +1,45 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.ui;
 
-import cucumber.api.java.en.And;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import de.digiwill.SpringBootBaseIntegrationTest;
+import de.digiwill.model.EmailAction;
 import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class loginTest {
+public class loginTest extends SpringBootBaseIntegrationTest {
 
     private WebDriver driver;
+
+    @Given("^\"([^\"]*)\" Users are created$")
+    public void createUsers(String arg0) {
+        setUpUserHandle(Integer.parseInt(arg0), Arrays.asList(
+                new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
+        ));
+    }
 
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
         driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(url);
-        //throw new PendingException();
+        //driver.manage().window().maximize();
+        driver.get("http://localhost:" + port + url);
     }
 
     @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" \"([^\"]*)\"$")
     public void aUserWithEmailAndPassword(String arg0, String arg1, String arg2) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-//TODO
+        //TODO
         //throw new PendingException();
     }
 
@@ -39,13 +49,6 @@ public class loginTest {
         driver.findElement(By.id("usernameInput")).sendKeys(emailAddress);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
-
-        //throw new PendingException();
-    }
-
-    @And("^Close Session$")
-    public void closeSession() {
-        driver.quit();
     }
 
     @Then("^Login for \"([^\"]*)\", \"([^\"]*)\"$")
@@ -54,11 +57,17 @@ public class loginTest {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         switch (arg1) {
             case "succeeds":
-                assertEquals("http://localhost:8080/", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/", driver.getCurrentUrl());
                 break;
             case "fails":
-                assertEquals("http://localhost:8080/login?error", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/login?error", driver.getCurrentUrl());
                 break;
         }
+    }
+
+    @After
+    public void closeSession() {
+        driver.close();
+        dropUsers();
     }
 }

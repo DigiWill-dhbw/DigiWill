@@ -1,10 +1,11 @@
 package de.digiwill.model;
 
-import de.digiwill.SystemHandle;
 import de.digiwill.exception.EmailException;
+import de.digiwill.util.EmailDispatcher;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @TypeAlias("EmailAction")
 public class EmailAction extends BaseAction {
+
+    @Autowired
+    private EmailDispatcher emailDispatcher;
 
     @Transient
     private Logger logger = LoggerFactory.getLogger(EmailAction.class);
@@ -29,6 +33,56 @@ public class EmailAction extends BaseAction {
         this.wasCompleted = wasCompleted;
     }
 
+    public List<String> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(List<String> recipients) {
+        this.recipients = recipients;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public boolean isHTMLContent() {
+        return isHTMLContent;
+    }
+
+    public void setHTMLContent(boolean HTMLContent) {
+        isHTMLContent = HTMLContent;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getRecipientString() {
+        String str = "";
+        for (String s :
+                this.recipients) {
+            str += s + " ";
+        }
+        return str;
+    }
+
+    public String getSkipedContent() {
+        if (this.content.length() > 20) {
+            return this.content.substring(0, 20) + "...";
+        } else {
+            return this.content;
+        }
+
+    }
+
     public EmailAction(List<String> recipients, String subject, boolean isHTMLContent, String content) {
         this.recipients = recipients;
         this.subject = subject;
@@ -38,13 +92,13 @@ public class EmailAction extends BaseAction {
     }
 
     @Override
-    public int execute(SystemHandle systemHandle) {
+    public ActionSuccess executeAction() {
         try {
-           systemHandle.getEmailDispatcher().sendEmail(recipients, subject, isHTMLContent, content);
+            emailDispatcher.sendEmail(recipients, subject, isHTMLContent, content);
         } catch (EmailException e) {
             logger.error(e.getMessage());
-            return 1;
+            return ActionSuccess.FAILURE;
         }
-        return 0;
+        return ActionSuccess.SUCCESS;
     }
 }
