@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''cd Backend
+        sh '''cp /var/lib/jenkins/workspace/secrets-test.properties /var/lib/jenkins/workspace/DigiWill_master/secrets-test.properties
+cd Backend
 mvn clean install -DskipTests'''
       }
     }
