@@ -57,10 +57,10 @@ public class loginTest extends SpringBootBaseIntegrationTest {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         switch (arg1) {
             case "succeeds":
-                assertEquals("http://localhost:" + port + "/", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/login", driver.getCurrentUrl());
                 break;
             case "fails":
-                assertEquals("http://localhost:" + port + "/login?error", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/?login&error", driver.getCurrentUrl());
                 break;
         }
     }
