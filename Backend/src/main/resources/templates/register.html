@@ -1,39 +1,70 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<link rel="stylesheet" type="text/css" href="css/register.css"/>
-<script th:if="${failure}" src="js/register.js"></script>
 <head>
-    <title>DigiWill registration</title>
+    <script th:if="${failure}" src="js/register.js" type="application/javascript"></script>
+    <th:block th:include="fragments/header :: head (title='DigiWill - Register')"></th:block>
 </head>
-<div id="toast">
-    <div id="img">Error</div>
-    <div id="desc" th:text="${responseText}"></div>
-</div>
+<body>
+<div th:include="fragments/header :: header"></div>
+
 <script th:if="${failure}">
     launch_toast();
 </script>
-<form th:action="@{/register}" method="post">
-    <div><label> Email address : <input id="emailInput" type="email" name="email"/> </label></div>
-    <div><label> Password: <input id="passwordInput" type="password" name="password"/> </label>
-        <div class="tooltip">?
-            <div class="tooltiptext">
-                Must be at least 8 characters long <br>
-                Must include at least one:
-                <ul>
-                    <li>Uppercase letter</li>
-                    <li>Lowercase letter</li>
-                    <li>Digit</li>
-                    <li>Special character</li>
-                </ul>
-            </div>
+<div id="content">
+    <div class="panel">
+        <div id="toast">
+            <div id="img">Error</div>
+            <div id="desc" th:text="${responseText}"></div>
+        </div>
+        <div class="form">
+            <form th:action="@{/register}" method="post">
+                <table>
+                    <tr>
+                        <td><label>Email address : </label></td><td><input id="emailInput" type="email" name="email"/> </td>
+                    </tr>
+                    <tr>
+                        <td><label>Password: </label></td>
+                        <td><input id="passwordInput" type="password" name="password"/></td>
+                            <td><div class="tooltip">?
+                                <div class="tooltiptext">
+                                    Must be at least 8 characters long <br>
+                                    Must include at least one:
+                                    <ul>
+                                        <li>Uppercase letter</li>
+                                        <li>Lowercase letter</li>
+                                        <li>Digit</li>
+                                        <li>Special character</li>
+                                    </ul>
+                                </div>
+                            </div></td>
+                    </tr>
+                    <tr>
+                        <td>Repeat:</td>
+                        <td><input id="passwordInput_rep" type="password" name="password_rep"/></td>
+                    </tr>
+                    <tr>
+                        <td>First name:</td>
+                        <td><input id="firstName" type="text" name="firstName"/></td>
+                    </tr>
+                    <tr>
+                        <td>Surname:</td>
+                        <td><input id="surName" type="text" name="surName"/></td>
+                    </tr>
+                    <tr>
+                        <td>Birthday</td>
+                        <td><input id="birthday" type="date" name="birthday"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input id="registerButton" type="submit" value="Register"/></td>
+                    </tr>
+
+                </table>
+            </form>
         </div>
     </div>
-    <div><label> Repeat password: <input id="passwordInput_rep" type="password" name="password_rep"/> </label></div>
-    <div><label> First name : <input id="firstName" type="text" name="firstName"/> </label></div>
-    <div><label> Surname : <input id="surName" type="text" name="surName"/> </label></div>
-    <div><label> Birthday : <input id="birthday" type="date" name="birthday"/> </label></div>
-    <div><input id="registerButton" type="submit" value="Register"/></div>
-</form>
+</div>
+<div th:include="fragments/footer :: footer"></div>
 </body>
 </html>
