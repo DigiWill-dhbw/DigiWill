@@ -18,23 +18,6 @@
         <div th:include="login :: login" class="modal-content">
         </div>
     </div>
-    <script th:if="${#httpServletRequest.remoteUser == null and param.login != null}">
-        window.onload = function(ev) {
-            document.getElementById('login').style.display = 'block';
-        }
-    </script>
-    <script th:if="${#httpServletRequest.remoteUser == null}">
-        // Get the modal
-        var modal = document.getElementById('login');
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                window.history.replaceState(null,null,window.location.pathname);
-            }
-        }
-    </script>
 </div>
 </body>
 
