@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head (title)">
+<head>
+    <th:block th:fragment="head (title)">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="digiwill">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="digiwill">
-
-    <title th:text="${title}">Page Title</title>
-
-    <link rel="stylesheet" type="text/css" href="css/startpage.css"/>
-    <link rel="stylesheet" type="text/css" href="css/register.css"/>
-    <script th:if="${#httpServletRequest.remoteUser == null}" src="/js/prelogin.js" type="text/javascript"></script>
-    <script th:if="${#httpServletRequest.remoteUser != null}" src="/js/loggedin.js" type="text/javascript"></script>
-    <script src="/js/general.js" type="application/javascript"></script>
+        <title th:text="${title}">Page Title</title>
+        <script th:if="${#httpServletRequest.remoteUser == null}" src="/js/prelogin.js" type="text/javascript"></script>
+        <script th:if="${#httpServletRequest.remoteUser != null}" src="/js/loggedin.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/startpage.css"/>
+        <link rel="stylesheet" type="text/css" href="css/register.css"/>
+        <script src="/js/general.js" type="application/javascript"></script>
+    </th:block>
 </head>
 <body>
 <div th:fragment="header">
@@ -37,7 +37,10 @@
                 <div class="dropdown">
                     <button onclick="openDropDown()" class="dropbtn button">Menu</button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a href="emailsettings">Emailsettings</a>
+                        <a href="/getEmails" th:href="@{/getEmails}">Show email actions</a>
+                        <form th:action="@{/lifeSign}" method="post">
+                            <input class="button" type="submit" value="Send lifesign"/>
+                        </form>
                         <form th:action="@{/logout}" method="post">
                             <input class="button" type="submit" value="Logout"/>
                         </form>

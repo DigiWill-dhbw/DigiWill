@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<script th:if="${failure}" src="js/register.js" type="application/javascript"></script>
-<head th:include="fragments/header :: head (title='DigiWill - Register')">
-    <title>DigiWill registration</title>
+<head>
+    <script th:if="${failure}" src="js/register.js" type="application/javascript"></script>
+    <th:block th:include="fragments/header :: head (title='DigiWill - Register')"></th:block>
 </head>
 <body>
 <div th:include="fragments/header :: header"></div>
