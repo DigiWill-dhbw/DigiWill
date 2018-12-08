@@ -3,10 +3,11 @@ Feature: Custom Emails CRUD
   I want certain emails to be send should I die
 
   Background:
-    Given The user is logged in and on the action overview page
+    Given "http://localhost:8080/login" is open
+    And The user "test_user_email_crud@digiwill.de" with the password "Blabla42!" is logged in and on the action overview page
     And There are no Email Actions
 
-  Scenario Outline: Create valid Email Action
+  Scenario Outline: 01 - Create valid Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     Then The service should accept the new action
     And A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
@@ -20,7 +21,7 @@ Feature: Custom Emails CRUD
   | thomas.meyer@gmail.com |   | As you might have heard by know I'm dead. |
   | thomas.meyer@gmail.com |  Hi Thomas | As you might have heard by know I'm dead. |
 
-  Scenario Outline: Cancel create valid Email Action
+  Scenario Outline: 02 - Cancel create valid Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Cancel"
     Then The service should not accept the new action
     And No new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
@@ -31,7 +32,7 @@ Feature: Custom Emails CRUD
   | mum.test@web.de | Hi mum, It's been a while | As you might have heard by know I'm dead. |
 
 
-  Scenario Outline: Create invalid Email Action
+  Scenario Outline: 03 - Create invalid Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     Then The service should not accept the new action
 
@@ -43,11 +44,10 @@ Feature: Custom Emails CRUD
   | thomas.meyergmail.com | Hi, It's been a while | As you might have heard by know I'm dead. |
   |   | Hi, It's been a while | As you might have heard by know I'm dead. |
 
-  Scenario Outline: Edit Email Action
+  Scenario Outline: 04 - Edit Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     And Clicking "Edit"
-    And Editing email with recipient "<recNew>", subject "<subNew>", content "<contNew>"
-    And Clicking "Save"
+    And Editing email with recipient "<recNew>", subject "<subNew>", content "<contNew>" and click "Save"
     Then The service should accept the new action
     And A new item with recipient "<recNew>", subject "<subNew>", content "<contNew>" should exist
 
@@ -57,11 +57,10 @@ Feature: Custom Emails CRUD
   | thomas.meyer@gmail.com | Hi Thomas | As you might have heard by know I'm dead. | thomas.meyer@gmail.com thomas.meier@web.de | Hi Thomas | As you might have heard by know I'm dead. |
   | mum.test@web.de | Hi mum | As you might have heard by know I'm dead. | mum.test@web.de | Hi mum, It's been a while | As you might have heard by know I'm dead. |
 
-  Scenario Outline: Cancel Edit Email Action
+  Scenario Outline: 05 - Cancel Edit Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     And Clicking "Edit"
-    And Editing email with recipient "<recNew>", subject "<subNew>", content "<contNew>"
-    And Clicking "Cancel"
+    And Editing email with recipient "<recNew>", subject "<subNew>", content "<contNew>" and click "Cancel"
     Then The service should accept the new action
     And  A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
 
@@ -72,12 +71,12 @@ Feature: Custom Emails CRUD
   | mum.test@web.de | Hi mum | As you might have heard by know I'm dead. | mum.test@web.de | Hi mum, It's been a while | As you might have heard by know I'm dead. |
 
 
-  Scenario Outline: Delete Email Action
+  Scenario Outline: 06 - Delete Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     Then A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
     When Clicking "Delete"
-    And Clicking "Confirm"
-    Then The item shouldn't exist anymore
+    And Click "Confirm" on the modal
+    Then No new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
 
   Examples:
   | recipient | subject | content |
@@ -85,11 +84,11 @@ Feature: Custom Emails CRUD
   | alex.smith@gmail.com | Hi Thomas |  |
   | mark.mcmuffin@web.de | Hi mum | As you might have heard by know I'm dead. |
 
-  Scenario Outline: Cancel Delete Email Action
+  Scenario Outline: 07 - Cancel Delete Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Save"
     Then A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
     When Clicking "Delete"
-    And Clicking "Cancel"
+    And Click "Cancel" on the modal
     Then The service should accept the new action
     And  A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
 
