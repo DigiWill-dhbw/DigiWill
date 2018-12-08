@@ -11,6 +11,7 @@ import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +32,9 @@ public class loginTest extends SpringBootBaseIntegrationTest {
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        driver = new ChromeDriver(options);
         //driver.manage().window().maximize();
         driver.get("http://localhost:" + port + url);
     }
