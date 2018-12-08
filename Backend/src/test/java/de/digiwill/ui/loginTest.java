@@ -1,7 +1,6 @@
 package de.digiwill.ui;
 
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,7 +10,6 @@ import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -32,10 +30,7 @@ public class loginTest extends SpringBootBaseIntegrationTest {
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        //driver.manage().window().maximize();
+        driver = new ChromeDriver(SeleniumDriverUtils.getChromeOptions());
         driver.get("http://localhost:" + port + url);
     }
 

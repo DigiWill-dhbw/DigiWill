@@ -1,6 +1,7 @@
 package de.digiwill.util;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SeleniumDriverUtils {
 
@@ -18,6 +19,15 @@ public class SeleniumDriverUtils {
         } else {
             return "";
         }
+    }
+
+    public static ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+        if(SystemUtils.IS_OS_LINUX) {
+            options.addArguments("--headless");
+        }
+        return options;
     }
 
 }
