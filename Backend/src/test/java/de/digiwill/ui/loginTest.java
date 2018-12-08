@@ -33,7 +33,7 @@ public class loginTest extends SpringBootBaseIntegrationTest {
     public void theIsOpen(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         //driver.manage().window().maximize();
         driver.get("http://localhost:" + port + url);
