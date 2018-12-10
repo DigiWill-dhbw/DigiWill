@@ -1,40 +1,38 @@
-package de.digiwill;
+package de.digiwill.configuration;
 
+import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.stereotype.Component;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@AutoConfigureDataMongo
-public abstract class SpringBootBaseIntegrationTest {
 
-    WebDriver webdriver;
+public class CucumberConfig{
 
-    @LocalServerPort
-    protected int port;
+    Properties props;
 
     @Autowired
     private UserHandleRepository repository;
     private UserHandleManager userHandleManager;
+
+    CucumberConfig(){
+        this.props =  new Properties();
+        try(FileInputStream fi = new FileInputStream("test/resources/secrets-"+System.getProperty("envTarget")+".properties")){
+            props.load(fi);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void setUpUserHandle(int amount, List<BaseAction> actions) {
         if (userHandleManager == null) {
@@ -57,7 +55,7 @@ public abstract class SpringBootBaseIntegrationTest {
     }
 
     public int getPort(){
-        return port;
+        return Integer.parseInt(props.getProperty("port"));
     }
 
     public UserHandleRepository getRepository() {

@@ -1,9 +1,10 @@
+@uitest
 Feature: Custom Emails CRUD
   As a mortal
   I want certain emails to be send should I die
 
   Background:
-    Given "http://localhost:8080/login" is open
+    Given "/login" is open
     And The user "test_user_email_crud@digiwill.de" with the password "Blabla42!" is logged in and on the action overview page
     And There are no Email Actions
 

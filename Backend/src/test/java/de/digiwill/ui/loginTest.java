@@ -12,26 +12,29 @@ import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class loginTest extends SpringBootBaseIntegrationTest {
+public class loginTest{
+    @Autowired
+    SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
-    private WebDriver driver;
+    WebDriver driver;
 
     @Given("^\"([^\"]*)\" Users are created$")
     public void createUsers(String arg0) {
-        setUpUserHandle(Integer.parseInt(arg0), Arrays.asList(
+        springBootBaseIntegrationTest.setUpUserHandle(Integer.parseInt(arg0), Arrays.asList(
                 new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
         ));
     }
 
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
-        driver.get("http://localhost:" + port + url);
+        driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + url);
     }
 
     @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" \"([^\"]*)\"$")
@@ -55,10 +58,10 @@ public class loginTest extends SpringBootBaseIntegrationTest {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         switch (arg1) {
             case "succeeds":
-                assertEquals("http://localhost:" + port + "/login", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/login", driver.getCurrentUrl());
                 break;
             case "fails":
-                assertEquals("http://localhost:" + port + "/?login&error", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/?login&error", driver.getCurrentUrl());
                 break;
         }
     }
@@ -72,7 +75,7 @@ public class loginTest extends SpringBootBaseIntegrationTest {
     @After("@uitest")
     public void afterUITest() {
         driver.close();
-        dropUsers();
+        springBootBaseIntegrationTest.dropUsers();
     }
 
 }

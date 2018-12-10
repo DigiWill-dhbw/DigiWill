@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.PersonalData;
@@ -18,39 +19,29 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class setupCustomEmails {
-
+public class setupCustomEmails extends SpringBootBaseIntegrationTest {
     private WebDriver driver;
-    @Autowired
-    UserHandleRepository repository;
-    private UserHandle userHandle;
-
-    @Given("^\"([^\"]*)\" is open")
-    public void givenWebsiteopen(String url) throws Throwable {
-        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        driver = new ChromeDriver();
-        //driver.manage().window().maximize();
-        driver.get(url);
-    }
+    SpringBootBaseIntegrationTest springBootBaseIntegrationTest = this;
 
     @And("^The user \"([^\"]*)\" with the password \"([^\"]*)\" is logged in and on the action overview page$")
     public void theUserWithThePasswordIsLoggedInAndOnTheActionOverviewPage(String email, String password) throws Throwable {
         List<BaseAction> actions = new ArrayList<>();
         PersonalData personalData = new PersonalData("no", "body", new Date(2018, 1, 1));
-        userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), null,
+        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), null,
                 true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
-        repository.insert(userHandle);
+        springBootBaseIntegrationTest.getRepository().insert(userHandle);
         driver.findElement(By.id("loginButtonHeader")).click();
         driver.findElement(By.id("usernameInput")).sendKeys(email);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
-        driver.get("http://localhost:8080/getEmails");
+        driver.get("http://localhost:"+springBootBaseIntegrationTest.getPort()+"/getEmails");
     }
 
 
