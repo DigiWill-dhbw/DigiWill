@@ -70,10 +70,12 @@ public class UserHandle implements UserDetails {
                 true /*TODO false*/, -1, -1, -1, -1, false,
                 personalData, new ArrayList<BaseAction>(), false);
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
         this(emailAddress, password, null, authorities);
 
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
                       boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
                       boolean isVerified, long lastSignOfLife, long lastReminder, long deltaReminder,
@@ -173,17 +175,33 @@ public class UserHandle implements UserDetails {
         this.actions.add(action);
     }
 
-    public String getAuthoritiesAsString(){
+    public String getAuthoritiesAsString() {
         String out = "";
-        for (GrantedAuthority a : authorities)
-        {
-           out += a.getAuthority() + "\n";
+        for (GrantedAuthority a : authorities) {
+            out += a.getAuthority() + "\n";
         }
         return out;
     }
 
+    public void addAuthority(String role) {
+        authorities.add(new SimpleGrantedAuthority(role));
+    }
+
+    public GrantedAuthority hasAuthority(String role) {
+        for (GrantedAuthority a : authorities) {
+            if (a.getAuthority().equals(role)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public void removeAuthority(GrantedAuthority auth){
+        authorities.remove(auth);
+    }
+
     @Deprecated
-    public String getAlias(){
+    public String getAlias() {
         return getUsername();
     }
 
@@ -198,7 +216,7 @@ public class UserHandle implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
