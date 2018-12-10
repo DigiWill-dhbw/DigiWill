@@ -1,3 +1,4 @@
+@uitest
 Feature: Login
   As a mortal
   I want to login with my registered account
