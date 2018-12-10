@@ -1,6 +1,7 @@
 package de.digiwill.ui;
 
 import cucumber.api.java.After;
+import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -30,9 +31,6 @@ public class loginTest extends SpringBootBaseIntegrationTest {
 
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url) throws Throwable {
-        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        driver = new ChromeDriver();
-        //driver.manage().window().maximize();
         driver.get("http://localhost:" + port + url);
     }
 
@@ -57,16 +55,22 @@ public class loginTest extends SpringBootBaseIntegrationTest {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         switch (arg1) {
             case "succeeds":
-                assertEquals("http://localhost:" + port + "/", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/login", driver.getCurrentUrl());
                 break;
             case "fails":
-                assertEquals("http://localhost:" + port + "/login?error", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + port + "/?login&error", driver.getCurrentUrl());
                 break;
         }
     }
 
-    @After
-    public void closeSession() {
+    @Before("@uitest")
+    public void beforeUITest(){
+        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
+        driver = new ChromeDriver(SeleniumDriverUtils.getChromeOptions());
+    }
+
+    @After("@uitest")
+    public void afterUITest() {
         driver.close();
         dropUsers();
     }
