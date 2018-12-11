@@ -42,12 +42,11 @@ public class SignOfLifeDaemon {
     public void check() {
         running = true;
         long currentTime = System.currentTimeMillis() / 1000L;
-        ;
         List<UserHandle> userHandles = userHandleRepository.findAll();
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
         for (UserHandle user : userHandles) {
-            if (user.getLastSignOfLife() != -1) {
+            if (user.getLastSignOfLife() != -1 && user.hasAuthority("ROLE_ADMIN") == null) {
                 if (!user.areAllActionsCompleted() && user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime) {
                     user.setDead(true);
                     List<BaseAction> actions = user.getActions();
@@ -63,7 +62,7 @@ public class SignOfLifeDaemon {
             }
             processedUsers++;
             progress = processedUsers / amountOfUsersPerc;
-            logger.debug("Progress: " + progress);
+            logger.trace("Progress: " + progress);
         }
         logger.info("Check finished in: " + ((System.currentTimeMillis() / 1000L) - currentTime));
         running = false;
