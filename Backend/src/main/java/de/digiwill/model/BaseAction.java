@@ -10,9 +10,9 @@ public abstract class BaseAction {
     protected boolean wasCompleted;
     protected ActionType type;
 
-    public ActionSuccess execute(){
-        if(wasCompleted){
-            return  ActionSuccess.SUCCESSFUL_PREVIOUSLY;
+    public ActionSuccess execute() {
+        if (wasCompleted) {
+            return ActionSuccess.SUCCESSFUL_PREVIOUSLY;
         }
         return executeAction();
     }
@@ -31,14 +31,15 @@ public abstract class BaseAction {
         return wasCompleted;
     }
 
-    public enum ActionSuccess{
-        SUCCESS (true, "Success"),
+    public enum ActionSuccess {
+        SUCCESS(true, "Success"),
         SUCCESSFUL_PREVIOUSLY(true, "Executed earlier"),
         FAILURE(false, "Failure");
 
         boolean success;
         String text;
-        ActionSuccess( boolean success, String text){
+
+        ActionSuccess(boolean success, String text) {
             this.success = success;
             this.text = text;
         }

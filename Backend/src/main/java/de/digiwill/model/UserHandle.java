@@ -1,16 +1,16 @@
 package de.digiwill.model;
 
-import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.*;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Document(collection = "users")
 @TypeAlias("user")
@@ -69,10 +69,12 @@ public class UserHandle implements UserDetails {
                 true /*TODO false*/, -1, -1, -1, -1, false,
                 personalData, new ArrayList<BaseAction>());
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
         this(emailAddress, password, null, authorities);
 
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
                       boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
                       boolean isVerified, long lastSignOfLife, long lastReminder, long deltaReminder,
@@ -172,7 +174,7 @@ public class UserHandle implements UserDetails {
     }
 
     @Deprecated
-    public String getAlias(){
+    public String getAlias() {
         return getUsername();
     }
 

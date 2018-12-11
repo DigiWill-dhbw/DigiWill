@@ -19,6 +19,7 @@ public class UserHandleManager implements UserDetailsManager {
 
     /**
      * constructor for tests
+     *
      * @param userHandleRepository
      */
     public UserHandleManager(UserHandleRepository userHandleRepository) {

@@ -24,7 +24,7 @@ public class SeleniumDriverUtils {
     public static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        if(SystemUtils.IS_OS_LINUX) {
+        if (SystemUtils.IS_OS_LINUX) {
             options.addArguments("--headless");
         }
         return options;
