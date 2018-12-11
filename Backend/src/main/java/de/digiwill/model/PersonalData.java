@@ -32,6 +32,9 @@ public class PersonalData {
     }
 
     public String getAddress() {
+        if(streetAddress == null && zipCode == null && city == null && country == null){
+            return "No address available";
+        }
         return streetAddress + "\n" + zipCode + " " + city + "\n" + "\n" + country;
     }
 

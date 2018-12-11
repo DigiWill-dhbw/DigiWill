@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Document(collection = "users")
@@ -67,17 +68,19 @@ public class UserHandle implements UserDetails {
     public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
         this(emailAddress, password, authorities, true, true, true,
                 true /*TODO false*/, -1, -1, -1, -1, false,
-                personalData, new ArrayList<BaseAction>());
+                personalData, new ArrayList<BaseAction>(), false);
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
         this(emailAddress, password, null, authorities);
 
     }
+
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
                       boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
                       boolean isVerified, long lastSignOfLife, long lastReminder, long deltaReminder,
                       long deltaDeathTime, boolean isDead,
-                      PersonalData personalData, List<BaseAction> actions) {
+                      PersonalData personalData, List<BaseAction> actions, boolean allActionsCompleted) {
 
         this.username = emailAddress;
         this.password = password;
@@ -93,6 +96,7 @@ public class UserHandle implements UserDetails {
         this.isDead = isDead;
         this.personalData = personalData;
         this.actions = actions;
+        this.allActionsCompleted = allActionsCompleted;
     }
 
     public boolean isValidNewUser() {
@@ -171,8 +175,33 @@ public class UserHandle implements UserDetails {
         this.actions.add(action);
     }
 
+    public String getAuthoritiesAsString() {
+        String out = "";
+        for (GrantedAuthority a : authorities) {
+            out += a.getAuthority() + "\n";
+        }
+        return out;
+    }
+
+    public void addAuthority(String role) {
+        authorities.add(new SimpleGrantedAuthority(role));
+    }
+
+    public GrantedAuthority hasAuthority(String role) {
+        for (GrantedAuthority a : authorities) {
+            if (a.getAuthority().equals(role)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public void removeAuthority(GrantedAuthority auth){
+        authorities.remove(auth);
+    }
+
     @Deprecated
-    public String getAlias(){
+    public String getAlias() {
         return getUsername();
     }
 
@@ -187,7 +216,7 @@ public class UserHandle implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
