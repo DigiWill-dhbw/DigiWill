@@ -57,8 +57,10 @@ public abstract class SpringBootBaseIntegrationTest {
         }
         List<BaseAction> actions = new ArrayList<>();
         PersonalData personalData = new PersonalData("no", "body", new Date(2018, 1, 1));
-        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), null,
-                true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
+        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), AuthorityUtils.createAuthorityList("ROLE_USER"),
+                true, true, true,
+                true , -1, -1, -1, -1, false,
+                personalData,   actions, false);
         userHandleManager.createUser(userHandle);
     }
 
