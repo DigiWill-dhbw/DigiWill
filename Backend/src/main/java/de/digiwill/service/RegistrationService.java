@@ -85,6 +85,8 @@ public class RegistrationService {
                 SecurityHelper.encodePassword(formData.getFirst("password")),
                 personalData,
                 authorities);
+        userHandle.sendLifeSign();
+        userHandle.setDeltaDeathTime(60*60*24*14); //Sets time to 14 days
 
         userHandleManager.createUser(userHandle);
         return REGISTRATION_SUCCESSFUL;

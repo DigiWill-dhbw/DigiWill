@@ -111,6 +111,10 @@ public class UserHandle implements UserDetails {
         return lastSignOfLife;
     }
 
+    public void sendLifeSign(){
+        this.lastSignOfLife = System.currentTimeMillis() / 1000L;
+    }
+
     public void setLastSignOfLife(long lastSignOfLife) {
         this.lastSignOfLife = lastSignOfLife;
     }
