@@ -5,7 +5,7 @@ Feature: Logout
   Background:
     Given "/login" is open
 
-  Scenario Outline: Simple logout
+  Scenario Outline: 01 - Simple logout
     When Clicking profile icon
     Then Menu is visible
     When Clicking "Logout"

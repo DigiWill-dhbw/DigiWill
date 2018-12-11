@@ -27,15 +27,15 @@
             <li><a href="/contact">Contact</a></li>
             <!-- user not logged in -->
             <li th:if="${#httpServletRequest.remoteUser == null}">
-                <a onclick="openLogin()" class="button">Login</a>
+                <a onclick="openLogin()" id="loginButtonHeader" class="button">Login</a>
             </li>
-            <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" class="button">Register</a></li>
+            <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" id="registerButtonHeader" class="button">Register</a></li>
             <!-- user logged in -->
             <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" th:text="${#httpServletRequest.remoteUser}"></a></li>
             <!--<li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>-->
             <li th:if="${#httpServletRequest.remoteUser != null}">
                 <div class="dropdown">
-                    <button onclick="openDropDown()" class="dropbtn button">Menu</button>
+                    <button onclick="openDropDown()" class="dropbtn button" id="dropdownMenuButton">Menu</button>
                     <div id="myDropdown" class="dropdown-content">
                         <a href="/getEmails" th:href="@{/getEmails}">Show email actions</a>
                         <form th:action="@{/lifeSign}" method="post">

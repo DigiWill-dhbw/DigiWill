@@ -21,7 +21,6 @@ public class UserHandleRepositoryTest {
 
     @Autowired
     private UserHandleRepository repository;
-
     private UserHandleManager userHandleManager;
 
     @Before

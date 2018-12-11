@@ -76,7 +76,6 @@ public class EmailController {
         String[] reci_array = recipients.split(" ");
         for (String r :
                 reci_array) {
-            recipient_list.add(r);
             if (registrationService.isValidEmailAdress(r)) {
                 recipient_list.add(r);
             } else {

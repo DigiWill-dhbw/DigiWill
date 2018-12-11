@@ -6,13 +6,15 @@ import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.util.SeleniumDriverUtils;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,18 +24,17 @@ import java.util.List;
 @AutoConfigureDataMongo
 public abstract class SpringBootBaseIntegrationTest {
 
+    protected WebDriver webDriver;
+
     @LocalServerPort
     protected int port;
 
     @Autowired
     private UserHandleRepository repository;
-
     private UserHandleManager userHandleManager;
 
-    public SpringBootBaseIntegrationTest() {
-    }
 
-    protected void setUpUserHandle(int amount, List<BaseAction> actions) {
+    public void setUpUserHandle(int amount, List<BaseAction> actions) {
         if (userHandleManager == null) {
             userHandleManager = new UserHandleManager(repository);
         }
@@ -47,9 +48,40 @@ public abstract class SpringBootBaseIntegrationTest {
         userHandleManager.createUsers(users);
     }
 
-    protected void dropUsers() {
+    public void setUpSingleUser(String email, String password){
+        if (userHandleManager == null) {
+            userHandleManager = new UserHandleManager(repository);
+        }
+        List<BaseAction> actions = new ArrayList<>();
+        PersonalData personalData = new PersonalData("no", "body", new Date(2018, 1, 1));
+        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), null,
+                true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
+        userHandleManager.createUser(userHandle);
+    }
+
+    public void dropUsers() {
         if (userHandleManager != null) {
             userHandleManager.deleteAllUsers();
         }
+    }
+
+    public void setWebDriver(WebDriver webDriver){
+        this.webDriver = webDriver;
+    }
+
+    public WebDriver getWebDriver() {
+        return webDriver;
+    }
+
+    public int getPort(){
+        return port;
+    }
+
+    public UserHandleRepository getRepository() {
+        return repository;
+    }
+
+    public UserHandleManager getUserHandleManager() {
+        return userHandleManager;
     }
 }
