@@ -1,4 +1,4 @@
-package de.digiwill.ui;
+package de.digiwill.StepDefinitons;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class LoginTest{
+public class login {
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
     WebDriver driver;
