@@ -100,6 +100,13 @@ public class setupCustomEmails extends SpringBootBaseIntegrationTest {
             item.findElement(By.id("editButton")).click();
         } else if (button.equals("Delete")) {
             item.findElement(By.id("deleteButton")).click();
+        } else if (button.equalsIgnoreCase("logout")){
+            WebElement dropdown = driver.findElement(By.className("myDropdown"));
+            List<WebElement> dropdownTtems = listing.findElements(By.tagName("input"));
+            WebElement dropdownItem = items.get(items.size());
+            if (button.equals("Logout")) {
+                item.findElement(By.id("sendLifeSign")).click();
+            }
         }
     }
 

@@ -12,20 +12,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class sendLifeSign {
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
     WebDriver driver;
 
-    @When("^Clicking in header \"([^\"]*)\"$")
-    public void clickInHeader(String button) {
+    @When("^Clicking in header \"([^\"]*)\" on Mainpage$")
+    public void clickInHeader(String buttonName) {
         driver = springBootBaseIntegrationTest.getWebDriver();
         // Write code here that turns the phrase above into concrete actions
-        WebElement listing = driver.findElement(By.className("myDropdown"));
-        List<WebElement> items = listing.findElements(By.tagName("input"));
-        WebElement item = items.get(items.size() - 1);
-        if (button.equals("Send life sign")) {
-            item.findElement(By.id("sendLifeSign")).click();
+        driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/");
+
+        WebElement listing = driver.findElement(By.className("dropdown-content"));
+
+        if(buttonName.equalsIgnoreCase("logout")){
+            List<WebElement> items = listing.findElements(By.tagName("input"));
+            WebElement item = items.get(items.size()-1);
+            assertEquals(buttonName,item.getAttribute("value"));
+            item.submit();
+
+        }else if(buttonName.equalsIgnoreCase("send life sign")){
+
+            List<WebElement> items = listing.findElements(By.tagName("input"));
+            WebElement item = items.get(items.size()-3);
+            assertEquals(buttonName, item.getAttribute("value"));
+            item.submit();
+        }else
+        {
+            assertEquals(0,1);
         }
     }
 
