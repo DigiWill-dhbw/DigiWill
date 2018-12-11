@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class sendLifeSign {
+public class SendLifeSingFeatureTest {
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
     WebDriver driver;

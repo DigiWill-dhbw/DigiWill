@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class setupCustomEmails extends SpringBootBaseIntegrationTest {
+public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest {
     WebDriver driver;
 
     @And("^The user \"([^\"]*)\" with the password \"([^\"]*)\" is logged in$")
@@ -105,7 +105,7 @@ public class setupCustomEmails extends SpringBootBaseIntegrationTest {
             List<WebElement> dropdownTtems = listing.findElements(By.tagName("input"));
             WebElement dropdownItem = items.get(items.size());
             if (button.equals("Logout")) {
-                item.findElement(By.id("sendLifeSign")).click();
+                item.findElement(By.id("SendLifeSingFeatureTest")).click();
             }
         }
     }

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class login {
+public class LoginFeatureTest {
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
     WebDriver driver;
