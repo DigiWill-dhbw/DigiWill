@@ -1,47 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>New Email</title>
+    <th:block th:include="fragments/header :: head (title='New Email')"></th:block>
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
+    <script src="js/email_check.js"></script>
 </head>
 <body>
-    <form th:action="@{/addEmail}" method="post" id="gui">
-        <h2>Add new custom email</h2>
-        <table>
-            <tr>
-                <td>
-                    Recipient(s)
-                </td>
-                <td>
-                    <input type="text" class="input-fields" name="recipients">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Subject
-                </td>
-                <td>
-                    <input type="text" class="input-fields" name="subject">
-                </td>
-            </tr>
-        </table>
-        <h4>Content</h4>
-        <table>
-            <tr>
-                <td colspan="2">
-                    <textarea rows="10" cols="50" class="input-fields" name="content" form="gui"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div><input type="submit" class="button"></div>
-                </td>
-                <td>
-                    <div class="right"><a href="get_emails.html" class="button">Cancel</a></div>
-                </td>
-            </tr>
-        </table>
-    </form>
+<div th:include="fragments/header :: header"></div>
+
+<div id="content">
+    <div class="panel">
+        <form th:action="@{/addEmail}" method="post" id="gui">
+            <h2>Add new custom email</h2>
+            <table>
+                <tr>
+                    <td>
+                        Recipient(s)
+                    </td>
+                    <td>
+                        <input type="text" class="input-fields" name="recipients" id="adressfield" onchange="checkEmail(document.getElementById('adressfield').value)">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Subject
+                    </td>
+                    <td>
+                        <input type="text" class="input-fields" name="subject">
+                    </td>
+                </tr>
+            </table>
+            <h4>Content</h4>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <textarea rows="10" cols="50" class="input-fields" name="content" form="gui"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div><input type="submit" class="button" id="submitButton"></div>
+                    </td>
+                    <td>
+                        <div class="right"><a href="getEmails" class="button" id="cancelButton">Cancel</a></div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div th:include="fragments/footer :: footer"></div>
 </body>
 </html>

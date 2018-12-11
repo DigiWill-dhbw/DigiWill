@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="digiwill">
+</head>
+<body>
+<div th:fragment="footer">
+    <footer>
+        <h1>TEST</h1>
+    </footer>
+
+    <div th:if="${#httpServletRequest.remoteUser == null}" id="login" class="modal">
+        <div th:include="login :: login" class="modal-content">
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

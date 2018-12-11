@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="head (title)">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="digiwill">
+
+        <title th:text="${title}">Page Title</title>
+        <script th:if="${#httpServletRequest.remoteUser == null}" src="/js/prelogin.js" type="text/javascript"></script>
+        <script th:if="${#httpServletRequest.remoteUser != null}" src="/js/loggedin.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/startpage.css"/>
+        <link rel="stylesheet" type="text/css" href="css/register.css"/>
+        <script src="/js/general.js" type="application/javascript"></script>
+    </th:block>
+</head>
+<body>
+<div th:fragment="header">
+    <header>
+        <img src="../images/digiwill_logo.png">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <!-- user not logged in -->
+            <li th:if="${#httpServletRequest.remoteUser == null}">
+                <a onclick="openLogin()" id="loginButtonHeader" class="button">Login</a>
+            </li>
+            <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" id="registerButtonHeader" class="button">Register</a></li>
+            <!-- user logged in -->
+            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" th:text="${#httpServletRequest.remoteUser}"></a></li>
+            <!--<li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>-->
+            <li th:if="${#httpServletRequest.remoteUser != null}">
+                <div class="dropdown">
+                    <button onclick="openDropDown()" class="dropbtn button" id="dropdownMenuButton">Menu</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="/getEmails" th:href="@{/getEmails}">Show email actions</a>
+                        <form th:action="@{/lifeSign}" method="post">
+                            <input class="button" type="submit" value="Send lifesign"/>
+                        </form>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="button" type="submit" value="Logout"/>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+</body>
+
+</html>

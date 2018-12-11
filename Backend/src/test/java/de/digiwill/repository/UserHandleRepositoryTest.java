@@ -1,19 +1,18 @@
 package de.digiwill.repository;
 
 import de.digiwill.model.*;
+import de.digiwill.model.Security.SecurityHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -21,11 +20,7 @@ import java.util.List;
 public class UserHandleRepositoryTest {
 
     @Autowired
-    protected MongoTemplate mongoTemplate;
-
-    @Autowired
     private UserHandleRepository repository;
-
     private UserHandleManager userHandleManager;
 
     @Before
@@ -44,7 +39,9 @@ public class UserHandleRepositoryTest {
     private Iterable<UserHandle> createUserHandle(int amount, List<BaseAction> actions) {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", "nobody" + i + "@digiwill.de", null);
+            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), null,
+                    true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
             users.add(userHandle);
         }
         return users;

@@ -1,15 +1,11 @@
 package de.digiwill.controller;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import de.digiwill.SystemHandle;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
-import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
-import org.bson.types.ObjectId;
+import de.digiwill.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,20 +19,27 @@ import java.util.List;
 public class EmailController {
     @Autowired
     UserHandleRepository repository;
+    @Autowired
+    RegistrationService registrationService;
 
     @GetMapping("/addEmail")
     public String addEmail(Model model) {
         return "add_email";
     }
     @PostMapping("/addEmail")
-    public RedirectView addEmailPost(@RequestParam(name="recipients", required=true) String recipients, @RequestParam(name="subject", required=true) String subject, @RequestParam(name="content", required=true) String content, Principal principal, Model model) {
+    public RedirectView addEmailPost(@RequestParam(name="recipients", required=true) String recipients, @RequestParam(name="subject", required=true) String subject, @RequestParam(name="content", required=true) String content, Principal principal, Model model){
         String username = principal.getName();
         UserHandle user = repository.findUserHandleByUsername(username);
         List<String> recipient_list = new ArrayList<>();
         String[] reci_array = recipients.split(" ");
         for (String r :
                 reci_array) {
-            recipient_list.add(r);
+            if (registrationService.isValidEmailAdress(r)) {
+                recipient_list.add(r);
+            } else {
+                return new RedirectView("getEmails");
+            }
+
         }
         EmailAction action = new EmailAction(recipient_list, subject, false, content);
         user.addAction(action);
@@ -49,7 +52,7 @@ public class EmailController {
         List<BaseAction> actions= user.getActions();
         List<EmailAction> emails = new ArrayList<>();
         for (BaseAction action: actions
-             ) {
+        ) {
             emails.add((EmailAction) action);
         }
         model.addAttribute("emails", emails);
@@ -73,7 +76,11 @@ public class EmailController {
         String[] reci_array = recipients.split(" ");
         for (String r :
                 reci_array) {
-            recipient_list.add(r);
+            if (registrationService.isValidEmailAdress(r)) {
+                recipient_list.add(r);
+            } else {
+                return new RedirectView("getEmails");
+            }
         }
         EmailAction action = new EmailAction(recipient_list, subject, false, content);
         actions.set(idx, action);
