@@ -1,7 +1,6 @@
 package de.digiwill.ui;
 
 import cucumber.api.java.After;
-import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -69,7 +68,7 @@ public class LoginTest{
     }
 
     @Before("@uitest")
-    public void beforeUITest(){
+    public void beforeUITest() {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
         springBootBaseIntegrationTest.setWebDriver(new ChromeDriver(SeleniumDriverUtils.getChromeOptions()));
     }

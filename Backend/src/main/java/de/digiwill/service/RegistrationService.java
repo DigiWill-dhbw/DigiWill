@@ -1,6 +1,5 @@
 package de.digiwill.service;
 
-import de.digiwill.controller.RegisterController;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
@@ -102,7 +101,7 @@ public class RegistrationService {
     }
 
     public boolean doesPasswordFitRequirements(String password) {
-       return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=ß!\"§~'`<>|;:,.\\-\\\\\\/\\?])(?=\\S+$).{8,}$");
+        return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=ß!\"§~'`<>|;:,.\\-\\\\\\/\\?])(?=\\S+$).{8,}$");
     }
 
     public boolean isValidEmailAdress(String email) {

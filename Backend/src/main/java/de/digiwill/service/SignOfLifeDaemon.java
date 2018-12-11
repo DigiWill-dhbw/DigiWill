@@ -1,6 +1,5 @@
 package de.digiwill.service;
 
-import de.digiwill.controller.GreetingController;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
@@ -12,7 +11,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service

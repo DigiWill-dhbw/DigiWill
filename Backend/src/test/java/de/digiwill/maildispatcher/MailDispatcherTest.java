@@ -5,17 +5,18 @@ import de.digiwill.model.UserHandle;
 import de.digiwill.util.EmailDispatcher;
 import de.digiwill.util.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,15 @@ public class MailDispatcherTest {
 
     EmailDispatcher emailDispatcher;
     Session session;
-    @Mock EmailTransportWrapper emailTransportWrapper;
+    @Mock
+    EmailTransportWrapper emailTransportWrapper;
 
     ArgumentCaptor<Message> sentMessage;
     String subject = "subject";
     String content = "content";
 
     @Before
-    public void setup(){
+    public void setup() {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.host", "smtp.google.com");
         session = Session.getInstance(properties);
@@ -46,14 +48,14 @@ public class MailDispatcherTest {
     }
 
     public void compareMessage(ArgumentCaptor<Message> m, String[] recipients, String subject, String content) throws IOException, MessagingException {
-        InternetAddress[] mailAddresses = InternetAddress.parse(String.join(",",recipients),true);
+        InternetAddress[] mailAddresses = InternetAddress.parse(String.join(",", recipients), true);
         Assert.assertArrayEquals(mailAddresses, m.getValue().getAllRecipients());
         Assert.assertEquals(subject, m.getValue().getSubject());
         Assert.assertEquals(content, m.getValue().getContent());
     }
 
     @Test
-    public void sendEmailTest() throws Exception{
+    public void sendEmailTest() throws Exception {
         String[] recipient = {"test@testmail.com"};
 
         emailDispatcher.sendEmail(recipient[0], subject, true, content);
@@ -62,10 +64,10 @@ public class MailDispatcherTest {
     }
 
     @Test
-    public void endEmailListTest()throws Exception{
+    public void endEmailListTest() throws Exception {
         List<String> recipients = new ArrayList<String>();
-        for(int i=0; i<10; i++){
-            recipients.add("test"+i+"@test.de");
+        for (int i = 0; i < 10; i++) {
+            recipients.add("test" + i + "@test.de");
         }
         emailDispatcher.sendEmail(recipients, subject, true, content);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
@@ -73,18 +75,18 @@ public class MailDispatcherTest {
     }
 
     @Test(expected = EmailException.class)
-    public void sendEmailTestMissingRecipients() throws Exception{
+    public void sendEmailTestMissingRecipients() throws Exception {
         emailDispatcher.sendEmail("", subject, true, content);
     }
 
     @Test(expected = EmailException.class)
-    public void sendMailMalformedEmailAddress() throws Exception{
+    public void sendMailMalformedEmailAddress() throws Exception {
         emailDispatcher.sendEmail("jfdsklfjsl", subject, true, content);
     }
 
 
     @Test
-    public void sendRegistrationConfirmationEmailTest() throws Exception{
+    public void sendRegistrationConfirmationEmailTest() throws Exception {
         UserHandle uh = new UserHandle("user@name.de", "test", null);
         uh.setVerified(false);
         EmailResponseHandle erh = EmailResponseHandle.getRegistrationHandle(uh);
@@ -98,7 +100,7 @@ public class MailDispatcherTest {
     }
 
     @Test
-    public void sendResetEmailTest() throws Exception{
+    public void sendResetEmailTest() throws Exception {
         //TODO out of scope right now, so test will be implemented later
 
         /*UserHandle uh = new UserHandle("user@name.de", "test", null);
@@ -113,7 +115,7 @@ public class MailDispatcherTest {
     }
 
     @Test
-    public void sendReminderEmailTest() throws Exception{
+    public void sendReminderEmailTest() throws Exception {
         UserHandle uh = new UserHandle("user@name.de", "test", null);
         String[] recipient = {uh.getUsername()};
 
@@ -123,7 +125,6 @@ public class MailDispatcherTest {
                 EmailDispatcher.REMINDER_EMAIL_CONTENT.replaceAll("<username>", uh.getUsername()));
 
     }
-
 
 
 }
