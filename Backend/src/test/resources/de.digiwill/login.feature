@@ -12,18 +12,18 @@ Feature: Login
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "succeeds"
 
-  Examples:
-  | email | password |
-  | nobody0@digiwill.de  | nobody0@digiwill.de |
+    Examples:
+      | email               | password            |
+      | nobody0@digiwill.de | nobody0@digiwill.de |
 
   Scenario Outline: 02 - Login failed
     Given A user with email "<email>" and password "<password>" "doesn't exist"
     When Enter Email "<email>", password "<password>" and login
     Then Login for "<email>", "fails"
 
-  Examples:
-  | email | password |
-  | admin@de.digiwill.de | adminpassword1 |
+    Examples:
+      | email                | password       |
+      | admin@de.digiwill.de | adminpassword1 |
 
   #Scenario Outline: Store login session
   #  When Enter Email "<email>", password "<password>", check checkbox and click "Login"

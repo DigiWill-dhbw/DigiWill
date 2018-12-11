@@ -3,12 +3,14 @@ package de.digiwill.controller;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.model.UserHandleManager;
 import de.digiwill.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
@@ -17,8 +19,9 @@ import java.util.List;
 
 @Controller
 public class EmailController {
+
     @Autowired
-    UserHandleRepository repository;
+    UserHandleManager userHandleManager;
     @Autowired
     RegistrationService registrationService;
 
@@ -30,7 +33,7 @@ public class EmailController {
     @PostMapping("/addEmail")
     public RedirectView addEmailPost(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content, Principal principal, Model model) {
         String username = principal.getName();
-        UserHandle user = repository.findUserHandleByUsername(username);
+        UserHandle user = userHandleManager.loadUserByUserName(username);
         List<String> recipient_list = new ArrayList<>();
         String[] reci_array = recipients.split(" ");
         for (String r :
@@ -44,13 +47,13 @@ public class EmailController {
         }
         EmailAction action = new EmailAction(recipient_list, subject, false, content);
         user.addAction(action);
-        repository.save(user);
+        userHandleManager.updateUser(user);
         return new RedirectView("getEmails");
     }
 
     @GetMapping("/getEmails")
     public String getEmails(Model model, Principal principal) {
-        UserHandle user = repository.findUserHandleByUsername(principal.getName());
+        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
         List<BaseAction> actions = user.getActions();
         List<EmailAction> emails = new ArrayList<>();
         for (BaseAction action : actions
@@ -64,7 +67,7 @@ public class EmailController {
     @GetMapping("/editEmail")
     public String editEmail(@RequestParam(name = "idx", required = true) String index, Principal principal, Model model) {
         int idx = Integer.parseInt(index);
-        UserHandle user = repository.findUserHandleByUsername(principal.getName());
+        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
         List<BaseAction> actions = user.getActions();
         EmailAction action = (EmailAction) actions.get(idx);
         model.addAttribute("email", action);
@@ -74,7 +77,7 @@ public class EmailController {
     @PostMapping("/editEmail")
     public RedirectView editEmailPost(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content, @RequestParam(name = "index", required = true) String index, Principal principal, Model model) {
         int idx = Integer.parseInt(index);
-        UserHandle user = repository.findUserHandleByUsername(principal.getName());
+        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
         List<BaseAction> actions = user.getActions();
         List<String> recipient_list = new ArrayList<>();
         String[] reci_array = recipients.split(" ");
@@ -88,18 +91,18 @@ public class EmailController {
         EmailAction action = new EmailAction(recipient_list, subject, false, content);
         actions.set(idx, action);
         user.setActions(actions);
-        repository.save(user);
+        userHandleManager.updateUser(user);
         return new RedirectView("getEmails");
     }
 
     @GetMapping("/deleteEmail")
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
-        UserHandle user = repository.findUserHandleByUsername(principal.getName());
+        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
         List<BaseAction> actions = user.getActions();
         actions.remove(idx);
         user.setActions(actions);
-        repository.save(user);
+        userHandleManager.updateUser(user);
         return new RedirectView("getEmails");
     }
 

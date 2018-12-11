@@ -2,7 +2,6 @@ package de.digiwill.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;

@@ -21,8 +21,9 @@ public class GreetingController {
 
     private static ApplicationContext app;
     Logger logger = LoggerFactory.getLogger(GreetingController.class);
+
     @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
         model.addAttribute("name", name);
 
         //Examples for logging

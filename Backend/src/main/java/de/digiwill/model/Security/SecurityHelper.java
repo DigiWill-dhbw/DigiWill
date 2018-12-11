@@ -7,7 +7,7 @@ public class SecurityHelper {
 
     private static PasswordEncoder encoder = new BCryptPasswordEncoder(11);
 
-    public static String encodePassword(String password){
+    public static String encodePassword(String password) {
         return encoder.encode(password);
     }
 
