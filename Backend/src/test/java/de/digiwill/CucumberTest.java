@@ -10,6 +10,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty"}, features = "src/test/resources/de.digiwill/")
-public class CucumberTest {
+public class CucumberTest{
 
 }
