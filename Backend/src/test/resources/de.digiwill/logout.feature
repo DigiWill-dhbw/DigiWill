@@ -1,9 +1,9 @@
-Feature:
+Feature: Logout
   As a mortal
   I want to logout from my registered account
 
   Background:
-    Given User is logged in and on the action overview page
+    Given "/login" is open
 
   Scenario Outline: Simple logout
     When Clicking profile icon

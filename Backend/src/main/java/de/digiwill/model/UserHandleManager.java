@@ -85,5 +85,8 @@ public class UserHandleManager implements UserDetailsManager {
 
     public List<UserHandle> findAll(){
         return userHandleRepository.findAll();
+      }
+    public void deleteAllUsers() {
+        userHandleRepository.deleteAll();
     }
 }
