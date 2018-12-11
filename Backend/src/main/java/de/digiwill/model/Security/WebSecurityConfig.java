@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/greeting", "/register").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -34,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll();
+        //.antMatchers("/admin/**").hasRole("ADMIN")
     }
 
     @Override
@@ -41,11 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userHandleManager)
                 .passwordEncoder(SecurityHelper.getEncoder());
-    }
-
-    @Autowired
-    public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
-        //builder.userDetailsService(userHandleManager);
     }
 
     @Bean

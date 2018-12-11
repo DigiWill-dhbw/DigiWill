@@ -7,13 +7,13 @@ Feature: Sign of life daemon
     Given The user is logged in
     And a duration is set in profile settings
 
-  Scenario: Get a reminder
+  Scenario: 01 - Get a reminder
     When Counter is started
     And Counter is expired
     And I have navigated to main page
     Then I should see a reminder in the notification area
 
-  Scenario: Trigger configured activities
+  Scenario: 02 - Trigger configured activities
     When Counter is started
     And Counter is expired
     And I have ignored all reminders

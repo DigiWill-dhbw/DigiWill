@@ -80,9 +80,7 @@ public class EmailController {
         List<BaseAction> actions = user.getActions();
         List<String> recipient_list = new ArrayList<>();
         String[] reci_array = recipients.split(" ");
-        for (String r :
-                reci_array) {
-            recipient_list.add(r);
+        for (String r :  reci_array) {
             if (registrationService.isValidEmailAdress(r)) {
                 recipient_list.add(r);
             } else {

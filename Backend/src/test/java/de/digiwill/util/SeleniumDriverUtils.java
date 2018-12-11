@@ -20,7 +20,6 @@ public class SeleniumDriverUtils {
             return "";
         }
     }
-
     public static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");

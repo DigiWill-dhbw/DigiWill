@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ public class UserHandleRepositoryTest {
 
     @Autowired
     private UserHandleRepository repository;
-
     private UserHandleManager userHandleManager;
 
     @Before
@@ -41,8 +41,10 @@ public class UserHandleRepositoryTest {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), null,
-                    true, true, true, true, 0, 0, 0, 0, false, personalData, actions);
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), AuthorityUtils.createAuthorityList("ROLE_USER"),
+                    true, true, true,
+                    true , -1, -1, -1, -1, false,
+                    personalData,   actions, false);
             users.add(userHandle);
         }
         return users;
