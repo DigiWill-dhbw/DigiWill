@@ -22,6 +22,7 @@ public class EmailController {
 
     @Autowired
     UserHandleManager userHandleManager;
+    @Autowired
     RegistrationService registrationService;
 
     @GetMapping("/addEmail")
