@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
-public class loginTest{
+public class LoginTest{
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
     WebDriver driver;

@@ -18,7 +18,7 @@ public class EmailResponseHandle {
         if (userHandle.isVerified()) {
             return null;
         }
-        return null;
+        return new EmailResponseHandle(userHandle, "", EmailResponseType.REGISTER);
     }
 
     public static EmailResponseHandle getResetHandle(UserHandle userHandle) { //TODO implement

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>DigiWill user overview</title>
+    <link rel="stylesheet" type="text/css" href="../../css/admin/overview.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="../../js/admin/overview/users.js"></script>
+</head>
+<body onload="onLoad()">
+<div id="deleteModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+
+        <p>Are you sure that you want to delete this?</p>
+        <form th:action="@{/admin/overview/users/delete}" method="post" style="display: inline;">
+            <button class="button" id="deleteButton" name="delete" value=""><i class="fas fa-check"></i></button>
+        </form>
+        <a class="button" id="closeButton"><i
+                class="fas fa-times"></i></a>
+    </div>
+</div>
+<div th:if="${not #lists.isEmpty(userhandles)}">
+    <h2>User List</h2>
+    <table class="listing">
+        <tr>
+            <th>Name</th>
+            <th>Email address</th>
+            <th>Address</th>
+            <th>Is dead</th>
+            <th>Actions completed</th>
+            <th>Authorities</th>
+            <th>Toggle Admin</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="userhandle : ${userhandles}">
+            <td th:text="${userhandle.personalData.getFullName()}"></td>
+            <td th:text="${userhandle.username}"></td>
+            <td th:text="${userhandle.personalData.getAddress()}"></td>
+            <td><img
+                    th:src="${userhandle.isDead()} ? '../../images/check_true.png' : '../../images/check_false.png'"
+                    alt="isDead" height="32" width="32"></td>
+            <td><img
+                    th:src="${userhandle.areAllActionsCompleted()} ? '../../images/check_true.png' : '../../images/check_false.png'"
+                    alt="actionsCompleted" height="32" width="32"></td>
+            <td th:text="${userhandle.getAuthoritiesAsString()}"></td>
+            <td>
+                <form th:action="@{/admin/overview/users/toggleAdmin}" method="post" style="display: inline;">
+                    <button class="button" id="toggleAdminButton" name="username" th:value="${userhandle.username}"><i class="fas fa-check"></i>
+                    </button>
+                </form>
+            </td>
+            <td class="no-border"><a th:onclick="|onDelete('${userhandle.username}')|" class="button"><i
+                    class="fas fa-trash-alt"></i></a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
