@@ -7,7 +7,7 @@ public class SeleniumDriverUtils {
 
     private static String CHROME_DRIVER_WINDOWS = "..\\Backend\\\\driver\\\\chromedriver.exe";
     private static String CHROME_DRIVER_MAC_OSX = "../Backend/driver/chromedriver_osx";
-    private static String CHROME_DRIVER_LINUX = "/usr/bin/chromedriver";
+    private static String CHROME_DRIVER_LINUX = "../Backend/driver/chromedriver_linux";
 
     public static String getChromeDriverPath() {
         if (SystemUtils.IS_OS_WINDOWS) {
