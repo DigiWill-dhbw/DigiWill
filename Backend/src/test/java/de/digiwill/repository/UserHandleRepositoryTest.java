@@ -4,12 +4,15 @@ import de.digiwill.model.*;
 import de.digiwill.model.Security.SecurityHelper;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.containers.GenericContainer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +22,9 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataMongoTest
 public class UserHandleRepositoryTest {
+
+    @ClassRule
+    public static GenericContainer webServer = new GenericContainer("alpine:3.2");
 
     @Autowired
     private UserHandleRepository repository;
