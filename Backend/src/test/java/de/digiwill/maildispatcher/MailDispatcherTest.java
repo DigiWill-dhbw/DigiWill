@@ -7,13 +7,11 @@ import de.digiwill.util.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.testcontainers.containers.GenericContainer;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -29,9 +27,6 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MailDispatcherTest {
-
-    @ClassRule
-    public static GenericContainer webServer = new GenericContainer("alpine:3.2");
 
     EmailDispatcher emailDispatcher;
     Session session;
