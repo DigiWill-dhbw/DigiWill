@@ -3,15 +3,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./Backend/src/test/resources/secrets-test.properties
-cd Backend
+        sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./src/test/resources/secrets-test.properties
 mvn clean install -DskipTests'''
       }
     }
     stage('Test') {
       steps {
-        sh '''cd Backend
-mvn test -DenvTarget=test'''
+        sh '''mvn test -DenvTarget=test'''
       }
     }
   }
