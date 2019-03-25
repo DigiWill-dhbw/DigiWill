@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./Backend/src/test/resources/secrets-test.properties
+        sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./src/test/resources/secrets-test.properties
 cd Backend
 mvn clean install -DskipTests'''
       }
