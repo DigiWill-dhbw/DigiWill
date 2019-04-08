@@ -63,12 +63,17 @@ public class RegistrationService {
             return RegistrationResponse.TO_YOUNG;
         }
         try {
-            UserHandle uH = (UserHandle) userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
+            UserHandle uH = userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
             if (uH != null) {
                 return RegistrationResponse.EMAIL_ALREADY_IN_USE;
             }
-        } catch (UsernameNotFoundException e) {
-        }
+        } catch (UsernameNotFoundException ignore) {}
+
+        userHandleManager.createUser(generateUserHandleFromFormData(formData, birthdayDate));
+        return RegistrationResponse.REGISTRATION_SUCCESSFUL;
+    }
+
+    private UserHandle generateUserHandleFromFormData(MultiValueMap<String, String> formData, Date birthdayDate) {
         PersonalData personalData = new PersonalData(formData.getFirst("firstName"),
                 formData.getFirst("surName"),
                 birthdayDate);
@@ -80,9 +85,7 @@ public class RegistrationService {
                 authorities);
         userHandle.sendLifeSign();
         userHandle.setDeltaDeathTime(60*60*24*14); //Sets time to 14 days
-
-        userHandleManager.createUser(userHandle);
-        return RegistrationResponse.REGISTRATION_SUCCESSFUL;
+        return userHandle;
     }
 
     private boolean isOldEnough(Date date) {
