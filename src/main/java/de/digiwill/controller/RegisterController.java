@@ -22,8 +22,6 @@ public class RegisterController {
     @Autowired
     private RegistrationService registrationService;
 
-    private Logger logger = LoggerFactory.getLogger(RegisterController.class);
-
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String register(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {

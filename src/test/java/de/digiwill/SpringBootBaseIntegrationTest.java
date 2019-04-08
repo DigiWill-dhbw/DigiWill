@@ -2,7 +2,7 @@ package de.digiwill;
 
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.PersonalData;
-import de.digiwill.model.Security.SecurityHelper;
+import de.digiwill.util.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;

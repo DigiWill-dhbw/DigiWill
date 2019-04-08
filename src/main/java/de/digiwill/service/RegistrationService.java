@@ -1,11 +1,9 @@
 package de.digiwill.service;
 
 import de.digiwill.model.PersonalData;
-import de.digiwill.model.Security.SecurityHelper;
+import de.digiwill.util.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,8 +26,6 @@ public class RegistrationService {
 
     @Autowired
     private UserHandleManager userHandleManager;
-
-    private Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     public RegistrationResponse addNewUser(MultiValueMap<String, String> formData) {
 

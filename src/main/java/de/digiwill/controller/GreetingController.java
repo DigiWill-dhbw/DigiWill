@@ -1,7 +1,6 @@
 package de.digiwill.controller;
 
 import de.digiwill.service.SignOfLifeDaemon;
-import de.digiwill.util.EmailDispatcher;
 import org.apache.catalina.core.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ public class GreetingController {
     @Autowired
     private SignOfLifeDaemon signOfLifeDaemon;
 
-    private static ApplicationContext app;
     private Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
     @GetMapping("/greeting")

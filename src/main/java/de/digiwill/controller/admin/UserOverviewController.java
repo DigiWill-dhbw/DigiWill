@@ -21,8 +21,6 @@ public class UserOverviewController {
     @Autowired
     private UserHandleManager userHandleManager;
 
-    private Logger logger = LoggerFactory.getLogger(UserOverviewController.class);
-
     @GetMapping("/admin/overview/users")
     public String listAllUsers(Model model) {
             model.addAttribute("userhandles", userHandleManager.findAll());

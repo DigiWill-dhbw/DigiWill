@@ -1,7 +1,7 @@
 package de.digiwill.repository;
 
 import de.digiwill.model.*;
-import de.digiwill.model.Security.SecurityHelper;
+import de.digiwill.util.SecurityHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
