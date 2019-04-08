@@ -10,10 +10,7 @@ public class PersonalData {
     private String firstName;
     private String surname;
     private Date dateOfBirth;
-    private String zipCode;
-    private String city;
-    private String streetAddress;
-    private String country;
+    private Address address;
 
     @PersistenceConstructor
     public PersonalData(String firstName, String surname, Date dateOfBirth) {
@@ -23,20 +20,11 @@ public class PersonalData {
     }
 
     @PersistenceConstructor
-    public PersonalData(String firstName, String surname, Date dateOfBirth, String zipCode, String city, String streetAddress, String country) {
+    public PersonalData(String firstName, String surname, Date dateOfBirth, Address address) {
         this(firstName, surname, dateOfBirth);
-        this.zipCode = zipCode;
-        this.city = city;
-        this.streetAddress = streetAddress;
-        this.country = country;
+        this.address = address;
     }
 
-    public String getAddress() {
-        if(streetAddress == null && zipCode == null && city == null && country == null){
-            return "No address available";
-        }
-        return streetAddress + "\n" + zipCode + " " + city + "\n" + "\n" + country;
-    }
 
     public String getFullName() {
         return firstName + " " + surname;
@@ -56,5 +44,9 @@ public class PersonalData {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }
