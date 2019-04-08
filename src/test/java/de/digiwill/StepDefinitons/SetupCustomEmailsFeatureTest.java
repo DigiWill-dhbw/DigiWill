@@ -45,7 +45,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         // Write code here that turns the phrase above into concrete actions
         driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/addEmail");
-        driver.findElement(By.id("adressfield")).sendKeys(recipient);
+        driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
         if (button.equals("Save")) {
@@ -132,8 +132,8 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     public void editingEmailWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) {
         driver = getWebDriver();
         // Write code here that turns the phrase above into concrete actions
-        driver.findElement(By.id("adressfield")).clear();
-        driver.findElement(By.id("adressfield")).sendKeys(recipient);
+        driver.findElement(By.id("addressField")).clear();
+        driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).clear();
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).clear();

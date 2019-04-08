@@ -8,9 +8,9 @@ function checkEmail(email) {
     });
     console.log(response);
     if(!response) {
-        document.getElementById("adressfield").style = "border-color: red;";
+        document.getElementById("addressField").style = "border-color: red;";
     } else {
-        document.getElementById("adressfield").style = "border-color: #ddd;";
+        document.getElementById("addressField").style = "border-color: #ddd;";
     }
 }
 function checkIfEmailInString(text) {
