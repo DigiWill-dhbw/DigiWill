@@ -5,53 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <script src="js/email_check.js"></script>
-    <script>
-        var span;
-        var modal;
-        var qs;
-        function parse_query_string(query) {
-            var vars = query.split("&");
-            var query_string = {};
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                var key = decodeURIComponent(pair[0]);
-                var value = decodeURIComponent(pair[1]);
-                // If first entry with this name
-                if (typeof query_string[key] === "undefined") {
-                    query_string[key] = decodeURIComponent(value);
-                    // If second entry with this name
-                } else if (typeof query_string[key] === "string") {
-                    var arr = [query_string[key], decodeURIComponent(value)];
-                    query_string[key] = arr;
-                    // If third or later entry with this name
-                } else {
-                    query_string[key].push(decodeURIComponent(value));
-                }
-            }
-            return query_string;
-        }
-        function onLoad() {
-            var query = window.location.search.substring(1);
-            qs = parse_query_string(query);
-            document.getElementById("index").value = qs.idx;
-            modal = document.getElementById('deleteModal');
-            // When the user clicks on <span> (x), close the modal
-            span = document.getElementById("cancelDeleteButton");
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        }
-        function onDelete() {
-            // Get the <span> element that closes the modal
-            modal.style.display = "block";
-            document.getElementById("confirmDeleteButton").href = "/deleteEmail?idx=" + qs.idx;
-        }
-    </script>
+    <th:block th:include="fragments/email_formular :: editScripts"></th:block>
 </head>
 <body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
@@ -69,44 +23,9 @@
     <div class="panel">
         <form th:action="@{/editEmail}" method="post" id="gui">
             <h2>Edit custom email</h2>
-            <table>
-                <tr>
-                    <td>
-                        Recipient(s)
-                    </td>
-                    <td>
-                        <input type="hidden" id="index" name="index" value="">
-                        <input type="text" class="input-fields" name="recipients" id="adressfield" th:value="${email.getRecipientString()}" onchange="checkEmail(document.getElementById('adressfield').value)">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Subject
-                    </td>
-                    <td>
-                        <input type="text" class="input-fields" name="subject" id="subjectfield" th:value="${email.subject}">
-                    </td>
-                </tr>
-            </table>
-            <h4>Content</h4>
-            <table>
-                <tr>
-                    <td colspan="3">
-                        <textarea rows="10" cols="50" class="input-fields" id="content" th:text="${email.content}" name="content" form="gui"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div><input type="submit" class="button" id="saveButton"></div>
-                    </td>
-                    <td>
-                        <a onclick="onDelete()" class="button" id="deleteButton"><i class="fas fa-trash-alt"></i></a></td>
-                    </td>
-                    <td>
-                        <div class="right"><a href="getEmails" class="button" id="cancelButton">Cancel</a></div>
-                    </td>
-                </tr>
-            </table>
+            <th:block th:include="fragments/email_formular :: form (edit = true)">
+
+            </th:block>
         </form>
     </div>
 </div>
