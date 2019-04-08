@@ -6,6 +6,7 @@ import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
 import de.digiwill.service.registration.RegistrationService;
+import de.digiwill.util.RegexMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,7 @@ public class EmailController {
         List<String> recipient_list = new ArrayList<>();
         String[] recipient_array = recipients.split(" ");
         for (String recipient : recipient_array) {
-            if (registrationService.isValidEmailAddress(recipient)) {
+            if (RegexMatcher.isValidEmailAddress(recipient)) {
                 recipient_list.add(recipient);
             } else {
                 throw new EmailException("Recipient List contains invalid Email Address");
