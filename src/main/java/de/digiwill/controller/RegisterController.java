@@ -1,5 +1,6 @@
 package de.digiwill.controller;
 
+import de.digiwill.service.RegistrationResponse;
 import de.digiwill.service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +28,13 @@ public class RegisterController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String register(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {
 
-        int returnCode = registrationService.addNewUser(formData);
+        RegistrationResponse response = registrationService.addNewUser(formData);
+        response.adjustModel(model);
+        return response.getRedirectTarget();
 
-        if (registrationService.wasRegistrationSuccesful(returnCode)) {
+       /* if (registrationService.wasRegistrationSuccesful(returnCode)) {
             model.addAttribute("name", formData.getFirst("firstName"));
-            return "home";
-        } else {
-            model.addAttribute("failure", true);
-            model.addAttribute("responseText", registrationService.codeToText(returnCode));
-            return "register";
-        }
+        }*/
     }
 
     @GetMapping("/register")
