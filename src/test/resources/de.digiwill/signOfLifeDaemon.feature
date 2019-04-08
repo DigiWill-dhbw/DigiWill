@@ -1,10 +1,14 @@
+@skip
 Feature: Sign of life daemon
   As the Server
   I want to make sure all actions are triggered when necessary
   and all reminders are sent out when necessary
 
   Background:
-    Given The user is logged in
+    Given "/login" is open
+    Given A user with email "example@mail.com" and password "password" exists
+    When Enter Email "example@mail.com", password "password" and login
+    Then Login "succeeds"
     And a duration is set in profile settings
 
   Scenario: 01 - Get a reminder
