@@ -15,7 +15,7 @@ public class EmailVerificationHandle extends EmailResponseHandle {
 
     @Override
     protected void initialize() {
-
+        //TODO implement
     }
 
     @Override

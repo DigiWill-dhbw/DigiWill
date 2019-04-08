@@ -11,7 +11,6 @@ function checkEmail(email) {
             response = response && checkIfEmailInString(e);
         }
     });
-    console.log(response);
     if(!response) {
         document.getElementById("addressField").style = "border-color: red;";
     } else {

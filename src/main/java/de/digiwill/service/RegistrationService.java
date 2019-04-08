@@ -33,7 +33,7 @@ public class RegistrationService {
             return RegistrationResponse.FORM_DATA_DOESNT_EXIST;
         }
 
-        if (!formData.getFirst("password").equals(formData.getFirst("password_rep"))) {
+        if (doPasswordsMatch(formData)) {
             return RegistrationResponse.PASSWORD_MISMATCH;
         }
         if (!doesPasswordFitRequirements(formData.getFirst("password"))) {
@@ -67,6 +67,10 @@ public class RegistrationService {
 
         userHandleManager.createUser(generateUserHandleFromFormData(formData, birthdayDate));
         return RegistrationResponse.REGISTRATION_SUCCESSFUL;
+    }
+
+    private boolean doPasswordsMatch(MultiValueMap<String, String> formData) {
+        return !formData.getFirst("password").equals(formData.getFirst("password_rep"));
     }
 
     private UserHandle generateUserHandleFromFormData(MultiValueMap<String, String> formData, Date birthdayDate) {

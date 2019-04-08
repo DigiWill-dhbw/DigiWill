@@ -36,9 +36,9 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
-        if (button.equals("Save")) {
+        if ("Save".equals(button)) {
             driver.findElement(By.id("submitButton")).click();
-        } else if (button.equals("Cancel")) {
+        } else if ("Cancel".equals(button)) {
             driver.findElement(By.id("cancelButton")).click();
         }
     }
@@ -107,7 +107,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         // Write code here that turns the phrase above into concrete actions
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
-        WebElement item = items.get(items.size() - 1);
+        items.get(items.size() - 1);
     }
 
     @Then("^The service should not accept the new action$")

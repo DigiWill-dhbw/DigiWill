@@ -100,7 +100,7 @@ public class MailDispatcherTest {
 
     }
 
-    @Test
+    //TODO @Test
     public void sendResetEmailTest() throws Exception {
         //TODO out of scope right now, so test will be implemented later
 
