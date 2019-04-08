@@ -48,7 +48,7 @@ public class LoginFeatureTest {
     public void enterEmailPasswordAndLogin(String emailAddress, String password) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.findElement(By.id("usernameInput")).sendKeys(emailAddress);
+        driver.findElement(By.id("emailInput")).sendKeys(emailAddress);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
     }

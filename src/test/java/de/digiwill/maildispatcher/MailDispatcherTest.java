@@ -1,6 +1,7 @@
 package de.digiwill.maildispatcher;
 
 import de.digiwill.exception.EmailException;
+import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
 import de.digiwill.util.EmailDispatcher;
 import de.digiwill.util.EmailResponseHandle;
@@ -87,7 +88,8 @@ public class MailDispatcherTest {
 
     @Test
     public void sendRegistrationConfirmationEmailTest() throws Exception {
-        UserHandle uh = new UserHandle("user@name.de", "test", null);
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        UserHandle uh = new UserHandle("user@name.de", "test", personalData, null);
         uh.setVerified(false);
         EmailResponseHandle erh = EmailResponseHandle.getRegistrationHandle(uh);
         String[] recipient = {uh.getEmailAddress()};
@@ -116,7 +118,8 @@ public class MailDispatcherTest {
 
     @Test
     public void sendReminderEmailTest() throws Exception {
-        UserHandle uh = new UserHandle("user@name.de", "test", null);
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        UserHandle uh = new UserHandle("user@name.de", "test", personalData, null);
         String[] recipient = {uh.getEmailAddress()};
 
         emailDispatcher.sendReminderEmail(uh);
