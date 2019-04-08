@@ -1,5 +1,6 @@
 package de.digiwill.controller;
 
+import de.digiwill.exception.EmailException;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
@@ -32,28 +33,35 @@ public class EmailController {
 
     @PostMapping("/addEmail")
     public RedirectView addEmailPost(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content, Principal principal, Model model) {
-        String username = principal.getName();
-        UserHandle user = userHandleManager.loadUserByUserName(username);
+        String emailAddress = principal.getName();
+        UserHandle user = userHandleManager.loadUserByEmailAddress(emailAddress);
+        try {
+            EmailAction action = generateEmailAction(recipients, subject, content);
+            user.addAction(action);
+            userHandleManager.updateUser(user);
+            return new RedirectView("getEmails");
+        }catch(EmailException e){
+            return new RedirectView("getEmails");
+        }
+    }
+
+    private EmailAction generateEmailAction(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content) throws EmailException {
         List<String> recipient_list = new ArrayList<>();
-        String[] reci_array = recipients.split(" ");
-        for (String r :
-                reci_array) {
-            if (registrationService.isValidEmailAdress(r)) {
-                recipient_list.add(r);
+        String[] recipient_array = recipients.split(" ");
+        for (String recipient : recipient_array) {
+            if (registrationService.isValidEmailAddress(recipient)) {
+                recipient_list.add(recipient);
             } else {
-                return new RedirectView("getEmails");
+                throw new EmailException("Recipient List contains invalid Email Address");
             }
 
         }
-        EmailAction action = new EmailAction(recipient_list, subject, false, content);
-        user.addAction(action);
-        userHandleManager.updateUser(user);
-        return new RedirectView("getEmails");
+        return new EmailAction(recipient_list, subject, false, content);
     }
 
     @GetMapping("/getEmails")
     public String getEmails(Model model, Principal principal) {
-        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
         List<EmailAction> emails = new ArrayList<>();
         for (BaseAction action : actions
@@ -67,7 +75,7 @@ public class EmailController {
     @GetMapping("/editEmail")
     public String editEmail(@RequestParam(name = "idx", required = true) String index, Principal principal, Model model) {
         int idx = Integer.parseInt(index);
-        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
         EmailAction action = (EmailAction) actions.get(idx);
         model.addAttribute("email", action);
@@ -77,28 +85,22 @@ public class EmailController {
     @PostMapping("/editEmail")
     public RedirectView editEmailPost(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content, @RequestParam(name = "index", required = true) String index, Principal principal, Model model) {
         int idx = Integer.parseInt(index);
-        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
-        List<String> recipient_list = new ArrayList<>();
-        String[] reci_array = recipients.split(" ");
-        for (String r :  reci_array) {
-            if (registrationService.isValidEmailAdress(r)) {
-                recipient_list.add(r);
-            } else {
-                return new RedirectView("getEmails");
-            }
+        try {
+            actions.set(idx, generateEmailAction(recipients, subject, content));
+            user.setActions(actions);
+            userHandleManager.updateUser(user);
+            return new RedirectView("getEmails");
+        }catch(EmailException e){
+            return new RedirectView("getEmails");
         }
-        EmailAction action = new EmailAction(recipient_list, subject, false, content);
-        actions.set(idx, action);
-        user.setActions(actions);
-        userHandleManager.updateUser(user);
-        return new RedirectView("getEmails");
     }
 
     @GetMapping("/deleteEmail")
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
-        UserHandle user = userHandleManager.loadUserByUserName(principal.getName());
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
         actions.remove(idx);
         user.setActions(actions);
