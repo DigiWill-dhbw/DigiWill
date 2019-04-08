@@ -44,26 +44,30 @@ public class SignOfLifeDaemon {
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
         for (UserHandle user : userHandles) {
-            if (user.getLastSignOfLife() != -1 && user.getAuthorityByRoleName("ROLE_ADMIN") == null) {
-                if (!user.areAllActionsCompleted() && user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime) {
-                    user.setDead(true);
-                    List<BaseAction> actions = user.getActions();
-                    boolean allCompleted = true;
-                    for (BaseAction action : actions) {
-                        if (!action.wasCompleted()) {
-                            allCompleted = allCompleted && action.execute().wasSuccessful();
-                        }
-                    }
-                    user.setAllActionsCompleted(allCompleted);
-                    userHandleManager.updateUser(user);
-                }
-            }
+            processUser(currentTime, user);
             processedUsers++;
             progress = processedUsers / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
         }
         logger.info("Check finished in: " + ((System.currentTimeMillis() / 1000L) - currentTime));
         running = false;
+    }
+
+    private void processUser(long currentTime, UserHandle user) {
+        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null;
+        boolean shouldTriggerActions = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
+        if (user.getLastSignOfLife() != -1 && isUser && !user.areAllActionsCompleted() && shouldTriggerActions) {
+            user.setDead(true);
+            List<BaseAction> actions = user.getActions();
+            boolean allCompleted = true;
+            for (BaseAction action : actions) {
+                if (!action.wasCompleted()) {
+                    allCompleted = allCompleted && action.execute().wasSuccessful();
+                }
+            }
+            user.setAllActionsCompleted(allCompleted);
+            userHandleManager.updateUser(user);
+        }
     }
 
     public boolean isRunning() {

@@ -4,10 +4,10 @@ import de.digiwill.model.UserHandle;
 
 public class EmailVerificationHandle extends EmailResponseHandle {
 
-    public EmailVerificationHandle(UserHandle userHandle) throws Exception{
+    public EmailVerificationHandle(UserHandle userHandle) throws IllegalArgumentException{
         super(userHandle);
         if (userHandle.isVerified()) {
-            throw new Exception("User already verified");
+            throw new IllegalArgumentException("User already verified");
         }else{
             initialize();
         }

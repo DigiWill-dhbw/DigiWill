@@ -1,7 +1,6 @@
 package de.digiwill.controller;
 
 import de.digiwill.service.SignOfLifeDaemon;
-import org.apache.catalina.core.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

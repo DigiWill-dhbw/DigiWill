@@ -50,12 +50,11 @@ public class UserHandleManager implements UserDetailsManager {
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
-
+        //TODO implement
     }
 
     @Override
     public boolean userExists(String emailAddress) {
-
         try {
            loadUserByEmailAddress(emailAddress);
             return true;

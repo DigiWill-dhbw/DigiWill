@@ -1,4 +1,4 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -125,9 +125,9 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).clear();
         driver.findElement(By.name("content")).sendKeys(content);
-        if (button.equals("Save")) {
+        if ("Save".equals(button)) {
             driver.findElement(By.id("saveButton")).click();
-        } else if (button.equals("Cancel")) {
+        } else if ("Cancel".equals(button)) {
             driver.findElement(By.id("cancelButton")).click();
         }
     }
@@ -135,7 +135,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     @And("^Click \"([^\"]*)\" on the modal$")
     public void clickOnTheModal(String button) {
         WebDriver driver = getWebDriver();
-        if (button.equals("Confirm")) {
+        if ("Confirm".equals(button)) {
             driver.findElement(By.id("confirmDeleteButton")).click();
         } else {
             driver.findElement(By.id("cancelDeleteButton")).click();

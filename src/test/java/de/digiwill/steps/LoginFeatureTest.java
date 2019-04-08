@@ -1,4 +1,4 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.steps;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
