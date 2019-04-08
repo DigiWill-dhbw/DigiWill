@@ -37,7 +37,7 @@
         </tr>
         <tr th:each="userhandle : ${userhandles}">
             <td th:text="${userhandle.personalData.getFullName()}"></td>
-            <td th:text="${userhandle.username}"></td>
+            <td th:text="${userhandle.emailAddress}"></td>
             <td th:text="${userhandle.personalData.getAddress()}"></td>
             <td><img
                     th:src="${userhandle.isDead()} ? '../../images/check_true.png' : '../../images/check_false.png'"
@@ -48,11 +48,11 @@
             <td th:text="${userhandle.getAuthoritiesAsString()}"></td>
             <td>
                 <form th:action="@{/admin/overview/users/toggleAdmin}" method="post" style="display: inline;">
-                    <button class="button" id="toggleAdminButton" name="username" th:value="${userhandle.username}"><i class="fas fa-check"></i>
+                    <button class="button" id="toggleAdminButton" name="emailAddress" th:value="${userhandle.emailAddress}"><i class="fas fa-check"></i>
                     </button>
                 </form>
             </td>
-            <td class="no-border"><a th:onclick="|onDelete('${userhandle.username}')|" class="button"><i
+            <td class="no-border"><a th:onclick="|onDelete('${userhandle.emailAddress}')|" class="button"><i
                     class="fas fa-trash-alt"></i></a></td>
         </tr>
     </table>

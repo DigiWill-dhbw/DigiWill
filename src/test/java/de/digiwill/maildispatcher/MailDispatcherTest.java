@@ -1,6 +1,7 @@
 package de.digiwill.maildispatcher;
 
 import de.digiwill.exception.EmailException;
+import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
 import de.digiwill.util.EmailDispatcher;
 import de.digiwill.util.EmailResponseHandle;
@@ -87,15 +88,16 @@ public class MailDispatcherTest {
 
     @Test
     public void sendRegistrationConfirmationEmailTest() throws Exception {
-        UserHandle uh = new UserHandle("user@name.de", "test", null);
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        UserHandle uh = new UserHandle("user@name.de", "test", personalData, null);
         uh.setVerified(false);
         EmailResponseHandle erh = EmailResponseHandle.getRegistrationHandle(uh);
-        String[] recipient = {uh.getUsername()};
+        String[] recipient = {uh.getEmailAddress()};
 
         emailDispatcher.sendRegistrationConfirmationEmail(erh);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REGISTRATION_EMAIL_SUBJECT,
-                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<username>", uh.getUsername()));
+                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", uh.getPersonalData().getFirstName()));
 
     }
 
@@ -116,13 +118,14 @@ public class MailDispatcherTest {
 
     @Test
     public void sendReminderEmailTest() throws Exception {
-        UserHandle uh = new UserHandle("user@name.de", "test", null);
-        String[] recipient = {uh.getUsername()};
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        UserHandle uh = new UserHandle("user@name.de", "test", personalData, null);
+        String[] recipient = {uh.getEmailAddress()};
 
         emailDispatcher.sendReminderEmail(uh);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REMINDER_EMAIL_SUBJECT,
-                EmailDispatcher.REMINDER_EMAIL_CONTENT.replaceAll("<username>", uh.getUsername()));
+                EmailDispatcher.REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", uh.getPersonalData().getFirstName()));
 
     }
 

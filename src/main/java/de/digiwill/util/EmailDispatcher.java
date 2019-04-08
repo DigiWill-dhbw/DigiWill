@@ -30,10 +30,10 @@ public class EmailDispatcher {
     public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {
         logger.debug("Initiating sendRegistrarionConfirmation");
         String subject = REGISTRATION_EMAIL_SUBJECT;
-        String content = REGISTRATION_EMAIL_CONTENT.replaceAll("<username>", responseHandle.getUserHandle().getUsername());
+        String content = REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", responseHandle.getUserHandle().getPersonalData().getFirstName());
 
         try {
-            sendEmail(responseHandle.getUserHandle().getUsername(), subject, true, content);
+            sendEmail(responseHandle.getUserHandle().getEmailAddress(), subject, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send registration Email", e);
         }
@@ -52,11 +52,11 @@ public class EmailDispatcher {
     public void sendReminderEmail(UserHandle userHandle) throws EmailException {
         logger.debug("Initiating sendReminder");
         String subject = REMINDER_EMAIL_SUBJECT;
-        String content = REMINDER_EMAIL_CONTENT.replaceAll("<username>", userHandle.getUsername());
+        String content = REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName());
         //TODO generate Link for user and refactor message content into file
 
         try {
-            sendEmail(userHandle.getUsername(), subject, true, content);
+            sendEmail(userHandle.getEmailAddress(), subject, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send reminder", e);
         }
@@ -101,13 +101,13 @@ public class EmailDispatcher {
     public static final String RESET_EMAIL_SUBJECT = "";
     public static final String RESET_EMAIL_CONTENT = "";
     public static final String REGISTRATION_EMAIL_SUBJECT = "Confirm your registration!";
-    public static final String REGISTRATION_EMAIL_CONTENT = "Hello <username><br/><br/>" +
+    public static final String REGISTRATION_EMAIL_CONTENT = "Hello <firstName><br/><br/>" +
             "please confirm your registration by clicking <a href=\"https://registrierung.com\">this link</a>.<br/>" +
             "Thanks for using our service<br/><br/>" +
             "Regards, <br/>DigiWill";
     ;
     public static final String REMINDER_EMAIL_SUBJECT = "Are you dead?";
-    public static final String REMINDER_EMAIL_CONTENT = "Hello <username>,<br/>" +
+    public static final String REMINDER_EMAIL_CONTENT = "Hello <firstName>,<br/>" +
             "we have noticed you haven't checked in with us for a long time.<br/>" +
             "Please confirm that you are alive in your app or at <a href=\"https://google.de\">this website</a>.<br/><br/>" +
             "Regards, <br/>DigiWill";

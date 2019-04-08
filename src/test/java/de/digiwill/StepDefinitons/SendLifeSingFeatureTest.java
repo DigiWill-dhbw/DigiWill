@@ -45,10 +45,10 @@ public class SendLifeSingFeatureTest {
         }
     }
 
-    @Then("^Life sign was sent$")
-    public void lifeSignWasSent() {
-        UserHandle userHandle = springBootBaseIntegrationTest.getUserHandleManager().loadUserByUserName("test_user_send_life_sign@digiwill.de");
-        Assert.assertTrue(userHandle.getLastSignOfLife() != 0);
+    @Then("^User with email \"([^\"]*)\" has sent a Life sign$")
+    public void lifeSignWasSent(String email) {
+        UserHandle userHandle = springBootBaseIntegrationTest.getUserHandleManager().loadUserByEmailAddress(email);
+        Assert.assertTrue(userHandle.getLastSignOfLife() > 0);
     }
 
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.time.Instant;
 
 @Controller
 public class SendLifeSignController {
@@ -17,10 +16,9 @@ public class SendLifeSignController {
 
     @PostMapping("/lifeSign")
     String sendLifeSign(Principal principal) {
-        String username = principal.getName();
-        UserHandle userHandle = userHandleManager.loadUserByUserName(username);
-        long currentTime = Instant.now().getEpochSecond();
-        userHandle.setLastSignOfLife(currentTime);
+        String emailAddress = principal.getName();
+        UserHandle userHandle = userHandleManager.loadUserByEmailAddress(emailAddress);
+        userHandle.sendSignOfLife();
         userHandleManager.updateUser(userHandle);
         return "index";
     }

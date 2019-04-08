@@ -7,11 +7,16 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.EmailAction;
+import de.digiwill.model.Security.SecurityHelper;
+import de.digiwill.model.UserHandle;
+import de.digiwill.model.UserHandleManager;
 import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +27,10 @@ import static org.junit.Assert.assertNotNull;
 public class LoginFeatureTest {
     @Autowired
     SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
+
+    @Autowired
+    UserHandleManager userHandleManager;
+
     WebDriver driver;
 
     @Given("^\"([^\"]*)\" Users are created$")
@@ -37,24 +46,32 @@ public class LoginFeatureTest {
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + url);
     }
 
-    @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" \"([^\"]*)\"$")
-    public void aUserWithEmailAndPassword(String arg0, String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        //TODO
-        //throw new PendingException();
+    @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
+    public void aUserWithEmailAndPasswordExists(String email, String password) throws Throwable {
+        springBootBaseIntegrationTest.setUpSingleUser(email, password);
+    }
+
+    @Given("^A user with email \"([^\"]*)\" doesn't exist$")
+    public void aUserWithEmailAndPasswordDoesntExist(String email){
+        try {
+            UserHandle userHandle = userHandleManager.loadUserByEmailAddress(email);
+            if (userHandle != null) {
+                userHandleManager.deleteUser(email);
+            }
+        }catch(UsernameNotFoundException ignore){}
     }
 
     @When("^Enter Email \"([^\"]*)\", password \"([^\"]*)\" and login$")
     public void enterEmailPasswordAndLogin(String emailAddress, String password) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.findElement(By.id("usernameInput")).sendKeys(emailAddress);
+        driver.findElement(By.id("emailInput")).sendKeys(emailAddress);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
     }
 
-    @Then("^Login for \"([^\"]*)\", \"([^\"]*)\"$")
-    public void loginFor(String user, String arg1) throws Throwable {
+    @Then("^Login \"([^\"]*)\"$")
+    public void login(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         driver = springBootBaseIntegrationTest.getWebDriver();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
@@ -70,7 +87,7 @@ public class LoginFeatureTest {
 
     @Then("Logout was successful")
     public void logoutWasSuccessful() {
-        driver =  springBootBaseIntegrationTest.getWebDriver();
+        driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort());
         assertNotNull(driver.findElement(By.id("loginButton")));
     }
