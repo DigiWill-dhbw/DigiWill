@@ -89,7 +89,8 @@
         </tr>
         <tr>
             <td>
-                <div><input type="submit" class="button" id="saveButton"></div>
+                <div><input th:if="${edit}" type="submit" class="button" id="saveButton"></div>
+                <div><input th:if="${!edit}" type="submit" class="button" id="submitButton"></div>
             </td>
             <td th:if="${edit == true}">
                 <a onclick="onDelete()" class="button" id="deleteButton"><i class="fas fa-trash-alt"></i></a></td>
