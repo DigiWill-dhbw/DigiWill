@@ -47,7 +47,7 @@ public class SendLifeSingFeatureTest {
 
     @Then("^Life sign was sent$")
     public void lifeSignWasSent() {
-        UserHandle userHandle = springBootBaseIntegrationTest.getUserHandleManager().loadUserByUserName("test_user_send_life_sign@digiwill.de");
+        UserHandle userHandle = springBootBaseIntegrationTest.getUserHandleManager().loadUserByEmailAddress("test_user_send_life_sign@digiwill.de");
         Assert.assertTrue(userHandle.getLastSignOfLife() != 0);
     }
 

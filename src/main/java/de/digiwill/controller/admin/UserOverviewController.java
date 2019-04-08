@@ -44,7 +44,7 @@ public class UserOverviewController {
     @RequestMapping(value = "/admin/overview/users/toggleAdmin", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String toggleAdmin(@RequestBody MultiValueMap<String, String> formData, Model model) {
-            UserHandle userHandle = userHandleManager.loadUserByUserName(formData.getFirst("username"));
+            UserHandle userHandle = userHandleManager.loadUserByEmailAddress(formData.getFirst("emailAddress"));
             GrantedAuthority auth = userHandle.getAuthorityByRoleName("ROLE_ADMIN");
             if (auth == null) {
                 userHandle.addAuthority("ROLE_ADMIN");

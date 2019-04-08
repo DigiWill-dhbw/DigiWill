@@ -44,8 +44,8 @@ public class UserHandleManager implements UserDetailsManager {
     }
 
     @Override
-    public void deleteUser(String username) {
-        userHandleRepository.deleteUserHandleBy(username);
+    public void deleteUser(String emailAddress) {
+        userHandleRepository.deleteUserHandleBy(emailAddress);
     }
 
     @Override
@@ -54,24 +54,23 @@ public class UserHandleManager implements UserDetailsManager {
     }
 
     @Override
-    public boolean userExists(String username) {
+    public boolean userExists(String emailAddress) {
 
         try {
-            UserDetails user = loadUserByUsername(username);
+            UserDetails user = loadUserByEmailAddress(emailAddress);
             return true;
         } catch (UsernameNotFoundException e) {
             return false;
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserHandle user = userHandleRepository.findUserHandleByUsername(username);
+    public UserHandle loadUserByEmailAddress(String emailAddress) throws UsernameNotFoundException {
+        UserHandle user = userHandleRepository.findUserHandleByEmailAddress(emailAddress);
         if (user == null) {
-            user = userHandleRepository.findUserHandleByUsername(username);
+            user = userHandleRepository.findUserHandleByEmailAddress(emailAddress);
         }
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(emailAddress);
         }
         return user;
     }
@@ -80,14 +79,15 @@ public class UserHandleManager implements UserDetailsManager {
         userHandleRepository.insert(users);
     }
 
-    public UserHandle loadUserByUserName(String username) {
-        return (UserHandle) loadUserByUsername(username);
-    }
-
     public List<UserHandle> findAll(){
         return userHandleRepository.findAll();
       }
     public void deleteAllUsers() {
         userHandleRepository.deleteAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return loadUserByEmailAddress(username);
     }
 }

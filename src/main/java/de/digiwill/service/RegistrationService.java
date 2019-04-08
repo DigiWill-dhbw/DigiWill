@@ -63,7 +63,7 @@ public class RegistrationService {
             return RegistrationResponse.TO_YOUNG;
         }
         try {
-            UserHandle uH = (UserHandle) userHandleManager.loadUserByUsername(formData.getFirst("email"));
+            UserHandle uH = (UserHandle) userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
             if (uH != null) {
                 return RegistrationResponse.EMAIL_ALREADY_IN_USE;
             }

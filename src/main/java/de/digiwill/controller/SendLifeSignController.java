@@ -16,8 +16,8 @@ public class SendLifeSignController {
 
     @PostMapping("/lifeSign")
     String sendLifeSign(Principal principal) {
-        String username = principal.getName();
-        UserHandle userHandle = userHandleManager.loadUserByUserName(username);
+        String emailAddress = principal.getName();
+        UserHandle userHandle = userHandleManager.loadUserByEmailAddress(emailAddress);
         userHandle.sendSignOfLife();
         userHandleManager.updateUser(userHandle);
         return "index";
