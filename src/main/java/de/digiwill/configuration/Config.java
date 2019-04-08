@@ -22,9 +22,9 @@ import java.util.Properties;
 @PropertySource("classpath:secrets-${envTarget}.properties")
 public class Config {
     @Autowired
-    Environment env;
+    private Environment env;
 
-    Logger logger = LoggerFactory.getLogger(Config.class);
+    private Logger logger = LoggerFactory.getLogger(Config.class);
 
     @Bean("emailDispatcher")
     public EmailDispatcher getEmailDispatcher() {

@@ -25,7 +25,7 @@ public class UserHandleRepositoryTest {
     private UserHandleManager userHandleManager;
 
     @Before
-    public void setup() {
+    public void setUp() {
         userHandleManager = new UserHandleManager(repository);
         userHandleManager.createUsers(createUserHandle(5, Arrays.asList(
                 new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")

@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GreetingController {
-    @Autowired
-    private EmailDispatcher emailDispatcher;
 
     @Autowired
-    SignOfLifeDaemon signOfLifeDaemon;
+    private SignOfLifeDaemon signOfLifeDaemon;
 
     private static ApplicationContext app;
-    Logger logger = LoggerFactory.getLogger(GreetingController.class);
+    private Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {

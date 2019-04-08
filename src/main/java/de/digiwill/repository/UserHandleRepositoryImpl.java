@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class UserHandleRepositoryImpl implements UserHandleRepositoryCustom {
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
     @Override
     public boolean checkLogin() {

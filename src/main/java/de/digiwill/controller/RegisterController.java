@@ -20,9 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterController {
 
     @Autowired
-    RegistrationService registrationService;
+    private RegistrationService registrationService;
 
-    Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    private Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

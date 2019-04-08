@@ -14,7 +14,7 @@ import java.util.List;
 public class UserHandleManager implements UserDetailsManager {
 
     @Autowired
-    UserHandleRepository userHandleRepository;
+    private UserHandleRepository userHandleRepository;
 
     public UserHandleManager() {
 
@@ -57,7 +57,7 @@ public class UserHandleManager implements UserDetailsManager {
     public boolean userExists(String emailAddress) {
 
         try {
-            UserDetails user = loadUserByEmailAddress(emailAddress);
+           loadUserByEmailAddress(emailAddress);
             return true;
         } catch (UsernameNotFoundException e) {
             return false;

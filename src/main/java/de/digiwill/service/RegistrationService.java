@@ -27,9 +27,9 @@ public class RegistrationService {
     private static final DateFormat df = new SimpleDateFormat("yyyy-dd-MM");
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
 
-    Logger logger = LoggerFactory.getLogger(RegistrationService.class);
+    private Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     public RegistrationResponse addNewUser(MultiValueMap<String, String> formData) {
 

@@ -19,13 +19,13 @@ public class SignOfLifeDaemon {
     /**
      * Check interval in minutes
      */
-    public static final int checkInterval = 10;
+    private static final int checkInterval = 10;
 
     @Autowired
-    UserHandleRepository userHandleRepository;
+    private UserHandleRepository userHandleRepository;
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
 
     private boolean running = false;
     /**

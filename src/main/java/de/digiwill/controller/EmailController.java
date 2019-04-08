@@ -22,9 +22,9 @@ import java.util.List;
 public class EmailController {
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
     @Autowired
-    RegistrationService registrationService;
+    private RegistrationService registrationService;
 
     @GetMapping("/addEmail")
     public String addEmail(Model model) {
