@@ -24,8 +24,6 @@ public class EmailController {
 
     @Autowired
     private UserHandleManager userHandleManager;
-    @Autowired
-    private RegistrationService registrationService;
 
     @GetMapping("/addEmail")
     public String addEmail(Model model) {
