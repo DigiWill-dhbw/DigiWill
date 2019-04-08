@@ -24,7 +24,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/");
         driver.findElement(By.id("loginButtonHeader")).click();
-        driver.findElement(By.id("emailAddressInput")).sendKeys(email);
+        driver.findElement(By.id("emailInput")).sendKeys(email);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
     }
