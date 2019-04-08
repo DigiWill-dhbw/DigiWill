@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -247,5 +248,8 @@ public class UserHandle implements UserDetails {
         return isVerified;
     }
 
-
+    public void sendSignOfLife() {
+        long currentTime = Instant.now().getEpochSecond();
+        setLastSignOfLife(currentTime);
+    }
 }
