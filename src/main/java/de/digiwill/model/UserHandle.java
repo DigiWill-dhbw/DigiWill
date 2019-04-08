@@ -23,7 +23,7 @@ public class UserHandle implements UserDetails {
     /**
      * Email Address
      */
-    private String username;
+    private String emailAddress;
     private String password;
     private List<GrantedAuthority> authorities; //TODO final?
     private boolean accountNonExpired;
@@ -82,7 +82,7 @@ public class UserHandle implements UserDetails {
                       long deltaDeathTime, boolean isDead,
                       PersonalData personalData, List<BaseAction> actions, boolean allActionsCompleted) {
 
-        this.username = emailAddress;
+        this.emailAddress = emailAddress;
         this.password = password;
         this.authorities = authorities;//Collections.unmodifiableSet(UserHelper.sortAuthorities(authorities));
         this.accountNonExpired = accountNonExpired;
@@ -204,14 +204,8 @@ public class UserHandle implements UserDetails {
         authorities.remove(auth);
     }
 
-    @Deprecated
-    public String getAlias() {
-        return getUsername();
-    }
-
-    @Deprecated
     public String getEmailAddress() {
-        return getUsername();
+        return emailAddress;
     }
 
     public PersonalData getPersonalData() {
@@ -230,7 +224,7 @@ public class UserHandle implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return getEmailAddress();
     }
 
     @Override
