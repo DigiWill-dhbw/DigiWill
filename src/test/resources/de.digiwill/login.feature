@@ -7,19 +7,18 @@ Feature: Login
     Given "/login" is open
 
   Scenario Outline: 01 - Login successful
-    Given A user with email "<email>" and password "<password>" "exists"
-    And "1" Users are created
+    Given A user with email "<email>" and password "<password>" exists
     When Enter Email "<email>", password "<password>" and login
-    Then Login for "<email>", "succeeds"
+    Then Login "succeeds"
 
     Examples:
-      | email               | password            |
-      | nobody0@digiwill.de | nobody0@digiwill.de |
+      | email            | password |
+      | example@mail.com | password |
 
   Scenario Outline: 02 - Login failed
-    Given A user with email "<email>" and password "<password>" "doesn't exist"
+    Given A user with email "<email>" doesn't exist
     When Enter Email "<email>", password "<password>" and login
-    Then Login for "<email>", "fails"
+    Then Login "fails"
 
     Examples:
       | email                | password       |
