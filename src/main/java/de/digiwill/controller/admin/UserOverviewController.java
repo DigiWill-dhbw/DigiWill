@@ -45,7 +45,7 @@ public class UserOverviewController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String toggleAdmin(@RequestBody MultiValueMap<String, String> formData, Model model) {
             UserHandle userHandle = userHandleManager.loadUserByUserName(formData.getFirst("username"));
-            GrantedAuthority auth = userHandle.hasAuthority("ROLE_ADMIN");
+            GrantedAuthority auth = userHandle.getAuthorityByRoleName("ROLE_ADMIN");
             if (auth == null) {
                 userHandle.addAuthority("ROLE_ADMIN");
             } else {

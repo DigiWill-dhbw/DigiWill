@@ -191,7 +191,7 @@ public class UserHandle implements UserDetails {
         authorities.add(new SimpleGrantedAuthority(role));
     }
 
-    public GrantedAuthority hasAuthority(String role) {
+    public GrantedAuthority getAuthorityByRoleName(String role) {
         for (GrantedAuthority a : authorities) {
             if (a.getAuthority().equals(role)) {
                 return a;

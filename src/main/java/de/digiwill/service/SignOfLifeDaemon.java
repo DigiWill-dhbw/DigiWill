@@ -44,7 +44,7 @@ public class SignOfLifeDaemon {
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
         for (UserHandle user : userHandles) {
-            if (user.getLastSignOfLife() != -1 && user.hasAuthority("ROLE_ADMIN") == null) {
+            if (user.getLastSignOfLife() != -1 && user.getAuthorityByRoleName("ROLE_ADMIN") == null) {
                 if (!user.areAllActionsCompleted() && user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime) {
                     user.setDead(true);
                     List<BaseAction> actions = user.getActions();
