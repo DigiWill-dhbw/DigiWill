@@ -1,4 +1,4 @@
-package de.digiwill.service;
+package de.digiwill.service.registration;
 
 import org.springframework.ui.Model;
 

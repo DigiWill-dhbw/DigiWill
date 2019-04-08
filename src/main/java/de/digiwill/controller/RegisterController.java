@@ -1,7 +1,7 @@
 package de.digiwill.controller;
 
-import de.digiwill.service.RegistrationResponse;
-import de.digiwill.service.RegistrationService;
+import de.digiwill.service.registration.RegistrationResponse;
+import de.digiwill.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

@@ -5,7 +5,7 @@ import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
-import de.digiwill.service.RegistrationService;
+import de.digiwill.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
