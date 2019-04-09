@@ -73,7 +73,7 @@ public class LoginFeatureTest {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         switch (state) {
             case "succeeds":
-                assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/login", driver.getCurrentUrl());
+                assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/", driver.getCurrentUrl());
                 break;
             case "fails":
                 assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/?login&error", driver.getCurrentUrl());

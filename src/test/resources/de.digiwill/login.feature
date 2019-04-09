@@ -4,7 +4,7 @@ Feature: Login
   I want to login with my registered account
 
   Background:
-    Given "/login" is open
+    Given "/?login" is open
 
   Scenario Outline: 01 - Login successful
     Given A user with email "<email>" and password "<password>" exists
