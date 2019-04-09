@@ -12,9 +12,11 @@ public abstract class EmailResponseHandle {
     @Field("_id")
     private ObjectId UID;
     private String emailAddress;
+    private long timeout;
 
-    EmailResponseHandle(UserHandle userHandle) {
+    EmailResponseHandle(UserHandle userHandle, long timeout) {
         this.emailAddress = userHandle.getEmailAddress();
+        this.timeout = timeout;
     }
 
     protected abstract void initialize();
@@ -27,5 +29,9 @@ public abstract class EmailResponseHandle {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public long getTimeout() {
+        return timeout;
     }
 }

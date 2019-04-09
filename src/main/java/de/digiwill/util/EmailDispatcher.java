@@ -6,6 +6,7 @@ import de.digiwill.model.UserHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -91,7 +92,6 @@ public class EmailDispatcher {
                 message.setSentDate(new Date());
             } catch (Exception e) {
                 logger.error("Error creating mail.");
-                e.printStackTrace();
                 throw new EmailException(e.getMessage());
             }
             logger.debug("Sending Email");
@@ -99,7 +99,6 @@ public class EmailDispatcher {
                 emailTransportWrapper.sendMessage(message);
             } catch (MessagingException e) {
                 logger.error("Error sending mail.");
-                e.printStackTrace();
                 throw new EmailException(e.getMessage());
             }
 

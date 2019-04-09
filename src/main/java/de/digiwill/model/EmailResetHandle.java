@@ -3,7 +3,7 @@ package de.digiwill.model;
 public class EmailResetHandle extends EmailResponseHandle {
 
     public EmailResetHandle(UserHandle userHandle) {
-        super(userHandle);
+        super(userHandle, -1);
         initialize();
     }
 
