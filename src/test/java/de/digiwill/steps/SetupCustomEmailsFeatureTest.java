@@ -1,4 +1,4 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -16,17 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 @Ignore
 public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest {
-
-   /* @And("^The user \"([^\"]*)\" with the password \"([^\"]*)\" is logged in$")
-    public void theUserWithThePasswordIsLoggedInAndOnTheActionOverviewPage(String email, String password) {
-        setUpSingleUser(email, password);
-        driver = getWebDriver();
-        driver.get("http://localhost:" + getPort() + "/");
-        driver.findElement(By.id("loginButtonHeader")).click();
-        driver.findElement(By.id("emailInput")).sendKeys(email);
-        driver.findElement(By.id("passwordInput")).sendKeys(password);
-        driver.findElement(By.id("loginButton")).click();
-    }*/
 
     @And("^The user is on the actions overview page$")
     public void theUserIsOnActionsOverviewPage() {
@@ -47,9 +36,9 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
-        if (button.equals("Save")) {
+        if ("Save".equals(button)) {
             driver.findElement(By.id("submitButton")).click();
-        } else if (button.equals("Cancel")) {
+        } else if ("Cancel".equals(button)) {
             driver.findElement(By.id("cancelButton")).click();
         }
     }
@@ -97,15 +86,15 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
         WebElement item = items.get(items.size() - 1);
-        if (button.equals("Edit")) {
+        if ("Edit".equals(button)) {
             item.findElement(By.id("editButton")).click();
-        } else if (button.equals("Delete")) {
+        } else if ("Delete".equals(button)) {
             item.findElement(By.id("deleteButton")).click();
-        } else if (button.equalsIgnoreCase("logout")){
-            WebElement dropdown = driver.findElement(By.className("myDropdown"));
-            List<WebElement> dropdownTtems = listing.findElements(By.tagName("input"));
-            WebElement dropdownItem = items.get(items.size());
-            if (button.equals("Logout")) {
+        } else if ("logout".equalsIgnoreCase(button)) {
+            driver.findElement(By.className("myDropdown"));
+            listing.findElements(By.tagName("input"));
+            items.get(items.size());
+            if ("Logout".equals(button)) {
                 item.findElement(By.id("SendLifeSingFeatureTest")).click();
             }
         }
@@ -118,7 +107,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         // Write code here that turns the phrase above into concrete actions
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
-        WebElement item = items.get(items.size() - 1);
+        items.get(items.size() - 1);
     }
 
     @Then("^The service should not accept the new action$")
@@ -136,9 +125,9 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).clear();
         driver.findElement(By.name("content")).sendKeys(content);
-        if (button.equals("Save")) {
+        if ("Save".equals(button)) {
             driver.findElement(By.id("saveButton")).click();
-        } else if (button.equals("Cancel")) {
+        } else if ("Cancel".equals(button)) {
             driver.findElement(By.id("cancelButton")).click();
         }
     }
@@ -146,7 +135,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     @And("^Click \"([^\"]*)\" on the modal$")
     public void clickOnTheModal(String button) {
         WebDriver driver = getWebDriver();
-        if (button.equals("Confirm")) {
+        if ("Confirm".equals(button)) {
             driver.findElement(By.id("confirmDeleteButton")).click();
         } else {
             driver.findElement(By.id("cancelDeleteButton")).click();

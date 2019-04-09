@@ -12,10 +12,10 @@ import java.security.Principal;
 public class SendLifeSignController {
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
 
     @PostMapping("/lifeSign")
-    String sendLifeSign(Principal principal) {
+    public String sendLifeSign(Principal principal) {
         String emailAddress = principal.getName();
         UserHandle userHandle = userHandleManager.loadUserByEmailAddress(emailAddress);
         userHandle.sendSignOfLife();

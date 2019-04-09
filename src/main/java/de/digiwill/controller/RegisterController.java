@@ -1,9 +1,7 @@
 package de.digiwill.controller;
 
-import de.digiwill.service.RegistrationResponse;
-import de.digiwill.service.RegistrationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.digiwill.service.registration.RegistrationResponse;
+import de.digiwill.service.registration.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -20,9 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterController {
 
     @Autowired
-    RegistrationService registrationService;
-
-    Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    private RegistrationService registrationService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

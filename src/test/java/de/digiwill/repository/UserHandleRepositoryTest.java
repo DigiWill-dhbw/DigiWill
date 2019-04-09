@@ -1,7 +1,7 @@
 package de.digiwill.repository;
 
 import de.digiwill.model.*;
-import de.digiwill.model.Security.SecurityHelper;
+import de.digiwill.util.SecurityHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class UserHandleRepositoryTest {
     private UserHandleManager userHandleManager;
 
     @Before
-    public void setup() {
+    public void setUp() {
         userHandleManager = new UserHandleManager(repository);
         userHandleManager.createUsers(createUserHandle(5, Arrays.asList(
                 new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")

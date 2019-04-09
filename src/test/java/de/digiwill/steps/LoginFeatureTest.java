@@ -1,4 +1,4 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.steps;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -7,7 +7,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.EmailAction;
-import de.digiwill.model.Security.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
 import de.digiwill.util.SeleniumDriverUtils;
@@ -15,39 +14,36 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class LoginFeatureTest {
     @Autowired
-    SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
+    private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
 
-    WebDriver driver;
 
     @Given("^\"([^\"]*)\" Users are created$")
     public void createUsers(String arg0) {
-        springBootBaseIntegrationTest.setUpUserHandle(Integer.parseInt(arg0), Arrays.asList(
-                new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
+        springBootBaseIntegrationTest.setUpUserHandle(Integer.parseInt(arg0), Collections.singletonList(
+                new EmailAction(Collections.singletonList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
         ));
     }
 
     @Given("^\"([^\"]*)\" is open$")
-    public void theIsOpen(String url) throws Throwable {
-        driver = springBootBaseIntegrationTest.getWebDriver();
+    public void theIsOpen(String url){
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + url);
     }
 
     @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
-    public void aUserWithEmailAndPasswordExists(String email, String password) throws Throwable {
+    public void aUserWithEmailAndPasswordExists(String email, String password){
         springBootBaseIntegrationTest.setUpSingleUser(email, password);
     }
 
@@ -62,32 +58,35 @@ public class LoginFeatureTest {
     }
 
     @When("^Enter Email \"([^\"]*)\", password \"([^\"]*)\" and login$")
-    public void enterEmailPasswordAndLogin(String emailAddress, String password) throws Throwable {
+    public void enterEmailPasswordAndLogin(String emailAddress, String password) {
         // Write code here that turns the phrase above into concrete actions
-        driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.findElement(By.id("emailInput")).sendKeys(emailAddress);
         driver.findElement(By.id("passwordInput")).sendKeys(password);
         driver.findElement(By.id("loginButton")).click();
     }
 
     @Then("^Login \"([^\"]*)\"$")
-    public void login(String arg1) throws Throwable {
+    public void login(String state) {
         // Write code here that turns the phrase above into concrete actions
-        driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        switch (arg1) {
+        switch (state) {
             case "succeeds":
                 assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/login", driver.getCurrentUrl());
                 break;
             case "fails":
                 assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/?login&error", driver.getCurrentUrl());
                 break;
+            default:
+                fail("Invalid argument: 'Login \"" + state + "\"");
+                break;
         }
     }
 
     @Then("Logout was successful")
     public void logoutWasSuccessful() {
-        driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort());
         assertNotNull(driver.findElement(By.id("loginButton")));
     }

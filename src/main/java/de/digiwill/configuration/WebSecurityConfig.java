@@ -1,6 +1,7 @@
-package de.digiwill.model.Security;
+package de.digiwill.configuration;
 
 import de.digiwill.model.UserHandleManager;
+import de.digiwill.util.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserHandleManager userHandleManager;
+    private UserHandleManager userHandleManager;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

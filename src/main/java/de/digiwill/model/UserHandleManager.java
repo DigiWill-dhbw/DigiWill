@@ -14,7 +14,7 @@ import java.util.List;
 public class UserHandleManager implements UserDetailsManager {
 
     @Autowired
-    UserHandleRepository userHandleRepository;
+    private UserHandleRepository userHandleRepository;
 
     public UserHandleManager() {
 
@@ -50,14 +50,13 @@ public class UserHandleManager implements UserDetailsManager {
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
-
+        //TODO implement
     }
 
     @Override
     public boolean userExists(String emailAddress) {
-
         try {
-            UserDetails user = loadUserByEmailAddress(emailAddress);
+           loadUserByEmailAddress(emailAddress);
             return true;
         } catch (UsernameNotFoundException e) {
             return false;

@@ -2,28 +2,18 @@ package de.digiwill.util;
 
 import de.digiwill.model.UserHandle;
 
-public class EmailResponseHandle {
+public abstract class EmailResponseHandle {
 
     private UserHandle userHandle;
-    private String handle;
-    private EmailResponseType type;
 
-    private EmailResponseHandle(UserHandle userHandle, String handle, EmailResponseType type) {
+    EmailResponseHandle(UserHandle userHandle) {
         this.userHandle = userHandle;
-        this.handle = handle;
-        this.type = type;
     }
 
-    public static EmailResponseHandle getRegistrationHandle(UserHandle userHandle) { //TODO implement
-        if (userHandle.isVerified()) {
-            return null;
-        }
-        return new EmailResponseHandle(userHandle, "", EmailResponseType.REGISTER);
-    }
+    protected abstract void initialize();
 
-    public static EmailResponseHandle getResetHandle(UserHandle userHandle) { //TODO implement
-        return null;
-    }
+    public abstract EmailResponseHandle getLinkSuffix();
+
 
     public UserHandle getUserHandle() {
         return userHandle;

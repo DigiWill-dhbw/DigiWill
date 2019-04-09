@@ -5,7 +5,7 @@ import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
-import de.digiwill.service.RegistrationService;
+import de.digiwill.util.RegexMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +22,7 @@ import java.util.List;
 public class EmailController {
 
     @Autowired
-    UserHandleManager userHandleManager;
-    @Autowired
-    RegistrationService registrationService;
+    private UserHandleManager userHandleManager;
 
     @GetMapping("/addEmail")
     public String addEmail(Model model) {
@@ -49,7 +47,7 @@ public class EmailController {
         List<String> recipient_list = new ArrayList<>();
         String[] recipient_array = recipients.split(" ");
         for (String recipient : recipient_array) {
-            if (registrationService.isValidEmailAddress(recipient)) {
+            if (RegexMatcher.isValidEmailAddress(recipient)) {
                 recipient_list.add(recipient);
             } else {
                 throw new EmailException("Recipient List contains invalid Email Address");

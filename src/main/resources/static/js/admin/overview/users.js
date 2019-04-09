@@ -8,15 +8,15 @@ function onDelete(usr) {
 }
 
 function onLoad() {
-    modal = document.getElementById('deleteModal');
+    modal = document.getElementById("deleteModal");
     // When the user clicks on <span> (x), close the modal
     span = document.getElementById("closeButton");
     span.onclick = function() {
         modal.style.display = "none";
-    }
+    };
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
         }
-    }
+    };
 }

@@ -6,6 +6,7 @@ import de.digiwill.model.UserHandle;
 import de.digiwill.util.EmailDispatcher;
 import de.digiwill.util.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
+import de.digiwill.util.EmailVerificationHandle;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,21 +30,19 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class MailDispatcherTest {
 
-    EmailDispatcher emailDispatcher;
-    Session session;
+    private EmailDispatcher emailDispatcher;
     @Mock
-    EmailTransportWrapper emailTransportWrapper;
+    private EmailTransportWrapper emailTransportWrapper;
 
-    ArgumentCaptor<Message> sentMessage;
-    String subject = "subject";
-    String content = "content";
+    private ArgumentCaptor<Message> sentMessage;
+    private String subject = "subject";
+    private String content = "content";
 
     @Before
-    public void setup() {
+    public void setUp() {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.host", "smtp.google.com");
-        session = Session.getInstance(properties);
-        emailDispatcher = new EmailDispatcher(session, emailTransportWrapper);
+        emailDispatcher = new EmailDispatcher(Session.getInstance(properties), emailTransportWrapper);
         sentMessage = ArgumentCaptor.forClass(Message.class);
         reset(emailTransportWrapper);
     }
@@ -89,19 +88,19 @@ public class MailDispatcherTest {
     @Test
     public void sendRegistrationConfirmationEmailTest() throws Exception {
         PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
-        UserHandle uh = new UserHandle("user@name.de", "test", personalData, null);
-        uh.setVerified(false);
-        EmailResponseHandle erh = EmailResponseHandle.getRegistrationHandle(uh);
-        String[] recipient = {uh.getEmailAddress()};
+        UserHandle userHandle = new UserHandle("user@name.de", "test", personalData, null);
+        userHandle.setVerified(false);
+        EmailResponseHandle erh = new EmailVerificationHandle(userHandle);
+        String[] recipient = {userHandle.getEmailAddress()};
 
         emailDispatcher.sendRegistrationConfirmationEmail(erh);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REGISTRATION_EMAIL_SUBJECT,
-                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", uh.getPersonalData().getFirstName()));
+                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName()));
 
     }
 
-    @Test
+    //TODO @Test
     public void sendResetEmailTest() throws Exception {
         //TODO out of scope right now, so test will be implemented later
 

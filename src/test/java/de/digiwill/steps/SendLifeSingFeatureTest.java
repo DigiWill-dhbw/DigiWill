@@ -1,4 +1,4 @@
-package de.digiwill.StepDefinitons;
+package de.digiwill.steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,12 +16,11 @@ import static org.junit.Assert.assertEquals;
 
 public class SendLifeSingFeatureTest {
     @Autowired
-    SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
-    WebDriver driver;
+    private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
     @When("^Clicking in header \"([^\"]*)\" on Mainpage$")
     public void clickInHeader(String buttonName) {
-        driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         // Write code here that turns the phrase above into concrete actions
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/");
 
