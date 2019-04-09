@@ -31,6 +31,6 @@ public enum RegistrationResponse {
     }
 
     public String getRedirectTarget() {
-        return success ? "home" : "register";
+        return success ? "redirect:/" : "register";
     }
 }

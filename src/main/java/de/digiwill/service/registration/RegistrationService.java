@@ -7,6 +7,7 @@ import de.digiwill.model.UserHandleManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
@@ -33,7 +34,6 @@ public class RegistrationService {
         validators.add(new NonEmptyStringValidator("firstName", RegistrationResponse.NO_FIRST_NAME));
         validators.add(new NonEmptyStringValidator("surName", RegistrationResponse.NO_SURNAME));
         validators.add(new BirthdayValidator(dateFormat));
-        validators.add(new EmailAddressNotInUseValidator(userHandleManager));
     }
 
     public RegistrationResponse addNewUser(final MultiValueMap<String, String> formData) {
@@ -41,6 +41,12 @@ public class RegistrationService {
         if (formData == null) {
             return RegistrationResponse.FORM_DATA_DOESNT_EXIST;
         }
+
+        try {
+            userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
+            return RegistrationResponse.EMAIL_ALREADY_IN_USE;
+        }catch(UsernameNotFoundException ignore){}
+
         for (RegistrationValidator validator : validators) {
             if (!validator.validate(formData)) {
                 return validator.getResponse();
