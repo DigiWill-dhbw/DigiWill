@@ -1,9 +1,16 @@
 package de.digiwill.service.registration;
 
+import de.digiwill.exception.EmailException;
 import de.digiwill.model.PersonalData;
+import de.digiwill.repository.EmailResponseHandleRepository;
+import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.util.EmailDispatcher;
+import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.util.SecurityHelper;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.UserHandleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,9 +28,14 @@ import java.util.List;
 @Service
 public class RegistrationService {
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
+    private final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     @Autowired
     private UserHandleManager userHandleManager;
+    @Autowired
+    private EmailDispatcher emailDispatcher;
+    @Autowired
+    private EmailResponseHandleRepository emailResponseHandleRepository;
 
     private List<RegistrationValidator> validators = new ArrayList<>();
 
@@ -53,7 +65,18 @@ public class RegistrationService {
             }
         }
 
-        userHandleManager.createUser(generateUserHandleFromFormData(formData));
+        UserHandle userHandle = generateUserHandleFromFormData(formData);
+        try {
+            userHandleManager.createUser(userHandle);
+
+            EmailVerificationHandle emailVerificationHandle = new EmailVerificationHandle(userHandle);
+            emailResponseHandleRepository.insert(emailVerificationHandle);
+
+            emailDispatcher.sendRegistrationConfirmationEmail(emailVerificationHandle, userHandle);
+        }catch(EmailException e){
+            userHandleManager.deleteUser(userHandle.getEmailAddress());
+            logger.error(e.getMessage());
+        }
 
         return RegistrationResponse.REGISTRATION_SUCCESSFUL;
     }

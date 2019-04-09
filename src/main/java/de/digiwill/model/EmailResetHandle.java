@@ -1,6 +1,4 @@
-package de.digiwill.util;
-
-import de.digiwill.model.UserHandle;
+package de.digiwill.model;
 
 public class EmailResetHandle extends EmailResponseHandle {
 
@@ -15,7 +13,8 @@ public class EmailResetHandle extends EmailResponseHandle {
     }
 
     @Override
-    public EmailResponseHandle getLinkSuffix() {
+    public String getLinkSuffix() {
         return null;
     }
+
 }

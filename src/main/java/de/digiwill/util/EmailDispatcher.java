@@ -1,6 +1,7 @@
 package de.digiwill.util;
 
 import de.digiwill.exception.EmailException;
+import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.model.UserHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class EmailDispatcher {
     public static final String RESET_EMAIL_CONTENT = "";
     public static final String REGISTRATION_EMAIL_SUBJECT = "Confirm your registration!";
     public static final String REGISTRATION_EMAIL_CONTENT = "Hello <firstName><br/><br/>" +
-            "please confirm your registration by clicking <a href=\"https://registrierung.com\">this link</a>.<br/>" +
+            "please confirm your registration by clicking <a href=\"<url>\">this link</a>.<br/>" +
             "Thanks for using our service<br/><br/>" +
             "Regards, <br/>DigiWill";
     public static final String REMINDER_EMAIL_SUBJECT = "Are you dead?";
@@ -30,9 +31,9 @@ public class EmailDispatcher {
             "Regards, <br/>DigiWill";
     public static final String EMAIL_REGEX = "^([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,},?)+$";
 
-    private Logger logger = LoggerFactory.getLogger(EmailDispatcher.class);
-    private Session session;
-    private EmailTransportWrapper emailTransportWrapper;
+    private final Logger logger = LoggerFactory.getLogger(EmailDispatcher.class);
+    private final Session session;
+    private final EmailTransportWrapper emailTransportWrapper;
 
     public EmailDispatcher(Session session, EmailTransportWrapper emailTransportWrapper) {
         this.session = session;
@@ -41,12 +42,12 @@ public class EmailDispatcher {
     }
 
     //TODO refactor Registration and Reset Email into a single method for system emails
-    public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle) throws EmailException {
-        logger.debug("Initiating sendRegistrarionConfirmation");
-        String content = REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", responseHandle.getUserHandle().getPersonalData().getFirstName());
-
+    public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle, UserHandle userHandle) throws EmailException {
+        logger.debug("Initiating sendRegistrationConfirmationEmail");
+        String content = REGISTRATION_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
+                            .replace("<url>", "http://localhost:8080/"+responseHandle.getLinkSuffix());
         try {
-            sendEmail(responseHandle.getUserHandle().getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
+            sendEmail( userHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send registration Email", e);
         }

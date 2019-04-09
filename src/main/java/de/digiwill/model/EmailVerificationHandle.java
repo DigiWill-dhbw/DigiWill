@@ -1,6 +1,4 @@
-package de.digiwill.util;
-
-import de.digiwill.model.UserHandle;
+package de.digiwill.model;
 
 public class EmailVerificationHandle extends EmailResponseHandle {
 
@@ -15,11 +13,9 @@ public class EmailVerificationHandle extends EmailResponseHandle {
 
     @Override
     protected void initialize() {
-        //TODO implement
+
     }
 
     @Override
-    public EmailResponseHandle getLinkSuffix() {
-        return null;
-    }
+    public String getLinkSuffix() { return "confirmEmail?"+getUID().toString(); }
 }

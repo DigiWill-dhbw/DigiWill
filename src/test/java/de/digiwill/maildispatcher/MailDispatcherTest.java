@@ -4,9 +4,9 @@ import de.digiwill.exception.EmailException;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
 import de.digiwill.util.EmailDispatcher;
-import de.digiwill.util.EmailResponseHandle;
+import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
-import de.digiwill.util.EmailVerificationHandle;
+import de.digiwill.model.EmailVerificationHandle;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,10 +90,10 @@ public class MailDispatcherTest {
         PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
         UserHandle userHandle = new UserHandle("user@name.de", "test", personalData, null);
         userHandle.setVerified(false);
-        EmailResponseHandle erh = new EmailVerificationHandle(userHandle);
+        EmailResponseHandle emailResponseHandle = new EmailVerificationHandle(userHandle);
         String[] recipient = {userHandle.getEmailAddress()};
 
-        emailDispatcher.sendRegistrationConfirmationEmail(erh);
+        emailDispatcher.sendRegistrationConfirmationEmail(emailResponseHandle, userHandle);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REGISTRATION_EMAIL_SUBJECT,
                 EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName()));
