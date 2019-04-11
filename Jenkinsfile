@@ -12,5 +12,11 @@ mvn clean install -DskipTests'''
         sh '''mvn test -DenvTarget=test'''
       }
     }
+    stage('Deploy') {
+      steps {
+        sh '''docker build --build-arg=target/*.jar -t digiwill .'''
+        sh '''docker run -d --name digiwill -p 8085:8080 digiwill'''
+       }
+    }
   }
 }
