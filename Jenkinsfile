@@ -4,6 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./src/test/resources/secrets-test.properties'''
+        sh '''cp /var/jenkins_home/workspace/secrets-deploy.properties ./src/main/resources/secrets-deploy.properties'''
         sh '''mvn clean install -DskipTests'''
       }
     }
@@ -14,7 +15,6 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh '''cp /var/jenkins_home/workspace/secrets-deploy.properties ./src/main/resources/secrets-deploy.properties'''
         sh '''docker build --build-arg=target/*.jar -t digiwill .'''
         sh '''docker stop digiwill'''
         sh '''docker rm digiwill'''
