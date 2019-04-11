@@ -16,7 +16,9 @@ pipeline {
       steps {
         sh '''cp /var/jenkins_home/workspace/secrets-deploy.properties ./src/test/resources/secrets-deploy.properties'''
         sh '''docker build --build-arg=target/*.jar -t digiwill .'''
-        sh '''docker run -d --name digiwill -p 8085:8080 digiwill'''
+        sh '''docker stop digiwill'''
+        sh '''docker rm digiwill'''
+        sh '''docker run -d --name digiwill digiwill'''
        }
     }
   }
