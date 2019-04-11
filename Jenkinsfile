@@ -9,6 +9,11 @@ pipeline {
       }
     }
     stage('Test') {
+      when {
+        not {
+          branch 'release'
+        }
+      }
       steps {
         sh '''mvn test -DenvTarget=test'''
       }
@@ -18,10 +23,10 @@ pipeline {
         branch 'release'
       }
       steps {
-        sh '''docker build --build-arg=target/*.jar -t digiwill .'''
         sh '''docker stop digiwill_prod'''
         sh '''docker rm digiwill_prod'''
         sh '''docker rmi digiwill'''
+        sh '''docker build --build-arg=target/*.jar -t digiwill .'''
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
     }
