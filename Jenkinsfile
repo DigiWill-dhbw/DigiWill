@@ -23,9 +23,13 @@ pipeline {
         branch 'release'
       }
       steps {
-        sh '''docker stop digiwill_prod'''
-        sh '''docker rm digiwill_prod'''
-        sh '''docker rmi digiwill'''
+        try {
+          sh '''docker stop digiwill_prod'''
+          sh '''docker rm digiwill_prod'''
+          sh '''docker rmi digiwill'''
+        } catch(err) {
+          echo err
+        }
         sh '''docker build --build-arg=target/*.jar -t digiwill .'''
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
