@@ -51,8 +51,7 @@ public class CheckEmailHandlesDaemon {
 
     public void process(EmailResponseHandle emailResponseHandle, long currentTime){
         if(emailResponseHandle.getTimeout() < currentTime ){
-            //TODO special operations for different response handles
-            //for example delete account if registrarion handle gets deleted
+            emailResponseHandle.executeTimeout();
             emailResponseHandleRepository.delete(emailResponseHandle);
         }
     }
