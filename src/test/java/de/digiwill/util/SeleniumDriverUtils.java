@@ -5,8 +5,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SeleniumDriverUtils {
 
-    private static String CHROME_DRIVER_WINDOWS = "..\\DigiWill\\driver\\\\chromedriver.exe";
-    private static String CHROME_DRIVER_MAC_OSX = "../DigiWill/driver/chromedriver_osx";
+    private static String CHROME_DRIVER_WINDOWS = ".\\\\driver\\\\chromedriver.exe";
+    private static String CHROME_DRIVER_MAC_OSX = "./driver/chromedriver_osx";
     private static String CHROME_DRIVER_LINUX = "/usr/bin/chromedriver";
 
     public static String getChromeDriverPath() {
