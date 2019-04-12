@@ -6,7 +6,6 @@ import de.digiwill.model.UserHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;

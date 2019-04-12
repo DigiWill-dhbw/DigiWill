@@ -3,7 +3,6 @@ package de.digiwill.service.registration;
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.PersonalData;
 import de.digiwill.repository.EmailResponseHandleRepository;
-import de.digiwill.repository.UserHandleRepository;
 import de.digiwill.util.EmailDispatcher;
 import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.util.SecurityHelper;
