@@ -7,6 +7,7 @@ import de.digiwill.util.EmailDispatcher;
 import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
 import de.digiwill.model.EmailVerificationHandle;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,13 +91,14 @@ public class MailDispatcherTest {
         PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
         UserHandle userHandle = new UserHandle("user@name.de", "test", personalData, null);
         userHandle.setVerified(false);
-        EmailResponseHandle emailResponseHandle = new EmailVerificationHandle(userHandle);
+        EmailResponseHandle emailResponseHandle = new EmailVerificationHandle(new ObjectId("abcdefabcdefabcdefabcdef"), userHandle.getEmailAddress() , "token" , 10 );
         String[] recipient = {userHandle.getEmailAddress()};
 
         emailDispatcher.sendRegistrationConfirmationEmail(emailResponseHandle, userHandle);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REGISTRATION_EMAIL_SUBJECT,
-                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName()));
+                EmailDispatcher.REGISTRATION_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
+                        .replace("<url>", "http://localhost:8080/" + emailResponseHandle.getLinkSuffix()));
 
     }
 
