@@ -52,7 +52,8 @@
                     </button>
                 </form>
             </td>
-            <td class="no-border"><a th:onclick="|onDelete('${userhandle.emailAddress}')|" class="button"><i
+            <td class="no-border"><a th:data1="${userhandle.emailAddress}"
+                                     th:onclick="javascript:onDelete(this.getAttribute('data1'));" class="button"><i
                     class="fas fa-trash-alt"></i></a></td>
         </tr>
     </table>
