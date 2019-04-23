@@ -7,6 +7,7 @@ import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.util.TestUtils;
 import de.digiwill.util.SecurityHelper;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -31,13 +32,14 @@ import java.util.List;
 @AutoConfigureDataMongo
 public abstract class SpringBootBaseIntegrationTest {
 
-    protected WebDriver webDriver;
+    private WebDriver webDriver;
 
     @LocalServerPort
     protected int port;
 
     @Autowired
     private UserHandleRepository repository;
+    @Autowired
     private UserHandleManager userHandleManager;
 
     @Configuration
@@ -57,15 +59,7 @@ public abstract class SpringBootBaseIntegrationTest {
         if (userHandleManager == null) {
             userHandleManager = new UserHandleManager(repository);
         }
-        List<UserHandle> users = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), AuthorityUtils.createAuthorityList("ROLE_USER"),
-                    true, true, true,
-                    true, -1, -1, -1, -1, false,
-                    personalData, actions, false);
-            users.add(userHandle);
-        }
+        List<UserHandle> users = TestUtils.createUserHandles(amount, actions);
         userHandleManager.createUsers(users);
     }
 
