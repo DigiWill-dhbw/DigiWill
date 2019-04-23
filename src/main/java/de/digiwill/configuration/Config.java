@@ -53,4 +53,5 @@ public class Config {
         return new SimpleMongoDbFactory(new MongoClient(env.getProperty("database.host"), Integer.parseInt(env.getProperty("database.port"))),
                 env.getProperty("database.name"));
     }
+
 }
