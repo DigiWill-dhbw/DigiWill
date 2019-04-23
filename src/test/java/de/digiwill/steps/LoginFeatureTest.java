@@ -90,16 +90,4 @@ public class LoginFeatureTest {
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort());
         assertNotNull(driver.findElement(By.id("loginButton")));
     }
-
-    @Before("@uitest")
-    public void beforeUITest() {
-        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        springBootBaseIntegrationTest.setWebDriver(new ChromeDriver(SeleniumDriverUtils.getChromeOptions()));
-    }
-
-    @After("@uitest")
-    public void afterUITest() {
-        springBootBaseIntegrationTest.getWebDriver().quit();
-        springBootBaseIntegrationTest.dropUsers();
-    }
 }
