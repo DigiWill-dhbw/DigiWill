@@ -31,6 +31,7 @@ public abstract class SpringBootBaseIntegrationTest {
 
     @Autowired
     private UserHandleRepository repository;
+    @Autowired
     private UserHandleManager userHandleManager;
 
 
