@@ -11,6 +11,9 @@
 
 <script th:if="${!failure}">
     function onLoad() {
+        var desc = document.getElementById("desc");
+        desc.innerHTML = desc.innerHTML.replace(/;/g, "<br/>");
+        console.log("Hate");
         launchToast();
     }
 </script>
