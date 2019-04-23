@@ -79,8 +79,15 @@
 
 #toast.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s forwards;
+    animation: fadein 0.5s, expand 0.5s 0.5s forwards;
+}
+
+#toast.disappear {
+    visibility: visible;
+    min-width: 350px;
+    -webkit-animation: shrink 0.5s 2s forwards, fadeout 0.5s 2.5s forwards;
+    animation: shrink 0.5s 4s forwards, fadeout 0.5s 4.5s forwards;
 }
 
 @-webkit-keyframes fadein {

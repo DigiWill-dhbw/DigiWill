@@ -2,14 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <script th:if="${failure}" src="js/register.js" type="application/javascript"></script>
+    <script th:if="${!failure}" src="js/register.js" type="application/javascript"></script>
     <th:block th:include="fragments/header :: head (title='DigiWill - Register')"></th:block>
 </head>
-<body>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
 
-<script th:if="${failure}">
-    launchToast();
+<script th:if="${!failure}">
+    function onLoad() {
+        launchToast();
+    }
 </script>
 <div id="content">
     <div class="panel">
