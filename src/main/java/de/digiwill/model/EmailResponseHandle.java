@@ -18,7 +18,7 @@ public abstract class EmailResponseHandle {
     private String emailAddress;
     private String token;
     /*
-    * time in minutes until handle will be deleted
+    * Timestamp after which handle will be invalid
     */
     private long timeout;
 
