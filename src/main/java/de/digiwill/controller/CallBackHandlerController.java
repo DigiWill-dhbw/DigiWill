@@ -1,12 +1,7 @@
 package de.digiwill.controller;
 
-import de.digiwill.model.EmailResponseHandle;
-import de.digiwill.model.EmailVerificationHandle;
-import de.digiwill.model.UserHandleManager;
-import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.callback.CallbackResponse;
 import de.digiwill.service.callback.CallbackService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CallBackHandlerController {
 
     @Autowired
-    CallbackService callbackService;
+    private CallbackService callbackService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "id") String id,
