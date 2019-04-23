@@ -42,13 +42,15 @@ public abstract class EmailResponseHandle {
 
     protected abstract void initialize();
 
-    public abstract void executeCallback();
-
     public abstract void executeTimeout();
 
     public  String getLinkSuffix(){
         return "callback?id=" + getUID().toString() +"&token=" + token;
     };
+
+    public boolean verifyToken(String compareToken){
+        return compareToken.contentEquals(token);
+    }
 
     public ObjectId getUID(){
         return this.UID;

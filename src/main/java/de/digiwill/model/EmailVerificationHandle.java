@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.repository.EmailResponseHandleRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.PersistenceConstructor;
 
@@ -25,12 +26,14 @@ public class EmailVerificationHandle extends EmailResponseHandle {
 
     @Override
     protected void initialize() {
-        //TODO
+        //TODO what? what should be done while initilazing
     }
 
-    @Override
-    public void executeCallback(){
-        //TODO set user to registered
+    public void executeCallback(UserHandleManager userHandleManager, EmailResponseHandleRepository emailResponseHandleRepository){
+        UserHandle userHandle = userHandleManager.loadUserByEmailAddress(this.getEmailAddress());
+        userHandle.setVerified(true);
+        userHandleManager.updateUser(userHandle);
+        emailResponseHandleRepository.delete(this);
     }
 
     @Override

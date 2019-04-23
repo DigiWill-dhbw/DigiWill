@@ -21,11 +21,6 @@ public class EmailResetHandle extends EmailResponseHandle {
     }
 
     @Override
-    public void executeCallback() {
-        //TODO implement
-    }
-
-    @Override
     public void executeTimeout() {
         //TODO implement
     }
