@@ -1,7 +1,6 @@
 package de.digiwill.service;
 
 import de.digiwill.model.EmailResponseHandle;
-import de.digiwill.repository.EmailResponseHandleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,9 @@ public class CheckEmailHandlesDaemon {
     private static final int checkInterval = 5;
 
     @Autowired
-    private EmailResponseHandleRepository emailResponseHandleRepository;
+    private EmailResponseHandleManager emailResponseHandleManager;
+    @Autowired
+    private UserHandleManager userHandleManager;
 
     private boolean running = false;
     /**
@@ -36,7 +37,7 @@ public class CheckEmailHandlesDaemon {
         running = true;
         //TODO maybe update time
         long currentTime = System.currentTimeMillis() / 1000L;
-        List<EmailResponseHandle> emailResponseHandles = emailResponseHandleRepository.findAll();
+        List<EmailResponseHandle> emailResponseHandles = emailResponseHandleManager.findAll();
         float amountOfUsersPerc = (float) emailResponseHandles.size() / 100;
         int processedData = 0;
         for (EmailResponseHandle emailResponseHandle : emailResponseHandles) {
@@ -51,8 +52,7 @@ public class CheckEmailHandlesDaemon {
 
     public void process(EmailResponseHandle emailResponseHandle, long currentTime){
         if(emailResponseHandle.getTimeout() < currentTime ){
-            emailResponseHandle.executeTimeout();
-            emailResponseHandleRepository.delete(emailResponseHandle);
+            emailResponseHandle.executeTimeout(userHandleManager, emailResponseHandleManager);
         }
     }
 

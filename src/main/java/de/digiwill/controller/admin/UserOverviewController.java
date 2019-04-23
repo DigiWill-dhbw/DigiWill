@@ -1,7 +1,7 @@
 package de.digiwill.controller.admin;
 
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;

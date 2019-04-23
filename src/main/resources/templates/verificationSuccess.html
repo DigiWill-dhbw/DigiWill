@@ -9,8 +9,7 @@
 <div id="content">
     <div class="panel">
         <!--/*@thymesVar id="failure" type="boolean"*/-->
-        <h3 th:if="${failure} == false">Callback successful</h3>
-        <h3 th:if="${failure} == true">Callback error</h3>
+        <h3 th:if="${failure} == false">Verification successful</h3>
         <!--/*@thymesVar id="longText" type="string"*/-->
         <p th:text="${longText}"></p>
     </div>

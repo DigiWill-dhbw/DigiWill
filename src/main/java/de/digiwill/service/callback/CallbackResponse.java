@@ -4,17 +4,19 @@ import org.springframework.ui.Model;
 
 public enum CallbackResponse {
 
-    CALLBACK_SUCCESS(true, null),
-    CALLBACK_ERROR(false,  "Callback URL parameters are invalid!");
-    //PLACE FOR OTHER ERRORS
+    CALLBACK_VERIFICATION_SUCCESS(true, null, "verificationSuccess"),
+    CALLBACK_RESET_SUCCESS(true, null, "resetPassword"),
+    CALLBACK_ERROR(false,  "Callback URL parameters are invalid!", "callbackError");
 
     private boolean success;
     private String responseText;
     private String longText;
+    private String redirect;
 
-    CallbackResponse(boolean success, String responseText) {
+    CallbackResponse(boolean success, String responseText, String redirect) {
         this.success = success;
         this.responseText = responseText;
+        this.redirect = redirect;
         if(success){
             this.longText = "Callback successful! Jannik möchte hier eine lustige Nachricht!";
         }else{
@@ -31,7 +33,7 @@ public enum CallbackResponse {
     }
 
     public String getRedirectTarget() {
-        return "callback";
+        return redirect;
     }
 
 }

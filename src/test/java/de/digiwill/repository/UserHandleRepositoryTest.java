@@ -1,6 +1,7 @@
 package de.digiwill.repository;
 
 import de.digiwill.model.*;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.SecurityHelper;
 import org.junit.Assert;
 import org.junit.Before;

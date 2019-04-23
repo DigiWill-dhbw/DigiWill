@@ -1,16 +1,16 @@
-package de.digiwill.model;
+package de.digiwill.service;
 
+import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-@Component
+@Service
 public class UserHandleManager implements UserDetailsManager {
 
     @Autowired

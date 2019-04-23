@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.SeleniumDriverUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

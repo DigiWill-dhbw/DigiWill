@@ -7,7 +7,7 @@ import de.digiwill.util.EmailDispatcher;
 import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.util.SecurityHelper;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

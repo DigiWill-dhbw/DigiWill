@@ -1,13 +1,15 @@
 package de.digiwill.model;
 
-import de.digiwill.repository.EmailResponseHandleRepository;
+import de.digiwill.service.EmailResponseHandleManager;
+import de.digiwill.service.UserHandleManager;
+import de.digiwill.service.callback.CallbackResponse;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.Instant;
 
 public class EmailVerificationHandle extends EmailResponseHandle {
-
+    // Time to timeout in minutes
     private final static int VERIFICATION_TIMEOUT = 10;
 
     @PersistenceConstructor
@@ -29,16 +31,19 @@ public class EmailVerificationHandle extends EmailResponseHandle {
         //TODO what? what should be done while initilazing
     }
 
-    public void executeCallback(UserHandleManager userHandleManager, EmailResponseHandleRepository emailResponseHandleRepository){
+    @Override
+    public CallbackResponse executeCallback(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager){
         UserHandle userHandle = userHandleManager.loadUserByEmailAddress(this.getEmailAddress());
         userHandle.setVerified(true);
         userHandleManager.updateUser(userHandle);
-        emailResponseHandleRepository.delete(this);
+        emailResponseHandleManager.deleteEmailResponseHandle(this);
+        return CallbackResponse.CALLBACK_VERIFICATION_SUCCESS;
     }
 
     @Override
-    public void executeTimeout() {
-        //TODO delete user or set user to inactive?
+    public void executeTimeout(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager) {
+        userHandleManager.deleteUser(this.getEmailAddress());
+        emailResponseHandleManager.deleteEmailResponseHandle(this);
     }
 
 }

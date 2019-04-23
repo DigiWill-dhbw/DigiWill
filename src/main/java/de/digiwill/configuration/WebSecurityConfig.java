@@ -1,6 +1,6 @@
 package de.digiwill.configuration;
 
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
