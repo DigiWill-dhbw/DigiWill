@@ -70,11 +70,18 @@
 
 
     color: #fff;
-
     padding: 16px;
 
     overflow: hidden;
     white-space: nowrap;
+}
+#toast #toastCloseButton {
+    background-color: black;
+    color: white;
+    border: 0;
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
 
 #toast.show {
@@ -86,8 +93,8 @@
 #toast.disappear {
     visibility: visible;
     min-width: 350px;
-    -webkit-animation: shrink 0.5s 2s forwards, fadeout 0.5s 2.5s forwards;
-    animation: shrink 0.5s 4s forwards, fadeout 0.5s 4.5s forwards;
+    -webkit-animation: shrink 0.5s 0s forwards, fadeout 0.5s 0.5s forwards;
+    animation: shrink 0.5s 0s forwards, fadeout 0.5s 0.5s forwards;
 }
 
 @-webkit-keyframes fadein {

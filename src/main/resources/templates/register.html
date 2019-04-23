@@ -4,6 +4,7 @@
 <head>
     <script th:if="${!failure}" src="js/register.js" type="application/javascript"></script>
     <th:block th:include="fragments/header :: head (title='DigiWill - Register')"></th:block>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
@@ -18,6 +19,7 @@
         <div id="toast">
             <div id="img">Error</div>
             <div id="desc" th:text="${responseText}"></div>
+            <button id="toastCloseButton" onclick="closeToast()"><i class="fas fa-times"></i></button>
         </div>
         <div class="form">
             <form th:action="@{/register}" method="post">
