@@ -2,9 +2,7 @@ package de.digiwill;
 
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
-import de.digiwill.model.BaseAction;
-import de.digiwill.model.PersonalData;
-import de.digiwill.model.UserHandle;
+import de.digiwill.model.*;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
 import de.digiwill.util.TestUtils;
@@ -67,12 +65,11 @@ public abstract class SpringBootBaseIntegrationTest {
         if (userHandleManager == null) {
             userHandleManager = new UserHandleManager(repository);
         }
-        List<BaseAction> actions = new ArrayList<>();
         PersonalData personalData = new PersonalData("no", "body", new Date(1990, 1, 1));
+        UserBooleans userBooleans = new UserBooleans(true, true, true, true);
         UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), AuthorityUtils.createAuthorityList("ROLE_USER"),
-                true, true, true,
-                true, -1, -1, -1, -1, false,
-                personalData, actions, false);
+                userBooleans, -1, -1, -1, -1, false,
+                personalData, UserActionSet.getInitial());
         userHandleManager.createUser(userHandle);
     }
 

@@ -55,17 +55,21 @@ public class SignOfLifeDaemon {
     private void processUser(long currentTime, UserHandle user) {
         boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null;
         boolean shouldTriggerActions = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
-        if (user.getLastSignOfLife() != -1 && isUser && !user.areAllActionsCompleted() && shouldTriggerActions) {
-            user.setDead(true);
-            List<BaseAction> actions = user.getActions();
-            boolean allCompleted = true;
-            for (BaseAction action : actions) {
-                if (!action.wasCompleted()) {
-                    allCompleted = allCompleted && action.execute().wasSuccessful();
+        if(isUser) {
+            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && shouldTriggerActions) {
+                user.setDead(true);
+                List<BaseAction> actions = user.getActions();
+                boolean allCompleted = true;
+                for (BaseAction action : actions) {
+                    if (!action.wasCompleted()) {
+                        allCompleted = allCompleted && action.execute().wasSuccessful();
+                    }
                 }
+                if(allCompleted) {
+                    user.setAllActionsCompleted();
+                }
+                userHandleManager.updateUser(user);
             }
-            user.setAllActionsCompleted(allCompleted);
-            userHandleManager.updateUser(user);
         }
     }
 
