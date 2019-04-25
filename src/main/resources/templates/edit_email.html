@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <script src="js/email_check.js"></script>
-    <th:block th:include="fragments/email_formular :: editScripts"></th:block>
+    <th:block th:include="fragments/emailForm :: editScripts"></th:block>
 </head>
 <body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
@@ -23,7 +23,7 @@
     <div class="panel">
         <form th:action="@{/editEmail}" method="post" id="gui">
             <h2>Edit custom email</h2>
-            <th:block th:include="fragments/email_formular :: form (edit = true)">
+            <th:block th:include="fragments/emailForm :: form (edit = true)">
 
             </th:block>
         </form>
