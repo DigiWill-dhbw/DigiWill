@@ -18,11 +18,6 @@ pipeline {
         sh '''mvn test -DenvTarget=test jacoco:report'''
       }
     }
-    stage('Test Report') {
-      steps {
-        sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
-      }
-    }
     stage('Deploy') {
       when {
         branch 'release'
@@ -34,6 +29,14 @@ pipeline {
         sh '''docker build --build-arg=target/*.jar -t digiwill .'''
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
+    }
+  }
+  stage('Test Report') {
+    when {
+      branch 'master'
+    }
+    steps {
+      sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
     }
   }
   post {
