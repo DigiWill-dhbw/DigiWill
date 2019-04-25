@@ -81,7 +81,7 @@ public class EmailDispatcher {
 
     public void sendEmail(String recipient, String subject, boolean htmlContentFlag, String content) throws EmailException {
         logger.debug("Creating Email");
-        if (RegexMatcher.isValidEmailAddress(recipient)) {
+        if (RegexMatcher.isValidMultipleEmailAddress(recipient)) {
             Message message = new MimeMessage(session);
             try {
                 message.setFrom(new InternetAddress(session.getProperty("mail.smtp.host"), false));
@@ -103,8 +103,8 @@ public class EmailDispatcher {
 
             logger.debug("Email sent");
         } else {
-            logger.error("Recipient email address is invalid");
-            throw new EmailException("Recipient email address is invalid");
+            logger.error("Recipient email address is invalid: " + recipient);
+            throw new EmailException("Recipient email address is invalid: " + recipient);
         }
     }
 
