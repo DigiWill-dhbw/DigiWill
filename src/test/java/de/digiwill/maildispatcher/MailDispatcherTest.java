@@ -126,7 +126,8 @@ public class MailDispatcherTest {
         emailDispatcher.sendReminderEmail(uh);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.REMINDER_EMAIL_SUBJECT,
-                EmailDispatcher.REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", uh.getPersonalData().getFirstName()));
+                EmailDispatcher.REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", uh.getPersonalData().getFirstName())
+                        .replace("<url>", "http://localhost:8080/"));
 
     }
 
