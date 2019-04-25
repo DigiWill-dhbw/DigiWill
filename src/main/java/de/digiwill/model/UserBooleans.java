@@ -29,6 +29,10 @@ public class UserBooleans {
         return credentialsNonExpired;
     }
 
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
     public boolean isVerified() {
         return isVerified;
     }

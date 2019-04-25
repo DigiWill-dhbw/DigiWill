@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -91,10 +90,6 @@ public class UserHandle implements UserDetails {
         this.userActionSet = userActionSet;
     }
 
-    public boolean isValidNewUser() {
-        return false; //TODO implement
-    }
-
     public ObjectId getUID() {
         return UID;
     }
@@ -139,8 +134,9 @@ public class UserHandle implements UserDetails {
         return isDead;
     }
 
-    public void setDead(boolean dead) {
-        isDead = dead;
+    public void setDead() {
+        isDead = true;
+        userBooleans.setAccountNonLocked(false);
     }
 
     public boolean isVerified() {
