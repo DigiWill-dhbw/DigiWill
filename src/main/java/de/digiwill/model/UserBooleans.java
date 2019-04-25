@@ -13,7 +13,7 @@ public class UserBooleans {
         this.isVerified = isVerified;
     }
 
-    static UserBooleans getInitial(){
+    public static UserBooleans getInitial(){
         return new UserBooleans(true, true, true, false);
     }
 
