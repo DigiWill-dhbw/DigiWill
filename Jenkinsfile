@@ -30,13 +30,13 @@ pipeline {
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
     }
-  }
-  stage('Test Report') {
-    when {
-      branch 'master'
-    }
-    steps {
-      sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
+    stage('Test Report') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
+      }
     }
   }
   post {
