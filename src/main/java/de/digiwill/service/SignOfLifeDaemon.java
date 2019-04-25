@@ -4,7 +4,6 @@ import de.digiwill.exception.EmailException;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
-import de.digiwill.util.EmailDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

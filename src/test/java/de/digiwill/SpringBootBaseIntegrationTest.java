@@ -66,7 +66,7 @@ public abstract class SpringBootBaseIntegrationTest {
         }
         PersonalData personalData = new PersonalData("no", "body", new Date(1990, 1, 1));
         UserBooleans userBooleans = new UserBooleans(true, true, true, true);
-        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), AuthorityUtils.createAuthorityList("ROLE_USER"),
+        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                 userBooleans, -1, -1, -1, -1, false,
                 personalData, UserActionSet.getInitial());
         userHandleManager.createUser(userHandle);

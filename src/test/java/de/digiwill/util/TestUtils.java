@@ -14,9 +14,9 @@ public class TestUtils {
         for (int i = 0; i < amount; i++) {
             PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
             UserBooleans userBooleans = new UserBooleans(true, true, true, true);
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), AuthorityUtils.createAuthorityList("ROLE_USER"),
+            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                     userBooleans, -1, -1, -1, -1, false,
-                    personalData,   UserActionSet.getInitial());
+                    personalData,   new UserActionSet(actions, false));
             users.add(userHandle);
         }
         return users;

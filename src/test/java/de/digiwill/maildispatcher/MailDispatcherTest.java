@@ -3,7 +3,7 @@ package de.digiwill.maildispatcher;
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
-import de.digiwill.util.EmailDispatcher;
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
 import de.digiwill.model.EmailVerificationHandle;

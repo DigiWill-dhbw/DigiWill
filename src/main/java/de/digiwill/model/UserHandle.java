@@ -25,7 +25,7 @@ public class UserHandle implements UserDetails {
      */
     private String emailAddress;
     private String password;
-    private List<GrantedAuthority> authorities; //TODO final?
+    private AuthoritySet authorities;
     private UserBooleans userBooleans;
 
     /**
@@ -61,25 +61,25 @@ public class UserHandle implements UserDetails {
 
     }
 
-    public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
+    public UserHandle(String emailAddress, String password, PersonalData personalData, AuthoritySet authorities) {
         this(emailAddress, password, authorities,
                 UserBooleans.getInitial(), -1, -1, -1, -1, false,
                 personalData, UserActionSet.getInitial());
     }
 
-    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
+    public UserHandle(String emailAddress, String password, AuthoritySet authorities) {
         this(emailAddress, password, null, authorities);
 
     }
 
-    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
+    public UserHandle(String emailAddress, String password, AuthoritySet authorities,
                       UserBooleans userBooleans, long lastSignOfLife, long lastReminder, long deltaReminder,
                       long deltaDeathTime, boolean isDead,
                       PersonalData personalData, UserActionSet userActionSet) {
 
         this.emailAddress = emailAddress;
         this.password = password;
-        this.authorities = authorities;//Collections.unmodifiableSet(UserHelper.sortAuthorities(authorities));
+        this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
         this.userBooleans = userBooleans;
         this.lastSignOfLife = lastSignOfLife;
         this.lastReminder = lastReminder;
@@ -172,28 +172,19 @@ public class UserHandle implements UserDetails {
     }
 
     public String getAuthoritiesAsString() {
-        String out = "";
-        for (GrantedAuthority a : authorities) {
-            out += a.getAuthority() + "\n";
-        }
-        return out;
+       return authorities.toString();
     }
 
     public void addAuthority(String role) {
-        authorities.add(new SimpleGrantedAuthority(role));
+        authorities.addAuthority(role);
     }
 
     public GrantedAuthority getAuthorityByRoleName(String role) {
-        for (GrantedAuthority a : authorities) {
-            if (a.getAuthority().equals(role)) {
-                return a;
-            }
-        }
-        return null;
+        return authorities.getAuthorityByRoleName(role);
     }
 
     public void removeAuthority(GrantedAuthority auth){
-        authorities.remove(auth);
+        authorities.removeAuthority(auth);
     }
 
     public String getEmailAddress() {
@@ -206,7 +197,7 @@ public class UserHandle implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return authorities.getAuthorities();
     }
 
     @Override
