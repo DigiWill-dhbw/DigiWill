@@ -75,6 +75,7 @@ public class RegistrationService {
         }catch(EmailException e){
             userHandleManager.deleteUser(userHandle.getEmailAddress());
             logger.error(e.getMessage());
+            return RegistrationResponse.INTERNAL_ERROR;
         }
 
         return RegistrationResponse.REGISTRATION_SUCCESSFUL;

@@ -91,7 +91,7 @@ public class EmailDispatcher {
                 message.setSentDate(new Date());
             } catch (Exception e) {
                 logger.error("Error creating mail.");
-                throw new EmailException(e.getMessage());
+                throw new EmailException(e.getMessage(), e);
             }
             logger.debug("Sending Email");
             try {

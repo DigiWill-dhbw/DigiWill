@@ -13,7 +13,8 @@ public enum RegistrationResponse {
     TO_YOUNG(false, "You must be at least XXX years old to register for this service"),
     EMAIL_ALREADY_IN_USE(false, "There already is an account registered with the email address you're trying to use"),
     BIRTHDAY_INVALID(false, "Please enter a valid date of birth"),
-    FORM_DATA_DOESNT_EXIST(false, "The data you entered wasn't transmitted to out server");
+    FORM_DATA_DOESNT_EXIST(false, "The data you entered wasn't transmitted to out server"),
+    INTERNAL_ERROR(false, "An internal server error occurred");
 
     private boolean success;
     private String failureMessage;
