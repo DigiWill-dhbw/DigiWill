@@ -15,7 +15,12 @@ pipeline {
         }
       }
       steps {
-        sh '''mvn test -DenvTarget=test'''
+        sh '''mvn test -DenvTarget=test jacoco:report'''
+      }
+    }
+    stage('Test Report') {
+      steps {
+        sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
       }
     }
     stage('Deploy') {
