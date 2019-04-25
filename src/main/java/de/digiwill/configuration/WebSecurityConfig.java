@@ -1,6 +1,6 @@
 package de.digiwill.configuration;
 
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/greeting", "/register").permitAll()
+                .antMatchers("/", "/greeting", "/register", "/callback").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

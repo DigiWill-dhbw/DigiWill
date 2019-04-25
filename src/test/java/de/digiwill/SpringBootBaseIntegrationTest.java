@@ -5,7 +5,7 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
 import de.digiwill.util.TestUtils;
 import de.digiwill.util.SecurityHelper;

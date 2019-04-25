@@ -68,7 +68,7 @@ public class UserHandle implements UserDetails {
 
     public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
         this(emailAddress, password, authorities, true, true, true,
-                true /*TODO false*/, -1, -1, -1, -1, false,
+                false, -1, -1, -1, -1, false,
                 personalData, new ArrayList<BaseAction>(), false);
     }
 

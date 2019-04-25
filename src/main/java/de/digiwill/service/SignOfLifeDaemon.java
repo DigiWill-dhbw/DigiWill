@@ -2,7 +2,6 @@ package de.digiwill.service;
 
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
