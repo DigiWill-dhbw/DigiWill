@@ -61,10 +61,8 @@
             </td>
             <td>
                 <input type="hidden" id="index" name="index" value="">
-                <input type="text" th:if="${edit}" class="input-fields" name="recipients" id="addressField"
-                       th:value="${email.getRecipientString()}" onchange="checkEmail(document.getElementById('addressField').value)">
-                <input type="text" th:if="${!edit}" class="input-fields" name="recipients" id="addressField"
-                       onchange="checkEmail(document.getElementById('addressField').value)">
+                <input type="text" class="input-fields" name="recipients" id="addressField"
+                       th:value="${email?.getRecipientString()}" onchange="checkEmail(document.getElementById('addressField').value)">
             </td>
         </tr>
         <tr>
@@ -72,8 +70,7 @@
                 Subject
             </td>
             <td>
-                <input type="text" th:if="${edit}" class="input-fields" name="subject" id="subjectfield" th:value="${email.subject}">
-                <input type="text" th:if="${!edit}" class="input-fields" name="subject" id="subjectfield">
+                <input type="text" class="input-fields" name="subject" id="subjectfield" th:value="${email?.subject}">
             </td>
         </tr>
     </table>
@@ -81,9 +78,7 @@
     <table>
         <tr>
             <td colspan="3">
-                <textarea rows="10" th:if="${edit}" cols="50" class="input-fields" id="content" th:text="${email.content}"
-                          name="content" form="gui"></textarea>
-                <textarea rows="10" th:if="${!edit}" cols="50" class="input-fields" id="content"
+                <textarea rows="10" cols="50" class="input-fields" id="content" th:text="${email?.content}"
                           name="content" form="gui"></textarea>
             </td>
         </tr>
