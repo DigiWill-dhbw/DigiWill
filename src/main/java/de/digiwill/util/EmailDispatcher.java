@@ -27,9 +27,8 @@ public class EmailDispatcher {
     public static final String REMINDER_EMAIL_SUBJECT = "Are you dead?";
     public static final String REMINDER_EMAIL_CONTENT = "Hello <firstName>,<br/>" +
             "we have noticed you haven't checked in with us for a long time.<br/>" +
-            "Please confirm that you are alive in your app or at <a href=\"https://google.de\">this website</a>.<br/><br/>" +
+            "Please confirm that you are alive in your app or at <a href=\"<url>\">this website</a>.<br/><br/>" +
             "Regards, <br/>DigiWill";
-    public static final String EMAIL_REGEX = "^([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,},?)+$";
 
     private final Logger logger = LoggerFactory.getLogger(EmailDispatcher.class);
     private final Session session;
@@ -45,9 +44,9 @@ public class EmailDispatcher {
     public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle, UserHandle userHandle) throws EmailException {
         logger.debug("Initiating sendRegistrationConfirmationEmail");
         String content = REGISTRATION_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
-                            .replace("<url>", "http://localhost:8080/"+responseHandle.getLinkSuffix());
+                .replace("<url>", "http://localhost:8080/" + responseHandle.getLinkSuffix());
         try {
-            sendEmail( userHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
+            sendEmail(userHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send registration Email", e);
         }
@@ -65,7 +64,8 @@ public class EmailDispatcher {
 
     public void sendReminderEmail(UserHandle userHandle) throws EmailException {
         logger.debug("Initiating sendReminder");
-        String content = REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName());
+        String content = REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName())
+                .replace("<url>", "http://localhost:8080/");
         //TODO generate Link for user and refactor message content into file
 
         try {
@@ -81,7 +81,7 @@ public class EmailDispatcher {
 
     public void sendEmail(String recipient, String subject, boolean htmlContentFlag, String content) throws EmailException {
         logger.debug("Creating Email");
-        if (recipient.matches(EMAIL_REGEX)) {
+        if (RegexMatcher.isValidEmailAddress(recipient)) {
             Message message = new MimeMessage(session);
             try {
                 message.setFrom(new InternetAddress(session.getProperty("mail.smtp.host"), false));
@@ -103,8 +103,8 @@ public class EmailDispatcher {
 
             logger.debug("Email sent");
         } else {
-            logger.error("Bad email recipient");
-            throw new EmailException("Bad email recipient");
+            logger.error("Recipient email address is invalid");
+            throw new EmailException("Recipient email address is invalid");
         }
     }
 

@@ -21,7 +21,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
