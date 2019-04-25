@@ -27,10 +27,7 @@ public class UserHandle implements UserDetails {
     private String emailAddress;
     private String password;
     private List<GrantedAuthority> authorities; //TODO final?
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
-    private boolean isVerified;
+    private UserBooleans userBooleans;
 
     /**
      * Unix timestamp in seconds
@@ -49,11 +46,10 @@ public class UserHandle implements UserDetails {
      */
     private long deltaDeathTime;
     private boolean isDead;
-    private boolean allActionsCompleted;
 
     private PersonalData personalData;
 
-    private List<BaseAction> actions;
+    private UserActionSet userActionSet;
 
    /* @PersistenceConstructor
     public UserHandle(ObjectId UID, String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
@@ -67,9 +63,9 @@ public class UserHandle implements UserDetails {
     }
 
     public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
-        this(emailAddress, password, authorities, true, true, true,
-                false, -1, -1, -1, -1, false,
-                personalData, new ArrayList<BaseAction>(), false);
+        this(emailAddress, password, authorities,
+                UserBooleans.getInitial(), -1, -1, -1, -1, false,
+                personalData, UserActionSet.getInitial());
     }
 
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
@@ -78,26 +74,21 @@ public class UserHandle implements UserDetails {
     }
 
     public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
-                      boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
-                      boolean isVerified, long lastSignOfLife, long lastReminder, long deltaReminder,
+                      UserBooleans userBooleans, long lastSignOfLife, long lastReminder, long deltaReminder,
                       long deltaDeathTime, boolean isDead,
-                      PersonalData personalData, List<BaseAction> actions, boolean allActionsCompleted) {
+                      PersonalData personalData, UserActionSet userActionSet) {
 
         this.emailAddress = emailAddress;
         this.password = password;
         this.authorities = authorities;//Collections.unmodifiableSet(UserHelper.sortAuthorities(authorities));
-        this.accountNonExpired = accountNonExpired;
-        this.accountNonLocked = accountNonLocked;
-        this.credentialsNonExpired = credentialsNonExpired;
-        this.isVerified = isVerified;
+        this.userBooleans = userBooleans;
         this.lastSignOfLife = lastSignOfLife;
         this.lastReminder = lastReminder;
         this.deltaReminder = deltaReminder;
         this.deltaDeathTime = deltaDeathTime;
         this.isDead = isDead;
         this.personalData = personalData;
-        this.actions = actions;
-        this.allActionsCompleted = allActionsCompleted;
+        this.userActionSet = userActionSet;
     }
 
     public boolean isValidNewUser() {
@@ -153,31 +144,35 @@ public class UserHandle implements UserDetails {
     }
 
     public boolean isVerified() {
-        return isVerified;
+        return userBooleans.isVerified();
     }
 
     public void setVerified(boolean verified) {
-        isVerified = verified;
+        userBooleans.setVerified(verified);
     }
 
     public boolean areAllActionsCompleted() {
-        return allActionsCompleted;
+        return userActionSet.areAllActionsCompleted();
     }
 
-    public void setAllActionsCompleted(boolean allActionsCompleted) {
-        this.allActionsCompleted = allActionsCompleted;
+    public void setAllActionsCompleted() {
+        userActionSet.setAllActionsCompleted();
     }
 
     public List<BaseAction> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<BaseAction> actions) {
-        this.actions = actions;
+        return userActionSet.getActions();
     }
 
     public void addAction(BaseAction action) {
-        this.actions.add(action);
+        userActionSet.add(action);
+    }
+
+    public void replaceAction(int index, BaseAction action){
+        userActionSet.replace(index, action);
+    }
+
+    public void removeAction(int index){
+        userActionSet.remove(index);
     }
 
     public String getAuthoritiesAsString() {
@@ -230,22 +225,22 @@ public class UserHandle implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return accountNonExpired;
+        return userBooleans.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return userBooleans.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
+        return userBooleans.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return isVerified;
+        return userBooleans.isVerified();
     }
 
     public void sendSignOfLife() {

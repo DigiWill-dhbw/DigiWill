@@ -1,8 +1,6 @@
 package de.digiwill.util;
 
-import de.digiwill.model.BaseAction;
-import de.digiwill.model.PersonalData;
-import de.digiwill.model.UserHandle;
+import de.digiwill.model.*;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.util.ArrayList;
@@ -15,10 +13,10 @@ public class TestUtils {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
+            UserBooleans userBooleans = new UserBooleans(true, true, true, true);
             UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), AuthorityUtils.createAuthorityList("ROLE_USER"),
-                    true, true, true,
-                    true , -1, -1, -1, -1, false,
-                    personalData,   actions, false);
+                    userBooleans, -1, -1, -1, -1, false,
+                    personalData,   UserActionSet.getInitial());
             users.add(userHandle);
         }
         return users;
