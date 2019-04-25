@@ -28,7 +28,7 @@ Feature: Custom Emails CRUD
   Scenario Outline: 02 - Cancel create valid Email Action
     When Create new email action with recipient "<recipient>", subject "<subject>", content "<content>" and click "Cancel"
     Then The service should not accept the new action
-    And No new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
+    And No item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
 
     Examples:
       | recipient              | subject                   | content                                                                      |

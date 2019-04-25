@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @Ignore
 public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest {
@@ -63,19 +64,18 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         }
     }
 
-    @And("^No new item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
-    public void noNewItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
-        // Write code here that turns the phrase above into concrete actions
+    @And("^No item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
+    public void noItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
         WebDriver driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/getEmails");
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
         items.remove(0);
-        for (WebElement item :
-                items) {
-            assertEquals(recipient, item.findElements(By.tagName("td")).get(0).getText());
-            assertEquals(subject, item.findElements(By.tagName("td")).get(1).getText());
-            assertEquals(skippedContent(content), item.findElements(By.tagName("td")).get(2).getText());
+        for (WebElement item : items) {
+            String recipientSubjectContent = item.findElements(By.tagName("td")).get(0).getText() + " " +
+                    item.findElements(By.tagName("td")).get(1).getText() + " " +
+                    item.findElements(By.tagName("td")).get(2).getText();
+            assertNotEquals(recipient + " " + subject + " " + skippedContent(content), recipientSubjectContent);
         }
     }
 
