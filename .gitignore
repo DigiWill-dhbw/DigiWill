@@ -35,3 +35,6 @@ ehthumbs.db
 Thumbs.db
 *.properties
 *.iml
+
+# exceptions
+!codacy-coverage-reporter.jar
