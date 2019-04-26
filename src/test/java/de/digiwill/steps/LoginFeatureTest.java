@@ -1,18 +1,14 @@
 package de.digiwill.steps;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
-import de.digiwill.util.SeleniumDriverUtils;
+import de.digiwill.service.UserHandleManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -89,17 +85,5 @@ public class LoginFeatureTest {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort());
         assertNotNull(driver.findElement(By.id("loginButton")));
-    }
-
-    @Before("@uitest")
-    public void beforeUITest() {
-        System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
-        springBootBaseIntegrationTest.setWebDriver(new ChromeDriver(SeleniumDriverUtils.getChromeOptions()));
-    }
-
-    @After("@uitest")
-    public void afterUITest() {
-        springBootBaseIntegrationTest.getWebDriver().quit();
-        springBootBaseIntegrationTest.dropUsers();
     }
 }

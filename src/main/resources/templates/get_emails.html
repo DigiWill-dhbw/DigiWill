@@ -45,7 +45,8 @@
             <tr>
                 <th>Recipient(s)</th>
                 <th>Subject</th>
-                <th colspan="2">Content</th>
+                <th>Content</th>
+                <th>Actions</th>
             </tr>
             <tr th:each="em, iter: ${emails}">
                 <td th:text="${em.getRecipientString()}">thomas@meyer.de</td>

@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @Ignore
 public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest {
@@ -50,34 +50,33 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
 
     @And("^A new item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
     public void aNewItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
-        WebDriver driver = getWebDriver();
-        driver.get("http://localhost:" + getPort() + "/getEmails");
-        WebElement listing = driver.findElement(By.className("listing"));
-        List<WebElement> items = listing.findElements(By.tagName("tr"));
-        items.remove(0);
-        for (WebElement item :
-                items) {
-            assertEquals(recipient, item.findElements(By.tagName("td")).get(0).getText());
-            assertEquals(subject, item.findElements(By.tagName("td")).get(1).getText());
-            assertEquals(skippedContent(content), item.findElements(By.tagName("td")).get(2).getText());
-        }
+        boolean foundItem = hasItem(recipient, subject, content);
+        assertTrue("An item which should have existed wasn't found", foundItem);
     }
 
-    @And("^No new item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
-    public void noNewItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
-        // Write code here that turns the phrase above into concrete actions
+    @And("^No item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
+    public void noItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
+        boolean foundItem = hasItem(recipient, subject, content);
+        assertFalse("An item which shouldn't have existed was found", foundItem);
+    }
+
+    private boolean hasItem(String recipient, String subject, String content) {
         WebDriver driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/getEmails");
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
         items.remove(0);
-        for (WebElement item :
-                items) {
-            assertEquals(recipient, item.findElements(By.tagName("td")).get(0).getText());
-            assertEquals(subject, item.findElements(By.tagName("td")).get(1).getText());
-            assertEquals(skippedContent(content), item.findElements(By.tagName("td")).get(2).getText());
+        boolean foundItem = false;
+        for (WebElement item : items) {
+            boolean isCorrect = recipient.equals(item.findElements(By.tagName("td")).get(0).getText()) &&
+                    subject.equals(item.findElements(By.tagName("td")).get(1).getText()) &&
+                    skippedContent(content).equals(item.findElements(By.tagName("td")).get(2).getText());
+
+            foundItem |= isCorrect;
         }
+        return foundItem;
     }
+
 
     @And("^Clicking \"([^\"]*)\"$")
     public void clicking(String button) {

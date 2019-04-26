@@ -1,9 +1,10 @@
 package de.digiwill.service;
 
+import de.digiwill.exception.EmailException;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.util.EmailDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class SignOfLifeDaemon {
     @Autowired
     private UserHandleManager userHandleManager;
 
+    @Autowired
+    private EmailDispatcher emailDispatcher;
+
     private boolean running = false;
     /**
      * Progress in percent
@@ -49,26 +53,49 @@ public class SignOfLifeDaemon {
             progress = processedUsers / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
         }
-        logger.info("Check finished in: " + ((System.currentTimeMillis() / 1000L) - currentTime));
+        long executionDuration = ((System.currentTimeMillis() / 1000L) - currentTime);
+        logger.info("Check finished in: " + executionDuration + " seconds");
+        if(executionDuration > checkInterval * 60000){
+            logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: " + (executionDuration / 60000) + " minutes");
+        }
         running = false;
     }
 
     private void processUser(long currentTime, UserHandle user) {
         boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null;
         boolean shouldTriggerActions = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
-        if (user.getLastSignOfLife() != -1 && isUser && !user.areAllActionsCompleted() && shouldTriggerActions) {
-            user.setDead(true);
-            List<BaseAction> actions = user.getActions();
-            boolean allCompleted = true;
-            for (BaseAction action : actions) {
-                if (!action.wasCompleted()) {
-                    allCompleted = allCompleted && action.execute().wasSuccessful();
+        if(isUser) {
+            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && shouldTriggerActions) {
+                user.setDead();
+                executeActions(user);
+            }else if(!user.isDead()){
+                long lastInteractionWithUser = Math.max(user.getLastSignOfLife(), user.getLastReminder());
+                if(lastInteractionWithUser + user.getDeltaReminder() > currentTime){
+                    try {
+                        emailDispatcher.sendReminderEmail(user);
+                        user.setLastReminder(currentTime);
+                    } catch (EmailException e) {
+                        logger.error("Couldn't send reminder to user ", e);
+                    }
                 }
             }
-            user.setAllActionsCompleted(allCompleted);
-            userHandleManager.updateUser(user);
         }
     }
+
+    private void executeActions(UserHandle user) {
+        List<BaseAction> actions = user.getActions();
+        boolean allCompleted = true;
+        for (BaseAction action : actions) {
+            if (!action.wasCompleted()) {
+                allCompleted = allCompleted && action.execute().wasSuccessful();
+            }
+        }
+        if(allCompleted) {
+            user.setAllActionsCompleted();
+        }
+        userHandleManager.updateUser(user);
+    }
+
 
     public boolean isRunning() {
         return running;

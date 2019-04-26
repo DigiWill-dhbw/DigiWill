@@ -4,7 +4,7 @@ import de.digiwill.exception.EmailException;
 import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
-import de.digiwill.model.UserHandleManager;
+import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.RegexMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,10 +84,8 @@ public class EmailController {
     public RedirectView editEmailPost(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content, @RequestParam(name = "index", required = true) String index, Principal principal, Model model) {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        List<BaseAction> actions = user.getActions();
         try {
-            actions.set(idx, generateEmailAction(recipients, subject, content));
-            user.setActions(actions);
+            user.replaceAction(idx, generateEmailAction(recipients, subject, content));
             userHandleManager.updateUser(user);
             return new RedirectView("getEmails");
         }catch(EmailException e){
@@ -99,9 +97,7 @@ public class EmailController {
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        List<BaseAction> actions = user.getActions();
-        actions.remove(idx);
-        user.setActions(actions);
+        user.removeAction(idx);
         userHandleManager.updateUser(user);
         return new RedirectView("getEmails");
     }
