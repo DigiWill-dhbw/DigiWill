@@ -68,15 +68,13 @@ public class SignOfLifeDaemon {
             if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && shouldTriggerActions) {
                 user.setDead();
                 executeActions(user);
-            }else if(!user.isDead()){
-                if(user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime){
+            }else if(!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime){
                     try {
                         emailDispatcher.sendReminderEmail(user);
                         user.setLastReminder(currentTime);
                     } catch (EmailException e) {
                         logger.error("Couldn't send reminder to user ", e);
                     }
-                }
             }
         }
     }
