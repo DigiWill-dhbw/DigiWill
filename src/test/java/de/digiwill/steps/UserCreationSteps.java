@@ -40,7 +40,7 @@ public class UserCreationSteps {
         }
         UserBooleans userBooleans = new UserBooleans(true, true, true, true);
         UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), authoritySet,
-                userBooleans, UserTimestamps.getInitial(), -1, -1, false,
+                userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
                 personalData, UserActionSet.getInitial());
         userHandleManager.createUser(userHandle);
     }

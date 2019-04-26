@@ -27,15 +27,8 @@ public class UserHandle implements UserDetails {
     private UserBooleans userBooleans;
 
     private UserTimestamps timestamps;
+    private UserDeltaTimes deltaTimes;
 
-    /**
-     * Time interval in seconds
-     */
-    private long deltaReminder;
-    /**
-     * Time interval in seconds
-     */
-    private long deltaDeathTime;
     private boolean isDead;
 
     private PersonalData personalData;
@@ -55,7 +48,7 @@ public class UserHandle implements UserDetails {
 
     public UserHandle(String emailAddress, String password, PersonalData personalData, AuthoritySet authorities) {
         this(emailAddress, password, authorities,
-                UserBooleans.getInitial(), UserTimestamps.getInitial(), -1, -1, false,
+                UserBooleans.getInitial(), UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
                 personalData, UserActionSet.getInitial());
     }
 
@@ -64,8 +57,7 @@ public class UserHandle implements UserDetails {
     }
 
     public UserHandle(String emailAddress, String password, AuthoritySet authorities,
-                      UserBooleans userBooleans, UserTimestamps timestamps, long deltaReminder,
-                      long deltaDeathTime, boolean isDead,
+                      UserBooleans userBooleans, UserTimestamps timestamps, UserDeltaTimes deltaTimes, boolean isDead,
                       PersonalData personalData, UserActionSet userActionSet) {
 
         this.emailAddress = emailAddress;
@@ -73,8 +65,7 @@ public class UserHandle implements UserDetails {
         this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
         this.userBooleans = userBooleans;
         this.timestamps = timestamps;
-        this.deltaReminder = deltaReminder;
-        this.deltaDeathTime = deltaDeathTime;
+        this.deltaTimes = deltaTimes;
         this.isDead = isDead;
         this.personalData = personalData;
         this.userActionSet = userActionSet;
@@ -89,19 +80,19 @@ public class UserHandle implements UserDetails {
     }
 
     public long getDeltaReminder() {
-        return deltaReminder;
+        return deltaTimes.getDeltaReminder();
     }
 
     public void setDeltaReminder(long deltaReminder) {
-        this.deltaReminder = deltaReminder;
+        deltaTimes.setDeltaReminder(deltaReminder);
     }
 
     public long getDeltaDeathTime() {
-        return deltaDeathTime;
+        return deltaTimes.getDeltaDeathTime();
     }
 
     public void setDeltaDeathTime(long deltaDeathTime) {
-        this.deltaDeathTime = deltaDeathTime;
+        deltaTimes.setDeltaDeathTime(deltaDeathTime);
     }
 
     public boolean isDead() {
