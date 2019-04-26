@@ -1,7 +1,6 @@
 package de.digiwill.service;
 
 import de.digiwill.exception.EmailException;
-import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
 import org.slf4j.Logger;
@@ -62,35 +61,22 @@ public class SignOfLifeDaemon {
     }
 
     private void processUser(long currentTime, UserHandle user) {
-        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null;
-        boolean shouldTriggerActions = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
-        if(isUser) {
-            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && shouldTriggerActions) {
+        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null && user.getAuthorityByRoleName("ROLE_USER") == null;
+        boolean userPresumedDead = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
+        if (isUser) {
+            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && userPresumedDead) {
                 user.setDead();
-                executeActions(user);
-            }else if(!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime){
-                    try {
-                        emailDispatcher.sendReminderEmail(user);
-                        user.setLastReminder(currentTime);
-                    } catch (EmailException e) {
-                        logger.error("Couldn't send reminder to user ", e);
-                    }
+                user.executeActions();
+                userHandleManager.updateUser(user);
+            } else if (!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime) {
+                try {
+                    emailDispatcher.sendReminderEmail(user);
+                    user.setLastReminder(currentTime);
+                } catch (EmailException e) {
+                    logger.error("Couldn't send reminder to user ", e);
+                }
             }
         }
-    }
-
-    private void executeActions(UserHandle user) {
-        List<BaseAction> actions = user.getActions();
-        boolean allCompleted = true;
-        for (BaseAction action : actions) {
-            if (!action.wasCompleted()) {
-                allCompleted = allCompleted && action.execute().wasSuccessful();
-            }
-        }
-        if(allCompleted) {
-            user.setAllActionsCompleted();
-        }
-        userHandleManager.updateUser(user);
     }
 
 

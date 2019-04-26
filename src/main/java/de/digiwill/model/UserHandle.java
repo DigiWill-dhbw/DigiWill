@@ -33,7 +33,7 @@ public class UserHandle implements UserDetails {
 
     private PersonalData personalData;
 
-    private UserActionSet userActionSet;
+    private ActionSet actionSet;
 
    /* @PersistenceConstructor
     public UserHandle(ObjectId UID, String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
@@ -49,7 +49,7 @@ public class UserHandle implements UserDetails {
     public UserHandle(String emailAddress, String password, PersonalData personalData, AuthoritySet authorities) {
         this(emailAddress, password, authorities,
                 UserBooleans.getInitial(), UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
-                personalData, UserActionSet.getInitial());
+                personalData, ActionSet.getInitial());
     }
 
     public UserHandle(String emailAddress, String password, AuthoritySet authorities) {
@@ -58,7 +58,7 @@ public class UserHandle implements UserDetails {
 
     public UserHandle(String emailAddress, String password, AuthoritySet authorities,
                       UserBooleans userBooleans, UserTimestamps timestamps, UserDeltaTimes deltaTimes, boolean isDead,
-                      PersonalData personalData, UserActionSet userActionSet) {
+                      PersonalData personalData, ActionSet actionSet) {
 
         this.emailAddress = emailAddress;
         this.password = password;
@@ -68,7 +68,7 @@ public class UserHandle implements UserDetails {
         this.deltaTimes = deltaTimes;
         this.isDead = isDead;
         this.personalData = personalData;
-        this.userActionSet = userActionSet;
+        this.actionSet = actionSet;
     }
 
     public ObjectId getUID() {
@@ -113,27 +113,23 @@ public class UserHandle implements UserDetails {
     }
 
     public boolean areAllActionsCompleted() {
-        return userActionSet.areAllActionsCompleted();
-    }
-
-    public void setAllActionsCompleted() {
-        userActionSet.setAllActionsCompleted();
+        return actionSet.areAllActionsCompleted();
     }
 
     public List<BaseAction> getActions() {
-        return userActionSet.getActions();
+        return actionSet.getActions();
     }
 
     public void addAction(BaseAction action) {
-        userActionSet.add(action);
+        actionSet.add(action);
     }
 
     public void replaceAction(int index, BaseAction action){
-        userActionSet.replace(index, action);
+        actionSet.replace(index, action);
     }
 
     public void removeAction(int index){
-        userActionSet.remove(index);
+        actionSet.remove(index);
     }
 
     public String getAuthoritiesAsString() {
@@ -205,5 +201,9 @@ public class UserHandle implements UserDetails {
 
     public void sendSignOfLife() {
         timestamps.sendLifeSign();
+    }
+
+    public void executeActions() {
+        actionSet.executeActions();
     }
 }

@@ -40,7 +40,7 @@ public class UserHandleRepositoryTest {
             UserBooleans userBooleans = new UserBooleans(true, true, true, true);
             UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                     userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
-                    personalData,   new UserActionSet(actions, false));
+                    personalData,   new ActionSet(actions, false));
             users.add(userHandle);
         }
         return users;
