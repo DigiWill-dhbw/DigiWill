@@ -1,9 +1,10 @@
 package de.digiwill.service.registration;
 
 import de.digiwill.exception.EmailException;
+import de.digiwill.model.AuthoritySet;
 import de.digiwill.model.PersonalData;
 import de.digiwill.repository.EmailResponseHandleRepository;
-import de.digiwill.util.EmailDispatcher;
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.util.SecurityHelper;
 import de.digiwill.model.UserHandle;
@@ -11,7 +12,6 @@ import de.digiwill.service.UserHandleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -91,13 +91,13 @@ public class RegistrationService {
         PersonalData personalData = new PersonalData(formData.getFirst("firstName"),
                 formData.getFirst("surName"),
                 birthdayDate);
-        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
+        AuthoritySet authorities = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER"));
 
         UserHandle userHandle = new UserHandle(formData.getFirst("email"),
                 SecurityHelper.encodePassword(formData.getFirst("password")),
                 personalData,
                 authorities);
-        userHandle.sendLifeSign();
+        userHandle.sendSignOfLife();
         userHandle.setDeltaDeathTime(60 * 60 * 24 * 14); //Sets time to 14 days
         return userHandle;
     }

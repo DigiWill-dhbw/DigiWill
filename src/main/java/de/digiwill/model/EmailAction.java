@@ -1,7 +1,7 @@
 package de.digiwill.model;
 
 import de.digiwill.exception.EmailException;
-import de.digiwill.util.EmailDispatcher;
+import de.digiwill.service.EmailDispatcher;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

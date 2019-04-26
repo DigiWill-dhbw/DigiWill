@@ -13,6 +13,10 @@ public class Address {
         this.country = country;
     }
 
+    public static Address getInitial(){
+        return new Address("-", "-", "-", "-");
+    }
+
     public String getZipCode() {
         return zipCode;
     }

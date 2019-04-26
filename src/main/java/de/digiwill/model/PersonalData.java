@@ -25,6 +25,10 @@ public class PersonalData {
         this.address = address;
     }
 
+    public static PersonalData getInitial(){
+        return new PersonalData("", "", null, Address.getInitial());
+    }
+
 
     public String getFullName() {
         return firstName + " " + surname;
