@@ -24,23 +24,10 @@ public class LoginFeatureTest {
     @Autowired
     private UserHandleManager userHandleManager;
 
-
-    @Given("^\"([^\"]*)\" Users are created$")
-    public void createUsers(String arg0) {
-        springBootBaseIntegrationTest.setUpUserHandle(Integer.parseInt(arg0), Collections.singletonList(
-                new EmailAction(Collections.singletonList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
-        ));
-    }
-
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url){
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + url);
-    }
-
-    @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
-    public void aUserWithEmailAndPasswordExists(String email, String password){
-        springBootBaseIntegrationTest.setUpSingleUser(email, password);
     }
 
     @Given("^A user with email \"([^\"]*)\" doesn't exist$")
