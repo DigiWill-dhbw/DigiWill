@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,14 +26,8 @@ public class UserHandle implements UserDetails {
     private AuthoritySet authorities;
     private UserBooleans userBooleans;
 
-    /**
-     * Unix timestamp in seconds
-     */
-    private long lastSignOfLife;
-    /**
-     * Unix timestamp in seconds
-     */
-    private long lastReminder;
+    private UserTimestamps timestamps;
+
     /**
      * Time interval in seconds
      */
@@ -62,17 +55,16 @@ public class UserHandle implements UserDetails {
 
     public UserHandle(String emailAddress, String password, PersonalData personalData, AuthoritySet authorities) {
         this(emailAddress, password, authorities,
-                UserBooleans.getInitial(), -1, -1, -1, -1, false,
+                UserBooleans.getInitial(), UserTimestamps.getInitial(), -1, -1, false,
                 personalData, UserActionSet.getInitial());
     }
 
     public UserHandle(String emailAddress, String password, AuthoritySet authorities) {
-        this(emailAddress, password, null, authorities);
-
+        this(emailAddress, password, PersonalData.getInitial(), authorities);
     }
 
     public UserHandle(String emailAddress, String password, AuthoritySet authorities,
-                      UserBooleans userBooleans, long lastSignOfLife, long lastReminder, long deltaReminder,
+                      UserBooleans userBooleans, UserTimestamps timestamps, long deltaReminder,
                       long deltaDeathTime, boolean isDead,
                       PersonalData personalData, UserActionSet userActionSet) {
 
@@ -80,8 +72,7 @@ public class UserHandle implements UserDetails {
         this.password = password;
         this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
         this.userBooleans = userBooleans;
-        this.lastSignOfLife = lastSignOfLife;
-        this.lastReminder = lastReminder;
+        this.timestamps = timestamps;
         this.deltaReminder = deltaReminder;
         this.deltaDeathTime = deltaDeathTime;
         this.isDead = isDead;
@@ -94,23 +85,7 @@ public class UserHandle implements UserDetails {
     }
 
     public long getLastSignOfLife() {
-        return lastSignOfLife;
-    }
-
-    public void sendLifeSign(){
-        this.lastSignOfLife = System.currentTimeMillis() / 1000L;
-    }
-
-    public void setLastSignOfLife(long lastSignOfLife) {
-        this.lastSignOfLife = lastSignOfLife;
-    }
-
-    public long getLastReminder() {
-        return lastReminder;
-    }
-
-    public void setLastReminder(long lastReminder) {
-        this.lastReminder = lastReminder;
+        return timestamps.getLastSignOfLife();
     }
 
     public long getDeltaReminder() {
@@ -229,8 +204,15 @@ public class UserHandle implements UserDetails {
         return userBooleans.isVerified();
     }
 
+    public long getLastInteractionWithUser(){
+        return timestamps.getLastInteraction();
+    }
+
+    public void setLastReminder(long lastReminder){
+        timestamps.setLastReminder(lastReminder);
+    }
+
     public void sendSignOfLife() {
-        long currentTime = Instant.now().getEpochSecond();
-        setLastSignOfLife(currentTime);
+        timestamps.sendLifeSign();
     }
 }

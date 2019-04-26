@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -42,7 +43,7 @@ public class SignOfLifeDaemon {
     @Scheduled(fixedRate = checkInterval * 60000)
     public void check() {
         running = true;
-        long currentTime = System.currentTimeMillis() / 1000L;
+        long currentTime = Instant.now().getEpochSecond();
         List<UserHandle> userHandles = userHandleRepository.findAll();
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
@@ -52,7 +53,7 @@ public class SignOfLifeDaemon {
             progress = processedUsers / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
         }
-        long executionDuration = ((System.currentTimeMillis() / 1000L) - currentTime);
+        long executionDuration = ((Instant.now().getEpochSecond()) - currentTime);
         logger.info("Check finished in: " + executionDuration + " seconds");
         if(executionDuration > checkInterval * 60000){
             logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: " + (executionDuration / 60000) + " minutes");
@@ -68,8 +69,7 @@ public class SignOfLifeDaemon {
                 user.setDead();
                 executeActions(user);
             }else if(!user.isDead()){
-                long lastInteractionWithUser = Math.max(user.getLastSignOfLife(), user.getLastReminder());
-                if(lastInteractionWithUser + user.getDeltaReminder() > currentTime){
+                if(user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime){
                     try {
                         emailDispatcher.sendReminderEmail(user);
                         user.setLastReminder(currentTime);
