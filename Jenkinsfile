@@ -40,7 +40,12 @@ pipeline {
     }
   }
   post {
-    always {
+    when {
+      not {
+        branch 'release'
+      }
+    }
+    steps {
       junit '**/target/surefire-reports/TEST-*.xml'
       step( [ $class: 'JacocoPublisher' ] )
     }
