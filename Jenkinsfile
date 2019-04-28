@@ -40,14 +40,13 @@ pipeline {
     }
   }
   post {
-    when {
-      not {
-        branch 'release'
-      }
-    }
     steps {
-      junit '**/target/surefire-reports/TEST-*.xml'
-      step( [ $class: 'JacocoPublisher' ] )
+      script {
+        if (env.BRANCH_NAME != 'release') {
+          junit '**/target/surefire-reports/TEST-*.xml'
+          step( [ $class: 'JacocoPublisher' ] )
+        }
+      }
     }
   }
 }
