@@ -40,7 +40,7 @@ pipeline {
     }
   }
   post {
-    steps {
+    always {
       script {
         if (env.BRANCH_NAME != 'release') {
           junit '**/target/surefire-reports/TEST-*.xml'
