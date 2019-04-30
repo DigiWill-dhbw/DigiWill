@@ -2,18 +2,50 @@ package de.digiwill.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
-public class UserHelper {
+public class AuthoritySet {
+    private List<GrantedAuthority> authorities;
 
-    public static SortedSet<GrantedAuthority> sortAuthorities(
-            Collection<? extends GrantedAuthority> authorities) {
+    public AuthoritySet(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void addAuthority(String role) {
+        authorities.add(new SimpleGrantedAuthority(role));
+    }
+
+    public GrantedAuthority getAuthorityByRoleName(String role) {
+        for (GrantedAuthority a : authorities) {
+            if (a.getAuthority().equals(role)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public void removeAuthority(GrantedAuthority auth){
+        authorities.remove(auth);
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String toString() {
+        String out = "";
+        for (GrantedAuthority a : authorities) {
+            out += a.getAuthority() + "\n";
+        }
+        return out;
+    }
+
+    public static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
         // Ensure array iteration order is predictable (as per
         // UserDetails.getAuthorities() contract and SEC-717)
@@ -21,11 +53,9 @@ public class UserHelper {
                 new AuthorityComparator());
 
         for (GrantedAuthority grantedAuthority : authorities) {
-            Assert.notNull(grantedAuthority,
-                    "GrantedAuthority list cannot contain any null elements");
+            Assert.notNull(grantedAuthority, "GrantedAuthority list cannot contain any null elements");
             sortedAuthorities.add(grantedAuthority);
         }
-
         return sortedAuthorities;
     }
 

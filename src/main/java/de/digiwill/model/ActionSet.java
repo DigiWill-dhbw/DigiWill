@@ -3,17 +3,17 @@ package de.digiwill.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserActionSet {
+public class ActionSet {
     private  List<BaseAction> actions;
     private boolean allActionsCompleted;
 
-    public UserActionSet(List<BaseAction> actions, boolean allActionsCompleted) {
+    public ActionSet(List<BaseAction> actions, boolean allActionsCompleted) {
         this.actions = actions;
         this.allActionsCompleted = allActionsCompleted;
     }
 
-    public static UserActionSet getInitial(){
-        return new UserActionSet(new ArrayList<>(), false);
+    public static ActionSet getInitial(){
+        return new ActionSet(new ArrayList<>(), false);
     }
 
     public List<BaseAction> getActions() {
@@ -38,5 +38,17 @@ public class UserActionSet {
 
     public void add(BaseAction action) {
         actions.add(action);
+    }
+
+    public void executeActions() {
+        boolean allCompleted = true;
+        for (BaseAction action : actions) {
+            if (!action.wasCompleted()) {
+                allCompleted = action.execute().wasSuccessful() && allCompleted;
+            }
+        }
+        if(allCompleted) {
+            setAllActionsCompleted();
+        }
     }
 }

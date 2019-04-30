@@ -1,8 +1,10 @@
-package de.digiwill.util;
+package de.digiwill.service;
 
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.model.UserHandle;
+import de.digiwill.util.EmailTransportWrapper;
+import de.digiwill.util.RegexMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
