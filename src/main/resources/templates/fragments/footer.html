@@ -18,6 +18,11 @@
         <div th:include="login :: login" class="modal-content">
         </div>
     </div>
+    <div id="toast">
+        <div id="img">Error</div>
+        <div id="desc" th:text="${responseText}"></div>
+        <button id="toastCloseButton" onclick="closeToast()"><i class="fas fa-times"></i></button>
+    </div>
 </div>
 </body>
 
