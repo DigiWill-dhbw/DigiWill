@@ -23,7 +23,6 @@ public class RegisterController {
 
     @Autowired
     private RegistrationService registrationService;
-    private Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
