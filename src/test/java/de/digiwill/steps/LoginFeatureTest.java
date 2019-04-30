@@ -4,7 +4,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
-import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.service.UserHandleManager;
 import org.openqa.selenium.By;
@@ -12,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -24,23 +22,10 @@ public class LoginFeatureTest {
     @Autowired
     private UserHandleManager userHandleManager;
 
-
-    @Given("^\"([^\"]*)\" Users are created$")
-    public void createUsers(String arg0) {
-        springBootBaseIntegrationTest.setUpUserHandle(Integer.parseInt(arg0), Collections.singletonList(
-                new EmailAction(Collections.singletonList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
-        ));
-    }
-
     @Given("^\"([^\"]*)\" is open$")
     public void theIsOpen(String url){
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + url);
-    }
-
-    @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
-    public void aUserWithEmailAndPasswordExists(String email, String password){
-        springBootBaseIntegrationTest.setUpSingleUser(email, password);
     }
 
     @Given("^A user with email \"([^\"]*)\" doesn't exist$")

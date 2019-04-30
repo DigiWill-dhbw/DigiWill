@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -36,7 +37,7 @@ public class CheckEmailHandlesDaemon {
     public void check() {
         running = true;
         //TODO maybe update time
-        long currentTime = System.currentTimeMillis() / 1000L;
+        long currentTime = Instant.now().getEpochSecond();
         List<EmailResponseHandle> emailResponseHandles = emailResponseHandleManager.findAll();
         float amountOfUsersPerc = (float) emailResponseHandles.size() / 100;
         int processedData = 0;
@@ -46,7 +47,7 @@ public class CheckEmailHandlesDaemon {
             progress = processedData / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
         }
-        logger.info("Check finished in: " + ((System.currentTimeMillis() / 1000L) - currentTime));
+        logger.info("Check finished in: " + ((Instant.now().getEpochSecond()) - currentTime));
         running = false;
     }
 

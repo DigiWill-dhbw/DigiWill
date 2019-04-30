@@ -2,7 +2,7 @@ package de.digiwill.configuration;
 
 
 import com.mongodb.MongoClient;
-import de.digiwill.util.EmailDispatcher;
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.util.EmailTransportWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,10 +1,8 @@
 package de.digiwill.service;
 
 import de.digiwill.exception.EmailException;
-import de.digiwill.model.BaseAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
-import de.digiwill.util.EmailDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -43,7 +42,7 @@ public class SignOfLifeDaemon {
     @Scheduled(fixedRate = checkInterval * 60000)
     public void check() {
         running = true;
-        long currentTime = System.currentTimeMillis() / 1000L;
+        long currentTime = Instant.now().getEpochSecond();
         List<UserHandle> userHandles = userHandleRepository.findAll();
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
@@ -53,7 +52,7 @@ public class SignOfLifeDaemon {
             progress = processedUsers / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
         }
-        long executionDuration = ((System.currentTimeMillis() / 1000L) - currentTime);
+        long executionDuration = ((Instant.now().getEpochSecond()) - currentTime);
         logger.info("Check finished in: " + executionDuration + " seconds");
         if(executionDuration > checkInterval * 60000){
             logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: " + (executionDuration / 60000) + " minutes");
@@ -62,38 +61,22 @@ public class SignOfLifeDaemon {
     }
 
     private void processUser(long currentTime, UserHandle user) {
-        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null;
-        boolean shouldTriggerActions = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
-        if(isUser) {
-            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && shouldTriggerActions) {
+        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null && user.getAuthorityByRoleName("ROLE_USER") == null;
+        boolean userPresumedDead = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
+        if (isUser) {
+            if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && userPresumedDead) {
                 user.setDead();
-                executeActions(user);
-            }else if(!user.isDead()){
-                long lastInteractionWithUser = Math.max(user.getLastSignOfLife(), user.getLastReminder());
-                if(lastInteractionWithUser + user.getDeltaReminder() > currentTime){
-                    try {
-                        emailDispatcher.sendReminderEmail(user);
-                        user.setLastReminder(currentTime);
-                    } catch (EmailException e) {
-                        logger.error("Couldn't send reminder to user ", e);
-                    }
+                user.executeActions();
+                userHandleManager.updateUser(user);
+            } else if (!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime) {
+                try {
+                    emailDispatcher.sendReminderEmail(user);
+                    user.setLastReminder(currentTime);
+                } catch (EmailException e) {
+                    logger.error("Couldn't send reminder to user ", e);
                 }
             }
         }
-    }
-
-    private void executeActions(UserHandle user) {
-        List<BaseAction> actions = user.getActions();
-        boolean allCompleted = true;
-        for (BaseAction action : actions) {
-            if (!action.wasCompleted()) {
-                allCompleted = allCompleted && action.execute().wasSuccessful();
-            }
-        }
-        if(allCompleted) {
-            user.setAllActionsCompleted();
-        }
-        userHandleManager.updateUser(user);
     }
 
 

@@ -6,10 +6,8 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,30 +23,17 @@ public class UserHandle implements UserDetails {
      */
     private String emailAddress;
     private String password;
-    private List<GrantedAuthority> authorities; //TODO final?
+    private AuthoritySet authorities;
     private UserBooleans userBooleans;
 
-    /**
-     * Unix timestamp in seconds
-     */
-    private long lastSignOfLife;
-    /**
-     * Unix timestamp in seconds
-     */
-    private long lastReminder;
-    /**
-     * Time interval in seconds
-     */
-    private long deltaReminder;
-    /**
-     * Time interval in seconds
-     */
-    private long deltaDeathTime;
+    private UserTimestamps timestamps;
+    private UserDeltaTimes deltaTimes;
+
     private boolean isDead;
 
     private PersonalData personalData;
 
-    private UserActionSet userActionSet;
+    private ActionSet actionSet;
 
    /* @PersistenceConstructor
     public UserHandle(ObjectId UID, String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
@@ -61,33 +46,29 @@ public class UserHandle implements UserDetails {
 
     }
 
-    public UserHandle(String emailAddress, String password, PersonalData personalData, List<GrantedAuthority> authorities) {
+    public UserHandle(String emailAddress, String password, PersonalData personalData, AuthoritySet authorities) {
         this(emailAddress, password, authorities,
-                UserBooleans.getInitial(), -1, -1, -1, -1, false,
-                personalData, UserActionSet.getInitial());
+                UserBooleans.getInitial(), UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
+                personalData, ActionSet.getInitial());
     }
 
-    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities) {
-        this(emailAddress, password, null, authorities);
-
+    public UserHandle(String emailAddress, String password, AuthoritySet authorities) {
+        this(emailAddress, password, PersonalData.getInitial(), authorities);
     }
 
-    public UserHandle(String emailAddress, String password, List<GrantedAuthority> authorities,
-                      UserBooleans userBooleans, long lastSignOfLife, long lastReminder, long deltaReminder,
-                      long deltaDeathTime, boolean isDead,
-                      PersonalData personalData, UserActionSet userActionSet) {
+    public UserHandle(String emailAddress, String password, AuthoritySet authorities,
+                      UserBooleans userBooleans, UserTimestamps timestamps, UserDeltaTimes deltaTimes, boolean isDead,
+                      PersonalData personalData, ActionSet actionSet) {
 
         this.emailAddress = emailAddress;
         this.password = password;
-        this.authorities = authorities;//Collections.unmodifiableSet(UserHelper.sortAuthorities(authorities));
+        this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
         this.userBooleans = userBooleans;
-        this.lastSignOfLife = lastSignOfLife;
-        this.lastReminder = lastReminder;
-        this.deltaReminder = deltaReminder;
-        this.deltaDeathTime = deltaDeathTime;
+        this.timestamps = timestamps;
+        this.deltaTimes = deltaTimes;
         this.isDead = isDead;
         this.personalData = personalData;
-        this.userActionSet = userActionSet;
+        this.actionSet = actionSet;
     }
 
     public ObjectId getUID() {
@@ -95,39 +76,23 @@ public class UserHandle implements UserDetails {
     }
 
     public long getLastSignOfLife() {
-        return lastSignOfLife;
-    }
-
-    public void sendLifeSign(){
-        this.lastSignOfLife = System.currentTimeMillis() / 1000L;
-    }
-
-    public void setLastSignOfLife(long lastSignOfLife) {
-        this.lastSignOfLife = lastSignOfLife;
-    }
-
-    public long getLastReminder() {
-        return lastReminder;
-    }
-
-    public void setLastReminder(long lastReminder) {
-        this.lastReminder = lastReminder;
+        return timestamps.getLastSignOfLife();
     }
 
     public long getDeltaReminder() {
-        return deltaReminder;
+        return deltaTimes.getDeltaReminder();
     }
 
     public void setDeltaReminder(long deltaReminder) {
-        this.deltaReminder = deltaReminder;
+        deltaTimes.setDeltaReminder(deltaReminder);
     }
 
     public long getDeltaDeathTime() {
-        return deltaDeathTime;
+        return deltaTimes.getDeltaDeathTime();
     }
 
     public void setDeltaDeathTime(long deltaDeathTime) {
-        this.deltaDeathTime = deltaDeathTime;
+        deltaTimes.setDeltaDeathTime(deltaDeathTime);
     }
 
     public boolean isDead() {
@@ -148,52 +113,39 @@ public class UserHandle implements UserDetails {
     }
 
     public boolean areAllActionsCompleted() {
-        return userActionSet.areAllActionsCompleted();
-    }
-
-    public void setAllActionsCompleted() {
-        userActionSet.setAllActionsCompleted();
+        return actionSet.areAllActionsCompleted();
     }
 
     public List<BaseAction> getActions() {
-        return userActionSet.getActions();
+        return actionSet.getActions();
     }
 
     public void addAction(BaseAction action) {
-        userActionSet.add(action);
+        actionSet.add(action);
     }
 
     public void replaceAction(int index, BaseAction action){
-        userActionSet.replace(index, action);
+        actionSet.replace(index, action);
     }
 
     public void removeAction(int index){
-        userActionSet.remove(index);
+        actionSet.remove(index);
     }
 
     public String getAuthoritiesAsString() {
-        String out = "";
-        for (GrantedAuthority a : authorities) {
-            out += a.getAuthority() + "\n";
-        }
-        return out;
+       return authorities.toString();
     }
 
     public void addAuthority(String role) {
-        authorities.add(new SimpleGrantedAuthority(role));
+        authorities.addAuthority(role);
     }
 
     public GrantedAuthority getAuthorityByRoleName(String role) {
-        for (GrantedAuthority a : authorities) {
-            if (a.getAuthority().equals(role)) {
-                return a;
-            }
-        }
-        return null;
+        return authorities.getAuthorityByRoleName(role);
     }
 
     public void removeAuthority(GrantedAuthority auth){
-        authorities.remove(auth);
+        authorities.removeAuthority(auth);
     }
 
     public String getEmailAddress() {
@@ -206,7 +158,7 @@ public class UserHandle implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return authorities.getAuthorities();
     }
 
     @Override
@@ -239,8 +191,19 @@ public class UserHandle implements UserDetails {
         return userBooleans.isVerified();
     }
 
+    public long getLastInteractionWithUser(){
+        return timestamps.getLastInteraction();
+    }
+
+    public void setLastReminder(long lastReminder){
+        timestamps.setLastReminder(lastReminder);
+    }
+
     public void sendSignOfLife() {
-        long currentTime = Instant.now().getEpochSecond();
-        setLastSignOfLife(currentTime);
+        timestamps.sendLifeSign();
+    }
+
+    public void executeActions() {
+        actionSet.executeActions();
     }
 }
