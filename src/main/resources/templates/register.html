@@ -8,11 +8,11 @@
 <body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
 
-<script th:if="${hasToast}">
+<script th:if="${hasToast}" th:inline="javascript">
     function onLoad() {
-        var desc = document.getElementById("desc");
-        desc.innerHTML = desc.innerHTML.replace(/;/g, "<br/>");
-        launchToast();
+        /*<![CDATA[*/
+        launchToast(/*[[${responseText}]]*/);
+        /*]]>*/
     }
 </script>
 <div id="content">
