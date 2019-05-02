@@ -8,11 +8,9 @@
 <body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
 
-<script th:if="${hasToast}" th:inline="javascript">
+<script th:if="${!hasToast}" th:inline="javascript">
     function onLoad() {
-        /*<![CDATA[*/
         launchToast(/*[[${responseText}]]*/);
-        /*]]>*/
     }
 </script>
 <div id="content">
