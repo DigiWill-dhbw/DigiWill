@@ -30,7 +30,7 @@ pipeline {
             sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
           }
         }
-        stage('Chrome') {
+        stage('Firefox') {
           steps {
             sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
           }
