@@ -22,6 +22,7 @@ public class GlobalSteps {
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
                 springBootBaseIntegrationTest.setWebDriver(new ChromeDriver(SeleniumDriverUtils.getChromeOptions()));
+                break;
             case "firefox":
                 System.setProperty("webdriver.gecko.driver", SeleniumDriverUtils.getFirefoxDriverPath());
                 springBootBaseIntegrationTest.setWebDriver(new FirefoxDriver(SeleniumDriverUtils.getFirefoxOptions()));
