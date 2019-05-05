@@ -24,6 +24,8 @@ public class GlobalSteps {
                 System.setProperty("webdriver.gecko.driver", SeleniumDriverUtils.getFirefoxDriverPath());
                 springBootBaseIntegrationTest.setWebDriver(new FirefoxDriver(SeleniumDriverUtils.getFirefoxOptions()));
                 break;
+            default:
+                break;
         }
     }
 
