@@ -4,6 +4,9 @@ import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SeleniumDriverUtils {
 
     private static String CHROME_DRIVER_WINDOWS = ".\\\\driver\\\\chromedriver.exe";
@@ -48,8 +51,8 @@ public class SeleniumDriverUtils {
         if (SystemUtils.IS_OS_LINUX) {
             options.addArguments("--headless");
         }
+        options.addArguments("--headless");
         return options;
     }
-
 }
 
