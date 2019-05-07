@@ -19,28 +19,28 @@ public class SendLifeSingFeatureTest {
     private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
     @When("^Clicking in header \"([^\"]*)\" on Mainpage$")
-    public void clickInHeader(String buttonName) {
+    public void clickInHeader(String buttonName) throws InterruptedException {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         // Write code here that turns the phrase above into concrete actions
         driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/");
 
         WebElement listing = driver.findElement(By.className("dropdown-content"));
 
-        if(buttonName.equalsIgnoreCase("logout")){
+        if (buttonName.equalsIgnoreCase("logout")) {
             List<WebElement> items = listing.findElements(By.tagName("input"));
-            WebElement item = items.get(items.size()-1);
-            assertEquals(buttonName,item.getAttribute("value"));
-            item.submit();
-
-        }else if(buttonName.equalsIgnoreCase("send life sign")){
-
-            List<WebElement> items = listing.findElements(By.tagName("input"));
-            WebElement item = items.get(items.size()-3);
+            WebElement item = items.get(items.size() - 1);
             assertEquals(buttonName, item.getAttribute("value"));
             item.submit();
-        }else
-        {
-            assertEquals(0,1);
+
+        } else if (buttonName.equalsIgnoreCase("send life sign")) {
+
+            List<WebElement> items = listing.findElements(By.tagName("input"));
+            WebElement item = items.get(items.size() - 3);
+            assertEquals(buttonName, item.getAttribute("value"));
+            item.submit();
+            Thread.sleep(100);
+        } else {
+            assertEquals(0, 1);
         }
     }
 

@@ -20,7 +20,7 @@ Feature: Register
 
     Examples:
       | email            | password       | passwordRep    | firstName | surName | birthday | result    |
-      | example@mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 01011990 | /         |
-      | example@mail.com | password       | password       | Tester    | McTest  | 01011990 | /register |
-      | example@mail.com | validPa33word! | VALIDPa33word? | Tester    | McTest  | 01011990 | /register |
-      | example-mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 01011990 | /register |
+      | example@mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 1990-01-01 | /         |
+      | example@mail.com | password       | password       | Tester    | McTest  | 1990-01-01 | /register |
+      | example@mail.com | validPa33word! | VALIDPa33word? | Tester    | McTest  | 1990-01-01 | /register |
+      | example-mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 1990-01-01 | /register |
