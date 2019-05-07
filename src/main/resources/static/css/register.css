@@ -36,7 +36,6 @@
 #toast {
     visibility: hidden;
     max-width: 50px;
-    height: 50px;
     /*margin-left: -125px;*/
     margin: auto;
     background-color: #333;
@@ -53,7 +52,8 @@
 }
 #toast #img{
     width: 50px;
-    height: 50px;
+    height: 100%;
+    position: absolute;
 
     float: left;
 
@@ -70,17 +70,31 @@
 
 
     color: #fff;
-
     padding: 16px;
 
     overflow: hidden;
     white-space: nowrap;
 }
+#toast #toastCloseButton {
+    background-color: black;
+    color: white;
+    border: 0;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
 
 #toast.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s forwards;
+    animation: fadein 0.5s, expand 0.5s 0.5s forwards;
+}
+
+#toast.disappear {
+    visibility: visible;
+    min-width: 350px;
+    -webkit-animation: shrink 0.5s 0s forwards, fadeout 0.5s 0.5s forwards;
+    animation: shrink 0.5s 0s forwards, fadeout 0.5s 0.5s forwards;
 }
 
 @-webkit-keyframes fadein {
