@@ -26,7 +26,7 @@ public enum RegistrationResponse {
 
     public void adjustModel(final Model model){
         if(failureMessage != null){
-            model.addAttribute("failure", true);
+            model.addAttribute("hasToast", true);
             model.addAttribute("responseText", failureMessage);
         }
     }

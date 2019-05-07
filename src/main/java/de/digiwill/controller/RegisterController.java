@@ -40,7 +40,8 @@ public class RegisterController {
         if (principal != null) {
             return "redirect:/";
         }
-        model.addAttribute("failure", false);
+        model.addAttribute("hasToast", false);
+        model.addAttribute("responseText", "No error occured");
         return "register";
     }
 }
