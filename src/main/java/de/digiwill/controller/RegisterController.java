@@ -35,7 +35,8 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("failure", false);
+        model.addAttribute("hasToast", false);
+        model.addAttribute("responseText", "No error occured");
         return "register";
     }
 }
