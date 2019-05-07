@@ -31,7 +31,7 @@ public class CheckEmailHandlesDaemon {
     private float progress;
 
     private Logger logger = LoggerFactory.getLogger(CheckEmailHandlesDaemon.class);
-//TODO make daemons generic?
+
     @Async
     @Scheduled(fixedRate = checkInterval * 60000)
     public void check() {

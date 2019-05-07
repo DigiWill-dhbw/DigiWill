@@ -2,6 +2,8 @@ package de.digiwill.service;
 
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,8 @@ public class UserHandleManager implements UserDetailsManager {
 
     @Autowired
     private UserHandleRepository userHandleRepository;
+
+    private Logger logger = LoggerFactory.getLogger(UserHandleManager.class);
 
     public UserHandleManager() {
 
@@ -45,7 +49,11 @@ public class UserHandleManager implements UserDetailsManager {
 
     @Override
     public void deleteUser(String emailAddress) {
-        userHandleRepository.deleteUserHandleBy(emailAddress);
+        long usersDeleted = userHandleRepository.deleteUserHandleByEmailAddress(emailAddress);
+        logger.debug("Deleted "+ usersDeleted + " user(s) with emailAdress: "+emailAddress);
+        if(usersDeleted > 2){
+            logger.error(usersDeleted + " users deleted. Should have been only one.");
+        }
     }
 
     @Override

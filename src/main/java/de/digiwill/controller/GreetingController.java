@@ -1,5 +1,6 @@
 package de.digiwill.controller;
 
+import de.digiwill.service.CheckEmailHandlesDaemon;
 import de.digiwill.service.SignOfLifeDaemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class GreetingController {
 
     @Autowired
-    private SignOfLifeDaemon signOfLifeDaemon;
+    private CheckEmailHandlesDaemon checkEmailHandlesDaemon;
 
     private Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
@@ -27,8 +28,6 @@ public class GreetingController {
         logger.info("An INFO Message");
         logger.warn("A WARN Message");
         logger.error("An ERROR Message");
-
-        signOfLifeDaemon.check();
         return "greeting";
 
     }
