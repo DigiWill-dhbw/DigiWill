@@ -46,8 +46,6 @@ public abstract class SpringBootBaseIntegrationTest {
         }
     }
 
-
-
     public void dropUsers() {
         if (userHandleManager != null) {
             userHandleManager.deleteAllUsers();
