@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 
 @Controller
 public class RegisterController {
@@ -34,7 +36,10 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
         model.addAttribute("hasToast", false);
         model.addAttribute("responseText", "No error occured");
         return "register";
