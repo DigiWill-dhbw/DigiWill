@@ -36,7 +36,10 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
         model.addAttribute("failure", false);
         return "register";
     }
