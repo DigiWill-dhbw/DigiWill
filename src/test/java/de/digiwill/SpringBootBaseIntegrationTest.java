@@ -4,8 +4,14 @@ import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.util.ChromeWebDriver;
+import de.digiwill.util.FirefoxWebDriver;
+import de.digiwill.util.SeleniumDriverUtils;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +22,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.swing.*;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +30,7 @@ import java.io.IOException;
 @AutoConfigureDataMongo
 public abstract class SpringBootBaseIntegrationTest {
 
+    @Autowired
     private WebDriver webDriver;
 
     @LocalServerPort
@@ -43,6 +51,23 @@ public abstract class SpringBootBaseIntegrationTest {
             MongoClient mongoClient = mongo.getObject();
             MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "users");
             return mongoTemplate;
+        }
+
+        @Bean(name = "webDriver", destroyMethod = "close")
+        public WebDriver getWebDriver() {
+            WebDriver webdriver = null;
+
+            switch (System.getProperty("browser", "chrome")) {
+                case "chrome":
+                    webdriver = new ChromeWebDriver();
+                    break;
+                case "firefox":
+                    webdriver = new FirefoxWebDriver();
+                    break;
+                default:
+                    break;
+            }
+            return webdriver;
         }
     }
 

@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
