@@ -19,7 +19,7 @@ public class ChromeWebDriver extends EventFiringWebDriver {
     static {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
 
-        ChromeOptions capabilities = new ChromeOptions();
+        ChromeOptions capabilities = SeleniumDriverUtils.getChromeOptions();
         webdriver = new ChromeDriver(capabilities);
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
