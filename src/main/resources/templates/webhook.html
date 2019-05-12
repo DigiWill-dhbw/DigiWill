@@ -5,17 +5,22 @@
     <link rel="stylesheet" type="text/css" href="css/webhook_gui.css"/>
     <script src="js/webhook_check.js"></script>
 </head>
-<body>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
 
 <div id="content">
     <div class="panel">
-        <form method="post" action="/saveWebhook" id="gui">
+        <form th:action="@{/webhook}" method="post" id="gui">
             <h2>Connect your IFTTT applet with digiwill</h2>
             IFTTT webhook url: <input class="input-fields" id="url" name="url" type="text"
                                       th:value="${webhook?.getDomain()}">
             <input type="submit" class="button" id="submitButton">
         </form>
+        <script th:if="${hasToast}" th:inline="javascript">
+            function onLoad() {
+                launchToast(/*[[${responseText}]]*/);
+            }
+        </script>
     </div>
 </div>
 <div th:include="fragments/footer :: footer"></div>
