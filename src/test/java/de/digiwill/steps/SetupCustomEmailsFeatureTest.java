@@ -144,7 +144,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     }
 
     public String skippedContent(String content) throws EmailException {
-        EmailAction emailAction = EmailAction.generateEmailAction(null, null, content, false);
+        EmailAction emailAction = EmailAction.generateEmailAction("", "", content, false);
         return emailAction.getSkipedContent();
     }
 }
