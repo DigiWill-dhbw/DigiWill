@@ -1,0 +1,16 @@
+@import "main.css";
+@import "listings.css";
+@import "modal.css";
+
+form {
+    margin: 5px;
+}
+
+table {
+    width:100%;
+}
+
+#url {
+    width:calc(100% - 20px);
+    margin-top: 5px;
+}
