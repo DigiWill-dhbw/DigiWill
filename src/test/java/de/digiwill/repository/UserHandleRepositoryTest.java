@@ -1,5 +1,6 @@
 package de.digiwill.repository;
 
+import de.digiwill.exception.EmailException;
 import de.digiwill.model.*;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.SecurityHelper;
@@ -26,10 +27,10 @@ public class UserHandleRepositoryTest {
     private UserHandleManager userHandleManager;
 
     @Before
-    public void setUp() {
+    public void setUp() throws EmailException {
         userHandleManager = new UserHandleManager(repository);
         userHandleManager.createUsers(createUserHandles(5, Arrays.asList(
-                new EmailAction(Arrays.asList("nobodyT@digiwill.de"), "Hey there!", false, "blalbalbla")
+                EmailAction.generateEmailAction("nobodyT@digiwill.de", "Hey there!", "blalbalbla", false)
         )));
     }
 

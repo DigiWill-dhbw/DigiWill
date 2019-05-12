@@ -33,7 +33,7 @@ public class EmailController {
         String emailAddress = principal.getName();
         UserHandle user = userHandleManager.loadUserByEmailAddress(emailAddress);
         try {
-            EmailAction action = EmailAction.generateEmailAction(recipients, subject, content);
+            EmailAction action = EmailAction.generateEmailAction(recipients, subject, content, false);
             user.addAction(action);
             userHandleManager.updateUser(user);
             return new RedirectView("getEmails");
@@ -70,7 +70,7 @@ public class EmailController {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         try {
-            user.replaceAction(idx, EmailAction.generateEmailAction(recipients, subject, content));
+            user.replaceAction(idx, EmailAction.generateEmailAction(recipients, subject, content, false));
             userHandleManager.updateUser(user);
             return new RedirectView("getEmails");
         }catch(EmailException e){

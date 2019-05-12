@@ -4,12 +4,14 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
+import de.digiwill.exception.EmailException;
 import de.digiwill.model.EmailAction;
 import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -49,18 +51,18 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     }
 
     @And("^A new item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
-    public void aNewItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
+    public void aNewItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) throws EmailException {
         boolean foundItem = hasItem(recipient, subject, content);
         assertTrue("An item which should have existed wasn't found", foundItem);
     }
 
     @And("^No item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
-    public void noItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) {
+    public void noItemWithRecipientSubjectContentShouldExist(String recipient, String subject, String content) throws EmailException {
         boolean foundItem = hasItem(recipient, subject, content);
         assertFalse("An item which shouldn't have existed was found", foundItem);
     }
 
-    private boolean hasItem(String recipient, String subject, String content) {
+    private boolean hasItem(String recipient, String subject, String content) throws EmailException {
         WebDriver driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/getEmails");
         WebElement listing = driver.findElement(By.className("listing"));
@@ -142,8 +144,8 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
 
     }
 
-    public String skippedContent(String content) {
-        EmailAction ea = new EmailAction(null, false, null, null, false, content);
-        return ea.getSkipedContent();
+    public String skippedContent(String content) throws EmailException {
+        EmailAction emailAction = EmailAction.generateEmailAction(null, null, content, false);
+        return emailAction.getSkipedContent();
     }
 }

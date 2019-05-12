@@ -30,10 +30,18 @@ public class EmailAction extends BaseAction {
     private String content;
 
     @PersistenceConstructor
-    public EmailAction(ObjectId UID, boolean wasCompleted, List<String> recipients, String subject, boolean isHTMLContent, String content) {
+    private EmailAction(ObjectId UID, boolean wasCompleted, List<String> recipients, String subject, boolean isHTMLContent, String content) {
         this(recipients, subject, isHTMLContent, content);
         this.UID = UID;
         this.wasCompleted = wasCompleted;
+    }
+
+    private EmailAction(List<String> recipients, String subject, boolean isHTMLContent, String content) {
+        this.recipients = recipients;
+        this.subject = subject;
+        this.isHTMLContent = isHTMLContent;
+        this.content = content;
+        this.type = ActionType.EMAIL;
     }
 
     public List<String> getRecipients() {
@@ -86,15 +94,7 @@ public class EmailAction extends BaseAction {
 
     }
 
-    public EmailAction(List<String> recipients, String subject, boolean isHTMLContent, String content) {
-        this.recipients = recipients;
-        this.subject = subject;
-        this.isHTMLContent = isHTMLContent;
-        this.content = content;
-        this.type = ActionType.EMAIL;
-    }
-
-    public static EmailAction generateEmailAction(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content) throws EmailException {
+    public static EmailAction generateEmailAction(@RequestParam(name = "recipients") String recipients, @RequestParam(name = "subject") String subject, @RequestParam(name = "content") String content, @RequestParam(name = "htmlContent", defaultValue = "false") boolean isHTMLContent) throws EmailException {
         List<String> recipient_list = new ArrayList<>();
         String[] recipient_array = recipients.split(" ");
         for (String recipient : recipient_array) {
@@ -105,7 +105,7 @@ public class EmailAction extends BaseAction {
             }
 
         }
-        return new EmailAction(recipient_list, subject, false, content);
+        return new EmailAction(recipient_list, subject, isHTMLContent, content);
     }
 
     @Override
