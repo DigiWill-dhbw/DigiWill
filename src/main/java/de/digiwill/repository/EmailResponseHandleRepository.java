@@ -10,6 +10,6 @@ public interface EmailResponseHandleRepository extends MongoRepository<EmailResp
 
         EmailResponseHandle findEmailResponseHandleBy(ObjectId UID);
 
-        EmailResponseHandle deleteEmailResponseHandleBy(ObjectId UID);
+        Long deleteEmailResponseHandleBy(ObjectId UID);
 
     }
