@@ -30,7 +30,7 @@ public class UserHandleRepositoryTest {
     public void setUp() throws EmailException {
         userHandleManager = new UserHandleManager(repository);
         userHandleManager.createUsers(createUserHandles(5, Arrays.asList(
-                EmailAction.generateEmailAction("nobodyT@digiwill.de", "Hey there!", "blalbalbla", false)
+                EmailAction.generateEmailAction("nobodyt@digiwill.de", "Hey there!", "blalbalbla", false)
         )));
     }
 
