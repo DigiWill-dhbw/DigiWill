@@ -5,7 +5,6 @@ import de.digiwill.model.BaseAction;
 import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.service.UserHandleManager;
-import de.digiwill.util.RegexMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,27 +33,13 @@ public class EmailController {
         String emailAddress = principal.getName();
         UserHandle user = userHandleManager.loadUserByEmailAddress(emailAddress);
         try {
-            EmailAction action = generateEmailAction(recipients, subject, content);
+            EmailAction action = EmailAction.generateEmailAction(recipients, subject, content);
             user.addAction(action);
             userHandleManager.updateUser(user);
             return new RedirectView("getEmails");
         }catch(EmailException e){
             return new RedirectView("getEmails");
         }
-    }
-
-    private EmailAction generateEmailAction(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content) throws EmailException {
-        List<String> recipient_list = new ArrayList<>();
-        String[] recipient_array = recipients.split(" ");
-        for (String recipient : recipient_array) {
-            if (RegexMatcher.isValidEmailAddress(recipient)) {
-                recipient_list.add(recipient);
-            } else {
-                throw new EmailException("Recipient List contains invalid Email Address");
-            }
-
-        }
-        return new EmailAction(recipient_list, subject, false, content);
     }
 
     @GetMapping("/getEmails")
@@ -85,7 +70,7 @@ public class EmailController {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         try {
-            user.replaceAction(idx, generateEmailAction(recipients, subject, content));
+            user.replaceAction(idx, EmailAction.generateEmailAction(recipients, subject, content));
             userHandleManager.updateUser(user);
             return new RedirectView("getEmails");
         }catch(EmailException e){

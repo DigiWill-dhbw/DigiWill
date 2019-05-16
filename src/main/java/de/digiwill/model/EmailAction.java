@@ -2,6 +2,7 @@ package de.digiwill.model;
 
 import de.digiwill.exception.EmailException;
 import de.digiwill.service.EmailDispatcher;
+import de.digiwill.util.RegexMatcher;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,20 @@ public class EmailAction extends BaseAction {
         this.isHTMLContent = isHTMLContent;
         this.content = content;
         this.type = ActionType.EMAIL;
+    }
+
+    public static EmailAction generateEmailAction(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content) throws EmailException {
+        List<String> recipient_list = new ArrayList<>();
+        String[] recipient_array = recipients.split(" ");
+        for (String recipient : recipient_array) {
+            if (RegexMatcher.isValidEmailAddress(recipient)) {
+                recipient_list.add(recipient);
+            } else {
+                throw new EmailException("Recipient List contains invalid Email Address");
+            }
+
+        }
+        return new EmailAction(recipient_list, subject, false, content);
     }
 
     @Override
