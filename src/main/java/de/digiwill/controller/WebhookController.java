@@ -31,12 +31,7 @@ public class WebhookController {
     @GetMapping(value="/webhook")
     public String webhook(Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        List<BaseAction> actions = user.getActions();
-        List<WebhookAction> webhook = new ArrayList<>();
-        for (BaseAction action : actions
-        ) {
-            webhook.add((WebhookAction) action);
-        }
+        model.addAttribute("webhook", user.getWebhook());
         return "webhook";
     }
 
@@ -46,9 +41,15 @@ public class WebhookController {
         if (RegexMatcher.isIFTTTUrl(url)) {
             UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
             WebhookAction webhookAction = new WebhookAction(url);
-            user.addAction(webhookAction);
+            int idx = user.getWebhookActionIdx();
+            if(idx == -1) {
+                user.addAction(webhookAction);
+            } else {
+                user.replaceAction(idx, webhookAction);
+            }
             userHandleManager.updateUser(user);
             model.addAttribute("hasToast", false);
+            model.addAttribute("webhook", user.getWebhook());
         } else {
             model.addAttribute("hasToast", true);
             model.addAttribute("responseText", "Not valid IFTTT webhook URL");
