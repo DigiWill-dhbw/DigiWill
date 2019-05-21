@@ -45,7 +45,7 @@ public class Config {
             }
         });
         logger.info("emailDispatcher Bean created");
-        return new EmailDispatcher(session, new EmailTransportWrapper());
+        return new EmailDispatcher(session, new EmailTransportWrapper(), env.getProperty("callback.url"));
     }
 
     @Bean("mongodbfactory")

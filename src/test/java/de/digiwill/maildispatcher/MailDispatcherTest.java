@@ -43,7 +43,7 @@ public class MailDispatcherTest {
     public void setUp() {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.host", "smtp.google.com");
-        emailDispatcher = new EmailDispatcher(Session.getInstance(properties), emailTransportWrapper);
+        emailDispatcher = new EmailDispatcher(Session.getInstance(properties), emailTransportWrapper, "http://localhost:8080");
         sentMessage = ArgumentCaptor.forClass(Message.class);
         reset(emailTransportWrapper);
     }
