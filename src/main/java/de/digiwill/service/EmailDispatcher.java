@@ -88,7 +88,7 @@ public class EmailDispatcher {
         if (RegexMatcher.isValidMultipleEmailAddress(recipient)) {
             Message message = new MimeMessage(session);
             try {
-                message.setFrom(new InternetAddress(session.getProperty("mail.smtp.host"), false));
+                message.setFrom(new InternetAddress(session.getProperty("mail.smtp.from"), "DigiWill"));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient, true));
                 message.setSubject(subject);
                 message.setContent(content, htmlContentFlag ? MediaType.TEXT_HTML_VALUE : MediaType.TEXT_PLAIN_VALUE);
