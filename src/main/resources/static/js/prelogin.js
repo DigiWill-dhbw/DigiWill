@@ -16,10 +16,20 @@ function closeLogin(btnClick, event) {
     }
 }
 
+function closePasswordRecovery(btnClick, event) {
+    // Get the modal
+    var modal = document.getElementById("passwordRecovery");
+    modal.style.display = "none";
+    window.history.replaceState(null,null,window.location.pathname);
+}
+
 document.addEventListener("DOMContentLoaded", function (ev) {
     var url = new URL(window.location.href);
     if (url.searchParams.get("login") != null) {
         document.getElementById("login").style.display = "block";
+    }
+    if (url.searchParams.get("passwordRecovery") != null) {
+        document.getElementById("passwordRecovery").style.display = "block";
     }
 });
 
