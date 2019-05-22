@@ -3,6 +3,7 @@ package de.digiwill.service;
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.UserHandleRepository;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class SignOfLifeDaemon {
         float amountOfUsersPerc = (float) userHandles.size() / 100;
         int processedUsers = 0;
         for (UserHandle user : userHandles) {
-            processUser(currentTime, user);
+            if(processUser(currentTime, user)) {
+                userHandleManager.updateUser(user);
+            }
             processedUsers++;
             progress = processedUsers / amountOfUsersPerc;
             logger.trace("Progress: " + progress);
@@ -60,23 +63,26 @@ public class SignOfLifeDaemon {
         running = false;
     }
 
-    private void processUser(long currentTime, UserHandle user) {
-        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null && user.getAuthorityByRoleName("ROLE_USER") == null;
-        boolean userPresumedDead = user.getLastSignOfLife() + user.getDeltaDeathTime() >= currentTime;
+    private boolean processUser(long currentTime, @NotNull UserHandle user) {
+        boolean isUser = user.getAuthorityByRoleName("ROLE_USER") != null && user.getAuthorityByRoleName("ROLE_ADMIN") == null;
+        boolean userPresumedDead = currentTime >= user.getLastSignOfLife() + user.getDeltaDeathTime();
+        boolean returnValue = false;
         if (isUser) {
             if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && userPresumedDead) {
                 user.setDead();
                 user.executeActions();
-                userHandleManager.updateUser(user);
+                returnValue = true;
             } else if (!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime) {
                 try {
                     emailDispatcher.sendReminderEmail(user);
                     user.setLastReminder(currentTime);
+                    returnValue = true;
                 } catch (EmailException e) {
                     logger.error("Couldn't send reminder to user ", e);
                 }
             }
         }
+        return returnValue;
     }
 
 
