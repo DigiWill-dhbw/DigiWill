@@ -6,12 +6,12 @@
 </head>
 <body>
 <div th:include="fragments/header :: header"></div>
-<div th:fragment= "login" id="content">
+<div th:fragment="login" id="content">
     <div class="panel">
         <div th:if="${param.error}" id="loginError">
             Invalid email address and password.
         </div>
-        <div  class = "form" >
+        <div class="form">
             <form th:action="@{/}" method="post">
                 <table>
                     <tr>
@@ -23,12 +23,20 @@
                         <td><input id="passwordInput" type="password" name="password"/></td>
                     </tr>
                     <tr>
-                        <td><button type="button" onclick="closeLogin(true)" class="cancelbtn button">Cancel</button></td>
+                        <td>
+                            <a href="?passwordRecovery">Forgot Password</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" onclick="closeLogin(true)" class="cancelbtn button">Cancel</button>
+                        </td>
                         <td><input id="loginButton" type="submit" value="Sign In" class="button"/></td>
                     </tr>
                 </table>
             </form>
         </div>
+
     </div>
 </div>
 </body>
