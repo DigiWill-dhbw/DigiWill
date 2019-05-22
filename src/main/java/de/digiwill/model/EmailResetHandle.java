@@ -8,19 +8,22 @@ import org.springframework.data.annotation.PersistenceConstructor;
 
 public class EmailResetHandle extends EmailResponseHandle {
 
+    // Time to timeout in minutes
+    private final static int PASSWORD_RESET_TIMEOUT = 10;
+
     @PersistenceConstructor
     public EmailResetHandle(ObjectId UID, String emailAddress, String token, long timeout){
         super(UID, emailAddress, token, timeout);
     }
 
     public EmailResetHandle(UserHandle userHandle) {
-        super(userHandle, -1);
+        super(userHandle, PASSWORD_RESET_TIMEOUT);
         initialize();
     }
 
     @Override
     protected void initialize() {
-        //TODO implement
+        //TODO what should happen when it is initialized?
     }
 
     @Override
@@ -30,7 +33,7 @@ public class EmailResetHandle extends EmailResponseHandle {
 
     @Override
     public void executeTimeout(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager) {
-        //TODO implement
+        emailResponseHandleManager.deleteEmailResponseHandle(this);
     }
 
 
