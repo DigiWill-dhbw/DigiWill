@@ -2,7 +2,6 @@ package de.digiwill.controller;
 
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.EmailResetHandle;
-import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.EmailDispatcher;
