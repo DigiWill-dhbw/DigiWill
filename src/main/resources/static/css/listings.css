@@ -20,9 +20,9 @@ table.listing {
     transition-property: background-color;
     transition-duration: 0.5s;
 }
-.listing tr:hover {
-    background-color: #ddd !important;
-}
 .listing tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+.listing tr:hover {
+    background-color: #ddd;
 }

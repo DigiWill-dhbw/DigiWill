@@ -8,14 +8,33 @@ pipeline {
         sh '''mvn clean install -DskipTests'''
       }
     }
-    stage('Test') {
+    stage('Unit tests') {
+      when {
+        not {
+          branch 'release'
+         }
+      }
+      steps {
+        sh '''mvn test -Dtest=!CucumberTest jacoco:report'''
+      }
+    }
+    stage('Selenium tests') {
       when {
         not {
           branch 'release'
         }
       }
-      steps {
-        sh '''mvn test -DenvTarget=test jacoco:report'''
+      parallel {
+        stage('Chrome') {
+          steps {
+            sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
+          }
+        }
+        stage('Firefox') {
+          steps {
+            sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
+          }
+        }
       }
     }
     stage('Deploy') {
@@ -41,8 +60,12 @@ pipeline {
   }
   post {
     always {
-      junit '**/target/surefire-reports/TEST-*.xml'
-      step( [ $class: 'JacocoPublisher' ] )
+      script {
+        if (env.BRANCH_NAME != 'release') {
+          junit '**/target/surefire-reports/TEST-*.xml'
+          step( [ $class: 'JacocoPublisher' ] )
+        }
+      }
     }
   }
 }

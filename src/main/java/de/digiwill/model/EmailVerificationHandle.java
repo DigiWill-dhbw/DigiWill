@@ -9,6 +9,7 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Instant;
 
 public class EmailVerificationHandle extends EmailResponseHandle {
+
     // Time to timeout in minutes
     private final static int VERIFICATION_TIMEOUT = 10;
 

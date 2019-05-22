@@ -29,6 +29,7 @@ public class Config {
     @Bean("emailDispatcher")
     public EmailDispatcher getEmailDispatcher() {
         EmailConfig emailconfig = new EmailConfig(env.getProperty("mail.host"),
+                env.getProperty("mail.from"),
                 env.getProperty("mail.port"),
                 env.getProperty("mail.user"),
                 env.getProperty("mail.password"));
@@ -37,6 +38,7 @@ public class Config {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", emailconfig.getHost());
+        props.put("mail.smtp.from", emailconfig.getFrom());
         props.put("mail.smtp.port", emailconfig.getPort());
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -45,7 +47,7 @@ public class Config {
             }
         });
         logger.info("emailDispatcher Bean created");
-        return new EmailDispatcher(session, new EmailTransportWrapper());
+        return new EmailDispatcher(session, new EmailTransportWrapper(), env.getProperty("callback.url"));
     }
 
     @Bean("mongodbfactory")

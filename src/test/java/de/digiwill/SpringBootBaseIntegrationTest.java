@@ -2,8 +2,10 @@ package de.digiwill;
 
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
-import de.digiwill.service.UserHandleManager;
 import de.digiwill.repository.UserHandleRepository;
+import de.digiwill.service.UserHandleManager;
+import de.digiwill.util.ChromeWebDriver;
+import de.digiwill.util.FirefoxWebDriver;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.io.IOException;
 @AutoConfigureDataMongo
 public abstract class SpringBootBaseIntegrationTest {
 
+    @Autowired
     private WebDriver webDriver;
 
     @LocalServerPort
@@ -44,9 +47,24 @@ public abstract class SpringBootBaseIntegrationTest {
             MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "users");
             return mongoTemplate;
         }
+
+        @Bean(name = "webDriver", destroyMethod = "close")
+        public WebDriver getWebDriver() {
+            WebDriver webdriver = null;
+
+            switch (System.getProperty("browser", "chrome")) {
+                case "chrome":
+                    webdriver = new ChromeWebDriver();
+                    break;
+                case "firefox":
+                    webdriver = new FirefoxWebDriver();
+                    break;
+                default:
+                    break;
+            }
+            return webdriver;
+        }
     }
-
-
 
     public void dropUsers() {
         if (userHandleManager != null) {

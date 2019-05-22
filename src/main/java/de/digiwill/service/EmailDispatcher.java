@@ -35,10 +35,12 @@ public class EmailDispatcher {
     private final Logger logger = LoggerFactory.getLogger(EmailDispatcher.class);
     private final Session session;
     private final EmailTransportWrapper emailTransportWrapper;
+    private String callbackUrl;
 
-    public EmailDispatcher(Session session, EmailTransportWrapper emailTransportWrapper) {
+    public EmailDispatcher(Session session, EmailTransportWrapper emailTransportWrapper, String callbackUrl) {
         this.session = session;
         this.emailTransportWrapper = emailTransportWrapper;
+        this.callbackUrl = callbackUrl;
 
     }
 
@@ -46,7 +48,7 @@ public class EmailDispatcher {
     public void sendRegistrationConfirmationEmail(EmailResponseHandle responseHandle, UserHandle userHandle) throws EmailException {
         logger.debug("Initiating sendRegistrationConfirmationEmail");
         String content = REGISTRATION_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
-                .replace("<url>", "http://localhost:8080/" + responseHandle.getLinkSuffix());
+                .replace("<url>", callbackUrl + responseHandle.getLinkSuffix());
         try {
             sendEmail(userHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
         } catch (EmailException e) {
@@ -67,7 +69,7 @@ public class EmailDispatcher {
     public void sendReminderEmail(UserHandle userHandle) throws EmailException {
         logger.debug("Initiating sendReminder");
         String content = REMINDER_EMAIL_CONTENT.replaceAll("<firstName>", userHandle.getPersonalData().getFirstName())
-                .replace("<url>", "http://localhost:8080/");
+                .replace("<url>", callbackUrl );
         //TODO generate Link for user and refactor message content into file
 
         try {
@@ -86,7 +88,7 @@ public class EmailDispatcher {
         if (RegexMatcher.isValidMultipleEmailAddress(recipient)) {
             Message message = new MimeMessage(session);
             try {
-                message.setFrom(new InternetAddress(session.getProperty("mail.smtp.host"), false));
+                message.setFrom(new InternetAddress(session.getProperty("mail.smtp.from"), "DigiWill"));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient, true));
                 message.setSubject(subject);
                 message.setContent(content, htmlContentFlag ? MediaType.TEXT_HTML_VALUE : MediaType.TEXT_PLAIN_VALUE);
