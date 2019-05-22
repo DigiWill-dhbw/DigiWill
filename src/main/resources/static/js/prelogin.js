@@ -36,4 +36,5 @@ document.addEventListener("DOMContentLoaded", function (ev) {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     closeLogin(false, event);
+    closePasswordRecovery(false, event);
 };

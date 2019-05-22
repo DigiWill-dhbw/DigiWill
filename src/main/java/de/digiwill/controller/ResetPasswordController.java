@@ -5,6 +5,7 @@ import de.digiwill.model.EmailResetHandle;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.EmailDispatcher;
+import de.digiwill.service.EmailResponseHandleManager;
 import de.digiwill.service.UserHandleManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,7 +20,8 @@ public class ResetPasswordController {
 
     @Autowired
     private UserHandleManager userHandleManager;
-
+    @Autowired
+    private EmailResponseHandleManager emailResponseHandleManager;
     @Autowired
     private EmailDispatcher emailDispatcher;
     @Autowired
@@ -30,13 +32,15 @@ public class ResetPasswordController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String requestPasswordReset(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {
 
+        EmailResetHandle emailResetHandle = null;
         try {
             UserHandle userHandle = userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
-            EmailResetHandle emailResetHandle = new EmailResetHandle(userHandle);
+            emailResetHandle = new EmailResetHandle(userHandle);
             emailResponseHandleRepository.insert(emailResetHandle);
 
             emailDispatcher.sendResetEmail(emailResetHandle, userHandle);
         } catch (EmailException e) {
+            emailResponseHandleManager.deleteEmailResponseHandle(emailResetHandle);
         } catch (Exception e) {
         }
         return "redirect:/";
