@@ -6,6 +6,8 @@ import de.digiwill.service.callback.CallbackResponse;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.PersistenceConstructor;
 
+import java.time.Instant;
+
 public class EmailResetHandle extends EmailResponseHandle {
 
     // Time to timeout in minutes
@@ -17,7 +19,7 @@ public class EmailResetHandle extends EmailResponseHandle {
     }
 
     public EmailResetHandle(UserHandle userHandle) {
-        super(userHandle, PASSWORD_RESET_TIMEOUT);
+        super(userHandle, Instant.now().getEpochSecond() + PASSWORD_RESET_TIMEOUT*60);
         initialize();
     }
 
@@ -28,7 +30,12 @@ public class EmailResetHandle extends EmailResponseHandle {
 
     @Override
     public CallbackResponse executeCallback(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager){
-        return CallbackResponse.CALLBACK_RESET_SUCCESS;
+        UserHandle userHandle = userHandleManager.loadUserByEmailAddress(this.getEmailAddress());
+        if (userHandle != null) {
+            return CallbackResponse.CALLBACK_RESET_PASSWORD;
+        } else {
+            return CallbackResponse.CALLBACK_ERROR;
+        }
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 public enum CallbackResponse {
 
     CALLBACK_VERIFICATION_SUCCESS(true, null, "verificationSuccess"),
-    CALLBACK_RESET_SUCCESS(true, null, "resetPassword"),
+    CALLBACK_RESET_PASSWORD(true, null, "resetPassword"),
     CALLBACK_ERROR(false,  "Callback URL parameters are invalid!", "callbackError");
 
     private boolean success;
