@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.util.SecurityHelper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -189,6 +190,10 @@ public class UserHandle implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = SecurityHelper.encodePassword(password);
     }
 
     @Override

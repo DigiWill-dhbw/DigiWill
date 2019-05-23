@@ -19,8 +19,7 @@ public class CallBackHandlerController {
                            @RequestParam(name = "token") String token, Model model) {
         //should there be an extra error if id or token are missing?
         CallbackResponse response = callbackService.getCallbackResponse(id, token);
-        response.adjustModel(model);
-
+        response.adjustModel(model, id, token);
         return response.getRedirectTarget();
     }
 
