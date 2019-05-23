@@ -1,6 +1,8 @@
 package de.digiwill.model;
 
 
+import de.digiwill.service.WebhookService;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,28 +26,10 @@ public class WebhookAction extends BaseAction {
 
     public ActionSuccess executeAction() {
         try {
-            sendGet(this.url);
+            WebhookService.sendGet(this.url);
             return ActionSuccess.SUCCESS;
         } catch (Exception e) {
             return ActionSuccess.FAILURE;
         }
-    }
-
-    private void sendGet(String url) throws Exception {
-        URL obj = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-        // optional default is GET
-        con.setRequestMethod("GET");
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
     }
 }
