@@ -1,8 +1,6 @@
 package de.digiwill.controller;
 
 
-import de.digiwill.model.BaseAction;
-import de.digiwill.model.EmailAction;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.WebhookAction;
 import de.digiwill.service.UserHandleManager;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller

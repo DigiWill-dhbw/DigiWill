@@ -3,11 +3,6 @@ package de.digiwill.model;
 
 import de.digiwill.service.WebhookService;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 public class WebhookAction extends BaseAction {
 
     private String url;
