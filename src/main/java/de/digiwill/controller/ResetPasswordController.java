@@ -31,7 +31,7 @@ public class ResetPasswordController {
             response.adjustModel(model);
             model.addAttribute("id", formData.getFirst("id"));
             model.addAttribute("token", formData.getFirst("token"));
-            return "/resetPassword";
+            return "resetPassword";
         }
     }
 
