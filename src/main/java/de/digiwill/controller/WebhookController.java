@@ -56,4 +56,15 @@ public class WebhookController {
         }
         return "webhook";
     }
+    @PostMapping(value="/deleteWebhook")
+    public RedirectView deleteWebhook(Model model,
+                                Principal principal) {
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
+        int idx = user.getWebhookActionIdx();
+        if (idx != -1) {
+            user.removeAction(idx);
+            userHandleManager.updateUser(user);
+        }
+        return new RedirectView("webhook");
+    }
 }

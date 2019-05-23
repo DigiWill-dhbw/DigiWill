@@ -14,7 +14,10 @@
             <h2>Connect your IFTTT applet with digiwill</h2>
             IFTTT webhook url: <input class="input-fields" id="url" name="url" type="text"
                                       th:value="${webhook?.getDomain()}">
-            <input type="submit" class="button" id="submitButton">
+            <input type="submit" class="button" id="submitButton" value="Set webhook">
+            <button class="button" id="deleteButton"
+                    onclick="onWebhookDelete()"><i class="fas fa-trash-alt"></i></button>
+
         </form>
         <script th:if="${hasToast}" th:inline="javascript">
             function onLoad() {
