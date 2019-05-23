@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ResetPasswordController {
 
     @Autowired
-    ResetPasswordService resetPasswordService;
+    private ResetPasswordService resetPasswordService;
 
     @RequestMapping(value = "/requestPasswordReset", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String requestPasswordReset(@RequestBody MultiValueMap<String, String> formData) {
