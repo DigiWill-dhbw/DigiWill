@@ -1,6 +1,7 @@
 package de.digiwill.controller.admin;
 
 import de.digiwill.model.UserHandle;
+import de.digiwill.service.ResetPasswordService;
 import de.digiwill.service.UserHandleManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +19,9 @@ public class UserOverviewController {
 
     @Autowired
     private UserHandleManager userHandleManager;
+
+    @Autowired
+    ResetPasswordService resetPasswordService;
 
     @GetMapping("/admin/overview/users")
     public String listAllUsers(Model model) {
@@ -45,6 +49,13 @@ public class UserOverviewController {
             userHandleManager.updateUser(userHandle);
 
             return "redirect:/admin/overview/users";
+    }
+
+    @RequestMapping(value = "/admin/overview/users/requestPasswordReset", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String requestPasswordReset(@RequestBody MultiValueMap<String, String> formData) {
+        resetPasswordService.requestPasswordReset(formData);
+        return "redirect:/admin/overview/users";
     }
 
 }
