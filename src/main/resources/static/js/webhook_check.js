@@ -1,9 +1,7 @@
 function onWebhookDelete() {
     var csrf_token = document.getElementsByName("_csrf")[0].value;
-    console.log(csrf_token);
     postAjax("/deleteWebhook", "_csrf=" + csrf_token, function (data) {
-       //location.reload();
-        console.log("Is deleted");
+       location.reload();
     });
 }
 

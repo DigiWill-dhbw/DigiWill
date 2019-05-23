@@ -36,7 +36,7 @@ public class WebhookController {
     }
 
     @PostMapping(value="/webhook")
-    public String updateWebhook(@RequestParam(name = "url", required = true) String url, Model model, Principal principal) {
+    public RedirectView updateWebhook(@RequestParam(name = "url", required = true) String url, Model model, Principal principal) {
         logger.info(url);
         if (RegexMatcher.isIFTTTUrl(url)) {
             UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
@@ -54,7 +54,7 @@ public class WebhookController {
             model.addAttribute("hasToast", true);
             model.addAttribute("responseText", "Not valid IFTTT webhook URL");
         }
-        return "webhook";
+        return new RedirectView("webhook");
     }
     @PostMapping(value="/deleteWebhook")
     public RedirectView deleteWebhook(Model model,
