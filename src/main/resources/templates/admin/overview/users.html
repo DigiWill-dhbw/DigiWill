@@ -33,6 +33,7 @@
             <th>Actions completed</th>
             <th>Authorities</th>
             <th>Toggle Admin</th>
+            <th>Request Password Reset</th>
             <th>Delete</th>
         </tr>
         <tr th:each="userhandle : ${userhandles}">
@@ -49,6 +50,12 @@
             <td>
                 <form th:action="@{/admin/overview/users/toggleAdmin}" method="post" style="display: inline;">
                     <button class="button" id="toggleAdminButton" name="emailAddress" th:value="${userhandle.emailAddress}"><i class="fas fa-check"></i>
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/admin/overview/users/requestPasswordReset}" method="post" style="display: inline;">
+                    <button class="button" id="passwordRecoveryButton" name="email" th:value="${userhandle.emailAddress}"><i class="fas fa-check"></i>
                     </button>
                 </form>
             </td>

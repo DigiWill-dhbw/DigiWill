@@ -1,12 +1,9 @@
 package de.digiwill.maildispatcher;
 
 import de.digiwill.exception.EmailException;
-import de.digiwill.model.PersonalData;
-import de.digiwill.model.UserHandle;
+import de.digiwill.model.*;
 import de.digiwill.service.EmailDispatcher;
-import de.digiwill.model.EmailResponseHandle;
 import de.digiwill.util.EmailTransportWrapper;
-import de.digiwill.model.EmailVerificationHandle;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +40,7 @@ public class MailDispatcherTest {
     public void setUp() {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.host", "smtp.google.com");
-        emailDispatcher = new EmailDispatcher(Session.getInstance(properties), emailTransportWrapper);
+        emailDispatcher = new EmailDispatcher(Session.getInstance(properties), emailTransportWrapper, "http://localhost:8080/");
         sentMessage = ArgumentCaptor.forClass(Message.class);
         reset(emailTransportWrapper);
     }
@@ -102,19 +99,17 @@ public class MailDispatcherTest {
 
     }
 
-    //TODO @Test
+    @Test
     public void sendResetEmailTest() throws Exception {
-        //TODO out of scope right now, so test will be implemented later
+        UserHandle userHandle = new UserHandle("user@name.de", "test", null);
+        EmailResponseHandle emailResponseHandle = new EmailResetHandle(new ObjectId("abcdefabcdefabcdefabcdef"), userHandle.getEmailAddress() , "token" , 10);
+        String[] recipient = {userHandle.getUsername()};
 
-        /*UserHandle uh = new UserHandle("user@name.de", "test", null);
-        uh.setVerified(false);
-        EmailResponseHandle erh = EmailResponseHandle.getResetHandle(uh);
-        String[] recipient = {uh.getUsername()};
-
-        emailDispatcher.sendResetEmail(erh);
+        emailDispatcher.sendResetEmail(emailResponseHandle, userHandle);
         verify(emailTransportWrapper).sendMessage(sentMessage.capture());
         compareMessage(sentMessage, recipient, EmailDispatcher.RESET_EMAIL_SUBJECT,
-                EmailDispatcher.RESET_EMAIL_SUBJECT.replaceAll("<username>", uh.getUsername()));*/
+                EmailDispatcher.RESET_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
+                        .replace("<url>", "http://localhost:8080/" + emailResponseHandle.getLinkSuffix()));
     }
 
     @Test
