@@ -40,6 +40,7 @@
                     <button onclick="openDropDown()" class="dropbtn button" id="dropdownMenuButton">Menu</button>
                     <div id="myDropdown" class="dropdown-content">
                         <a href="/getEmails" th:href="@{/getEmails}">Show email actions</a>
+                        <a href="/getEmails" th:href="@{/webhook}">Connect to IFTTT.com</a>
                         <form th:action="@{/lifeSign}" method="post">
                             <input id="sendLifeSign" class="button" type="submit" value="Send life sign"/>
                         </form>
