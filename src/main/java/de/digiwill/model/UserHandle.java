@@ -112,6 +112,31 @@ public class UserHandle implements UserDetails {
         userBooleans.setVerified(verified);
     }
 
+    public int getWebhookActionIdx() {
+        int idx = -1;
+        int counter = 0;
+        List<BaseAction> actions = this.getActions();
+        for (BaseAction action : actions
+        ) {
+            if (action instanceof WebhookAction) {
+                idx = counter;
+                break;
+            } else {
+                counter ++;
+            }
+        }
+        return idx;
+    }
+
+    public WebhookAction getWebhook() {
+        int idx = getWebhookActionIdx();
+        if(idx != -1) {
+            return (WebhookAction) this.getActions().get(idx);
+        } else {
+            return null;
+        }
+    }
+
     public boolean areAllActionsCompleted() {
         return actionSet.areAllActionsCompleted();
     }
