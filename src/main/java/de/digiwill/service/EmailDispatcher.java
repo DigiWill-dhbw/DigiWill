@@ -19,8 +19,12 @@ import java.util.List;
 
 public class EmailDispatcher {
 
-    public static final String RESET_EMAIL_SUBJECT = "";
-    public static final String RESET_EMAIL_CONTENT = "";
+    public static final String RESET_EMAIL_SUBJECT = "Password recovery";
+    public static final String RESET_EMAIL_CONTENT = "Hello <firstName><br/><br/>"+
+            "there was a request to change your accounts password.<br>"+
+            "If this request was sent by you please click <a href=\"<url>\">this link</a><br/>"+
+            "If not ignore this mail."+
+            "Regards, <br/>DigiWill";
     public static final String REGISTRATION_EMAIL_SUBJECT = "Confirm your registration!";
     public static final String REGISTRATION_EMAIL_CONTENT = "Hello <firstName><br/><br/>" +
             "please confirm your registration by clicking <a href=\"<url>\">this link</a>.<br/>" +
@@ -41,7 +45,6 @@ public class EmailDispatcher {
         this.session = session;
         this.emailTransportWrapper = emailTransportWrapper;
         this.callbackUrl = callbackUrl;
-
     }
 
     //TODO refactor Registration and Reset Email into a single method for system emails
@@ -50,17 +53,19 @@ public class EmailDispatcher {
         String content = REGISTRATION_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
                 .replace("<url>", callbackUrl + responseHandle.getLinkSuffix());
         try {
-            sendEmail(userHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
+            sendEmail(responseHandle.getEmailAddress(), REGISTRATION_EMAIL_SUBJECT, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send registration Email", e);
         }
     }
 
-    public void sendResetEmail(EmailResponseHandle responseHandle) throws EmailException {
-        //TODO irgendwo irgendwie irgendwann
+    public void sendResetEmail(EmailResponseHandle responseHandle, UserHandle userHandle) throws EmailException {
+        logger.debug("Initiating sendResetEmail");
+        String content = RESET_EMAIL_CONTENT.replace("<firstName>", userHandle.getPersonalData().getFirstName())
+                .replace("<url>", callbackUrl + responseHandle.getLinkSuffix());
 
         try {
-            sendEmail("", null, true, null);
+            sendEmail(responseHandle.getEmailAddress(), RESET_EMAIL_SUBJECT, true, content);
         } catch (EmailException e) {
             throw new EmailException("Failed to send reset Email", e);
         }
