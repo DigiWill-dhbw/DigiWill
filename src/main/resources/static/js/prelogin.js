@@ -19,8 +19,10 @@ function closeLogin(btnClick, event) {
 function closePasswordRecovery(btnClick, event) {
     // Get the modal
     var modal = document.getElementById("passwordRecovery");
-    modal.style.display = "none";
-    window.history.replaceState(null,null,window.location.pathname);
+    if (btnClick || event.target === modal) {
+        modal.style.display = "none";
+        window.history.replaceState(null,null,window.location.pathname);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function (ev) {
