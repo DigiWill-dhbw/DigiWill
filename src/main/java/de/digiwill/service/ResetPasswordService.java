@@ -53,13 +53,15 @@ public class ResetPasswordService {
     }
 
     public RegistrationResponse resetPassword(MultiValueMap<String, String> formData) {
-        String id = formData.getFirst("id");
-        String token = formData.getFirst("token");
-        EmailResetHandle emailResetHandle = (EmailResetHandle) callbackService.getEmailResponseHandle(id, token);
 
         if (formData == null) {
             return RegistrationResponse.FORM_DATA_DOESNT_EXIST;
         }
+
+        String id = formData.getFirst("id");
+        String token = formData.getFirst("token");
+        EmailResetHandle emailResetHandle = (EmailResetHandle) callbackService.getEmailResponseHandle(id, token);
+
 
         for (RegistrationValidator validator : validators) {
             if (!validator.validate(formData)) {
