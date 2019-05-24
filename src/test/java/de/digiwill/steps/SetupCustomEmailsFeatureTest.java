@@ -7,6 +7,7 @@ import de.digiwill.SpringBootBaseIntegrationTest;
 import de.digiwill.model.EmailAction;
 import org.junit.Ignore;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -29,18 +30,14 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     }
 
     @When("^Create new email action with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
-    public void createNewEmailActionWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) {
+    public void createNewEmailActionWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) throws InterruptedException {
         // Write code here that turns the phrase above into concrete actions
         WebDriver driver = getWebDriver();
         driver.get("http://localhost:" + getPort() + "/addEmail");
         driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
-        if ("Save".equals(button)) {
-            driver.findElement(By.id("submitButton")).click();
-        } else if ("Cancel".equals(button)) {
-            driver.findElement(By.id("cancelButton")).click();
-        }
+        clickSaveOrCancelButton(button, false);
     }
 
     @Then("^The service should accept the new action$")
@@ -115,7 +112,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
     }
 
     @And("^Editing email with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
-    public void editingEmailWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) {
+    public void editingEmailWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) throws InterruptedException {
         WebDriver driver = getWebDriver();
         // Write code here that turns the phrase above into concrete actions
         driver.findElement(By.id("addressField")).clear();
@@ -124,11 +121,7 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).clear();
         driver.findElement(By.name("content")).sendKeys(content);
-        if ("Save".equals(button)) {
-            driver.findElement(By.id("saveButton")).click();
-        } else if ("Cancel".equals(button)) {
-            driver.findElement(By.id("cancelButton")).click();
-        }
+        clickSaveOrCancelButton(button, true);
     }
 
     @And("^Click \"([^\"]*)\" on the modal$")
@@ -140,6 +133,19 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
             driver.findElement(By.id("cancelDeleteButton")).click();
         }
 
+    }
+
+    private void clickSaveOrCancelButton(String buttonLabel, boolean editing) throws InterruptedException {
+        WebDriver driver = getWebDriver();
+        if ("Save".equals(buttonLabel)) {
+            WebElement element = driver.findElement(By.id(editing ? "saveButton" : "submitButton"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+            element.click();
+        } else if ("Cancel".equals(buttonLabel)) {
+            WebElement element = driver.findElement(By.id("cancelButton"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+            element.click();
+        }
     }
 
     public String skippedContent(String content) {
