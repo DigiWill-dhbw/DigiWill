@@ -21,6 +21,7 @@ public class ChromeWebDriver extends EventFiringWebDriver {
 
         ChromeOptions capabilities = SeleniumDriverUtils.getChromeOptions();
         webdriver = new ChromeDriver(capabilities);
+        webdriver.manage().window().maximize();
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }

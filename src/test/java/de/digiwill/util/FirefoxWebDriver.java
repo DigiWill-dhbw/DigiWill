@@ -21,6 +21,7 @@ public class FirefoxWebDriver extends EventFiringWebDriver {
 
         FirefoxOptions capabilities = SeleniumDriverUtils.getFirefoxOptions();
         webdriver = new FirefoxDriver(capabilities);
+        webdriver.manage().window().maximize();
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
