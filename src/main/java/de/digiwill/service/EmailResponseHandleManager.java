@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmailResponseHandleManager {
@@ -18,11 +19,16 @@ public class EmailResponseHandleManager {
     private UserHandleManager userHandleManager;
 
     public EmailResponseHandle findEmailResponseHandleBy(ObjectId UID){
-        EmailResponseHandle emailResponseHandle = emailResponseHandleRepository.findEmailResponseHandleBy(UID);
-        if(emailResponseHandle.getTimeout() < Instant.now().getEpochSecond()){
-            emailResponseHandle.executeTimeout(userHandleManager, this);
-            emailResponseHandle = null;
+        EmailResponseHandle emailResponseHandle = null;
+        Optional optional = emailResponseHandleRepository.findById(UID);
+        if(optional.isPresent()){
+            emailResponseHandle = (EmailResponseHandle) optional.get();
+            if (emailResponseHandle.getTimeout() < Instant.now().getEpochSecond()) {
+                emailResponseHandle.executeTimeout(userHandleManager, this);
+                emailResponseHandle = null;
+            }
         }
+
         return emailResponseHandle;
     }
 
