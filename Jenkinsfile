@@ -49,15 +49,12 @@ pipeline {
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
     }
-    stage('Codacy Report') {
-      when {
-        branch 'master'
-      }
-      steps {
-        sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
-      }
-    }
     stage('SonarQube Report') {
+      when {
+        not {
+          branch 'release'
+        }
+      }
       steps {
         sh "mvn sonar:sonar -Dsonar.projectKey=DigiWill-dhbw_DigiWill -Dsonar.organization=digiwill-dhbw -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -Dsonar.branch.name=${env.BRANCH_NAME}"
       }
