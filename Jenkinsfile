@@ -59,7 +59,7 @@ pipeline {
     }
     stage('SonarQube Report') {
       steps {
-        sh "mvn sonar:sonar -Dsonar.projectKey=DigiWill-dhbw_DigiWill -Dsonar.organization=digiwill-dhbw -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco.xml -Dsonar.branch.name=${env.BRANCH_NAME}"
+        sh "mvn sonar:sonar -Dsonar.projectKey=DigiWill-dhbw_DigiWill -Dsonar.organization=digiwill-dhbw -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -Dsonar.branch.name=${env.BRANCH_NAME}"
       }
     }
   }
