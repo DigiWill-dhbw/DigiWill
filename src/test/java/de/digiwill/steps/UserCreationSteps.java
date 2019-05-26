@@ -39,7 +39,7 @@ public class UserCreationSteps {
             userHandleManager = new UserHandleManager(repository);
         }
         UserBooleans userBooleans = new UserBooleans(true, true, true, true);
-        UserHandle userHandle = new UserHandle(email, SecurityHelper.encodePassword(password), authoritySet,
+        UserHandle userHandle = UserHandleFactory.createCompleteUserHandle(email, SecurityHelper.encodePassword(password), authoritySet,
                 userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
                 personalData, ActionSet.getInitial());
         userHandleManager.createUser(userHandle);
