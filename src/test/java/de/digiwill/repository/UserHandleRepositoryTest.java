@@ -38,7 +38,7 @@ public class UserHandleRepositoryTest {
         for (int i = 0; i < amount; i++) {
             PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
             UserBooleans userBooleans = new UserBooleans(true, true, true, true);
-            UserHandle userHandle = new UserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
+            UserHandle userHandle = UserHandleFactory.createCompleteUserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                     userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
                     personalData,   new ActionSet(actions, false));
             users.add(userHandle);

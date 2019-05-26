@@ -1,13 +1,10 @@
 package de.digiwill.service.registration;
 
 import de.digiwill.exception.EmailException;
-import de.digiwill.model.AuthoritySet;
-import de.digiwill.model.PersonalData;
+import de.digiwill.model.*;
 import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.EmailDispatcher;
-import de.digiwill.model.EmailVerificationHandle;
 import de.digiwill.util.SecurityHelper;
-import de.digiwill.model.UserHandle;
 import de.digiwill.service.UserHandleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +90,8 @@ public class RegistrationService {
                 birthdayDate);
         AuthoritySet authorities = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER"));
 
-        UserHandle userHandle = new UserHandle(formData.getFirst("email"),
+        UserHandle userHandle = UserHandleFactory.createUserHandleWithEmailPasswordAuthoritiesPersonalData(
+                formData.getFirst("email"),
                 SecurityHelper.encodePassword(formData.getFirst("password")),
                 personalData,
                 authorities);
