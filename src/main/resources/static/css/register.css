@@ -18,6 +18,14 @@
     padding: 10px;
     box-shadow: 1px 2px 3px rgba(123,123,123,0.6);
 }
+.tooltiptext ul {
+    list-style-type: square;
+    float: none;
+}
+.tooltiptext li {
+    float: none;
+    font-size: 12px;
+}
 .tooltip .tooltiptext::after {
     content: " ";
     position: absolute;
