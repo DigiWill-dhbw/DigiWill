@@ -18,20 +18,24 @@ public class CallbackService {
     //
     //}
 
-    public CallbackResponse getCallbackResponse(String id, String token){
-            //TODO check for timeout
-            EmailResponseHandle emailResponseHandle;
-            try {
-                emailResponseHandle = emailResponseHandleManager.findEmailResponseHandleBy(new ObjectId(id));
-            }catch(IllegalArgumentException ex){
-                return CallbackResponse.CALLBACK_ERROR;
-            }
+    public CallbackResponse getCallbackResponse(String id, String token) {
+        EmailResponseHandle emailResponseHandle = getEmailResponseHandle(id, token);
 
-            if (emailResponseHandle != null && emailResponseHandle.verifyToken(token)) {
-                return emailResponseHandle.executeCallback(userHandleManager, emailResponseHandleManager);
-            } else {
-                return CallbackResponse.CALLBACK_ERROR;
-            }
+        if (emailResponseHandle != null) {
+            return emailResponseHandle.executeCallback(userHandleManager, emailResponseHandleManager);
+        } else {
+            return CallbackResponse.CALLBACK_ERROR;
+        }
+    }
+
+    public EmailResponseHandle getEmailResponseHandle(String id, String token) throws IllegalArgumentException {
+        EmailResponseHandle emailResponseHandle = emailResponseHandleManager.findEmailResponseHandleBy(new ObjectId(id));
+
+        if (emailResponseHandle.verifyToken(token)) {
+            return emailResponseHandle;
+        }
+        return null;
+
     }
 
 }

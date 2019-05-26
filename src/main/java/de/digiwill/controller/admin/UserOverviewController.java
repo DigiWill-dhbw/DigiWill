@@ -21,7 +21,7 @@ public class UserOverviewController {
     private UserHandleManager userHandleManager;
 
     @Autowired
-    ResetPasswordService resetPasswordService;
+    private ResetPasswordService resetPasswordService;
 
     @GetMapping("/admin/overview/users")
     public String listAllUsers(Model model) {

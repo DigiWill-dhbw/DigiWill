@@ -49,12 +49,14 @@ pipeline {
         sh '''docker run -d --name digiwill_prod digiwill'''
       }
     }
-    stage('Test Report') {
+    stage('SonarQube Report') {
       when {
-        branch 'master'
+        not {
+          branch 'release'
+        }
       }
       steps {
-        sh '''java -jar codacy-coverage-reporter.jar report -l Java -r ./target/site/jacoco/jacoco.xml'''
+        sh "mvn sonar:sonar -Dsonar.projectKey=DigiWill-dhbw_DigiWill -Dsonar.organization=digiwill-dhbw -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${env.SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -Dsonar.branch.name=${env.BRANCH_NAME}"
       }
     }
   }
@@ -66,6 +68,28 @@ pipeline {
           step( [ $class: 'JacocoPublisher' ] )
         }
       }
+    }
+    failure {
+      emailext (
+                subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                mimeType: 'text/html',
+                replyTo: '$DEFAULT_REPLYTO',
+                body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                  <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&</p>""",
+                to: emailextrecipients([[$class: 'CulpritsRecipientProvider'],
+                                                 [$class: 'RequesterRecipientProvider']])
+        )
+    }
+    fixed {
+      emailext (
+                    subject: "FIXED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                    mimeType: 'text/html',
+                    replyTo: '$DEFAULT_REPLYTO',
+                    body: """<p>FIXED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                      <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&</p>""",
+                    to: emailextrecipients([[$class: 'CulpritsRecipientProvider'],
+                                                     [$class: 'RequesterRecipientProvider']])
+        )
     }
   }
 }
