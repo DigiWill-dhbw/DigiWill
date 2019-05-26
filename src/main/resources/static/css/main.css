@@ -22,8 +22,10 @@ footer {
     position: fixed;
     text-align: center;
     bottom: 0;
-    width: 100%;
+    width: calc(100% - 20px * 2);
     background: white;
+    padding-left: 20px;
+    padding-right: 20px;
     box-shadow: 3px 5px 10px rgba(123,123,123,0.5);
 }
 
