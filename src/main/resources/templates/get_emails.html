@@ -4,14 +4,12 @@
     <th:block th:include="fragments/header :: head (title='Setup Email')"></th:block>
     <link rel="stylesheet" type="text/css" href="css/email_gui.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="js/main.js"></script>
+    <script src="js/email_check.js"></script>
     <script>
         var span;
         var modal;
-        function onDelete(idx) {
-            // Get the <span> element that closes the modal
-            modal.style.display = "block";
-            document.getElementById("confirmDeleteButton").href = "/deleteEmail?idx=" + idx;
-        }
+
         function onLoad() {
             modal = document.getElementById('deleteModal');
             // When the user clicks on <span> (x), close the modal
@@ -37,7 +35,9 @@
             <div class="modal-content">
 
                 <p>Are you sure that you want to delete this?</p>
-                <a id="confirmDeleteButton" class="button"><i class="fas fa-check"></i></a><a class="button" id="cancelDeleteButton"><i class="fas fa-times"></i></a>
+                <a id="confirmDeleteButton" class="button" onclick="onConfirmDelete()"><i class="fas fa-check"></i></a><a
+                    class="button"
+                                                                                               id="cancelDeleteButton"><i class="fas fa-times"></i></a>
             </div>
 
         </div>

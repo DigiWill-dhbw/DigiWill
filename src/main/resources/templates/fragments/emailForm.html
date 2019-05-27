@@ -32,6 +32,7 @@
                 var query = window.location.search.substring(1);
                 qs = parse_query_string(query);
                 document.getElementById("index").value = qs.idx;
+                currentDeleteIdx = qs.idx;
                 modal = document.getElementById('deleteModal');
                 // When the user clicks on <span> (x), close the modal
                 span = document.getElementById("cancelDeleteButton");
@@ -43,11 +44,6 @@
                         modal.style.display = "none";
                     }
                 }
-            }
-            function onDelete() {
-                // Get the <span> element that closes the modal
-                modal.style.display = "block";
-                document.getElementById("confirmDeleteButton").href = "/deleteEmail?idx=" + qs.idx;
             }
         </script>
     </th:block>

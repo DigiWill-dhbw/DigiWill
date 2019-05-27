@@ -78,7 +78,7 @@ public class EmailController {
         }
     }
 
-    @GetMapping("/deleteEmail")
+    @PostMapping("/deleteEmail")
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());

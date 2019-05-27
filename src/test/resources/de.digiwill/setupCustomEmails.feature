@@ -80,7 +80,7 @@ Feature: Custom Emails CRUD
     Then A new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
     When Clicking "Delete"
     And Click "Confirm" on the modal
-    Then No new item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
+    Then No item with recipient "<recipient>", subject "<subject>", content "<content>" should exist
 
     Examples:
       | recipient               | subject             | content                                   |
