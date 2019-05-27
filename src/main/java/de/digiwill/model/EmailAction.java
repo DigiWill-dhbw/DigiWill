@@ -57,7 +57,7 @@ public class EmailAction extends BaseAction {
     }
 
     public void setHTMLContent(boolean isHTMLContent) {
-        isHTMLContent = isHTMLContent;
+        this.isHTMLContent = isHTMLContent;
     }
 
     public String getContent() {
