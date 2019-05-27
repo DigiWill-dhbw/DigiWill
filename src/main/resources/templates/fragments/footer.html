@@ -11,7 +11,8 @@
 <body>
 <div th:fragment="footer">
     <footer>
-        <h1>TEST</h1>
+        <p class="left">© DigiWill</p>
+        <p class="right"><a href="https://github.com/DigiWill-dhbw/DigiWill"><i class="fab fa-github"></i></a></p>
     </footer>
 
     <div th:if="${#httpServletRequest.remoteUser == null}" id="login" class="modal">

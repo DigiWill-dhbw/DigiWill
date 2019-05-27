@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 public enum CallbackResponse {
 
     CALLBACK_VERIFICATION_SUCCESS(true, null, "verificationSuccess"),
-    CALLBACK_RESET_SUCCESS(true, null, "resetPassword"),
+    CALLBACK_RESET_PASSWORD(true, null, "resetPassword"),
     CALLBACK_ERROR(false,  "Callback URL parameters are invalid!", "callbackError");
 
     private boolean success;
@@ -24,7 +24,9 @@ public enum CallbackResponse {
         }
     }
 
-    public void adjustModel(final Model model){
+    public void adjustModel(final Model model, String id, String token){
+        model.addAttribute("id", id);
+        model.addAttribute("token", token);
         model.addAttribute("failure", !success);
         model.addAttribute("longText", longText);
         if(responseText != null) {

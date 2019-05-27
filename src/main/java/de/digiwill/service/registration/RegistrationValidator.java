@@ -2,16 +2,14 @@ package de.digiwill.service.registration;
 
 import org.springframework.util.MultiValueMap;
 
-public class RegistrationValidator {
+public abstract class RegistrationValidator {
     private RegistrationResponse response;
 
     public RegistrationValidator(RegistrationResponse response){
         this.response = response;
     }
 
-    public boolean validate(final MultiValueMap<String, String> formData){
-        return false;
-    }
+    public abstract boolean validate(final MultiValueMap<String, String> formData);
 
     public RegistrationResponse getResponse(){
         return response;

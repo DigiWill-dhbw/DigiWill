@@ -29,10 +29,6 @@ public class RegisterController {
         RegistrationResponse response = registrationService.addNewUser(formData);
         response.adjustModel(model);
         return response.getRedirectTarget();
-
-       /* if (registrationService.wasRegistrationSuccesful(returnCode)) {
-            model.addAttribute("name", formData.getFirst("firstName"));
-        }*/
     }
 
     @GetMapping("/register")

@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.util.SecurityHelper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -62,7 +63,7 @@ public class UserHandle implements UserDetails {
 
         this.emailAddress = emailAddress;
         this.password = password;
-        this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
+        this.authorities = authorities;
         this.userBooleans = userBooleans;
         this.timestamps = timestamps;
         this.deltaTimes = deltaTimes;
@@ -110,6 +111,31 @@ public class UserHandle implements UserDetails {
 
     public void setVerified(boolean verified) {
         userBooleans.setVerified(verified);
+    }
+
+    public int getWebhookActionIdx() {
+        int idx = -1;
+        int counter = 0;
+        List<BaseAction> actions = this.getActions();
+        for (BaseAction action : actions
+        ) {
+            if (action instanceof WebhookAction) {
+                idx = counter;
+                break;
+            } else {
+                counter ++;
+            }
+        }
+        return idx;
+    }
+
+    public WebhookAction getWebhook() {
+        int idx = getWebhookActionIdx();
+        if(idx != -1) {
+            return (WebhookAction) this.getActions().get(idx);
+        } else {
+            return null;
+        }
     }
 
     public boolean areAllActionsCompleted() {
@@ -164,6 +190,10 @@ public class UserHandle implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = SecurityHelper.encodePassword(password);
     }
 
     @Override

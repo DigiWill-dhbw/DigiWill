@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmailResponseHandleRepository extends MongoRepository<EmailResponseHandle, ObjectId>{
 
-        EmailResponseHandle findEmailResponseHandleBy(ObjectId UID);
-
         Long deleteEmailResponseHandleBy(ObjectId UID);
 
     }
