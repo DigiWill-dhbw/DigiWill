@@ -60,8 +60,12 @@ public class EmailController {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
-        EmailAction action = (EmailAction) actions.get(idx);
-        model.addAttribute("email", action);
+        try {
+            EmailAction action = (EmailAction) actions.get(idx);
+            model.addAttribute("email", action);
+        }catch (Exception e) {
+            return "redirect:/getEmails";
+        }
         return "edit_email";
     }
 
@@ -78,7 +82,7 @@ public class EmailController {
         }
     }
 
-    @GetMapping("/deleteEmail")
+    @PostMapping("/deleteEmail")
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
