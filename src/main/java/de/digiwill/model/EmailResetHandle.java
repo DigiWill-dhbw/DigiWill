@@ -11,7 +11,7 @@ import java.time.Instant;
 public class EmailResetHandle extends EmailResponseHandle {
 
     // Time to timeout in minutes
-    private final static int PASSWORD_RESET_TIMEOUT = 10;
+    private static final int PASSWORD_RESET_TIMEOUT = 10;
 
     @PersistenceConstructor
     public EmailResetHandle(ObjectId UID, String emailAddress, String token, long timeout){

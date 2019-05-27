@@ -112,7 +112,7 @@ public class EmailDispatcher {
 
             logger.debug("Email sent");
         } else {
-            logger.error("Recipient email address is invalid: " + recipient);
+            logger.error("Recipient email address is invalid: {}", recipient);
             throw new EmailException("Recipient email address is invalid: " + recipient);
         }
     }
