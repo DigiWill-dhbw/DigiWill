@@ -19,43 +19,43 @@
             <form th:action="@{/register}" method="post">
                 <table>
                     <tr>
-                        <td><label>Email address : </label></td><td><input id="emailInput" type="email" name="email"/> </td>
+                        <td><label>Email address : </label></td><td><input id="emailInput" type="email" name="email" class="input-fields"
+                    /> </td>
                     </tr>
                     <tr>
                         <td><label>Password: </label></td>
-                        <td><input id="passwordInput" type="password" name="password"/></td>
+                        <td><input id="passwordInput" type="password" name="password" class="input-fields"/></td>
                             <td><div class="tooltip">?
                                 <div class="tooltiptext">
-                                    Must be at least 8 characters long <br>
-                                    Must include at least one:
+                                    Password must meet following requirements:
                                     <ul>
-                                        <li>Uppercase letter</li>
-                                        <li>Lowercase letter</li>
-                                        <li>Digit</li>
-                                        <li>Special character</li>
+                                        <li>Contains at least one uppercase letter</li>
+                                        <li>Contains at least one lowercase letter</li>
+                                        <li>Contains at least one digit</li>
+                                        <li>Contains at least one special character</li>
                                     </ul>
                                 </div>
                             </div></td>
                     </tr>
                     <tr>
                         <td>Repeat:</td>
-                        <td><input id="passwordInput_rep" type="password" name="password_rep"/></td>
+                        <td><input id="passwordInput_rep" type="password" name="password_rep" class="input-fields"/></td>
                     </tr>
                     <tr>
                         <td>First name:</td>
-                        <td><input id="firstName" type="text" name="firstName"/></td>
+                        <td><input id="firstName" type="text" name="firstName" class="input-fields"/></td>
                     </tr>
                     <tr>
                         <td>Surname:</td>
-                        <td><input id="surName" type="text" name="surName"/></td>
+                        <td><input id="surName" type="text" name="surName" class="input-fields"/></td>
                     </tr>
                     <tr>
                         <td>Birthday</td>
-                        <td><input id="birthday" type="date" name="birthday"/></td>
+                        <td><input id="birthday" type="date" name="birthday" class="input-fields"/></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input id="registerButton" type="submit" value="Register"/></td>
+                        <td><input id="registerButton" type="submit" value="Register" class="button"/></td>
                     </tr>
 
                 </table>
