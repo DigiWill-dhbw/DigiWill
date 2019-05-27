@@ -60,12 +60,8 @@ public class EmailController {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
-        try {
-            EmailAction action = (EmailAction) actions.get(idx);
-            model.addAttribute("email", action);
-        }catch (Exception e) {
-            return "redirect:/getEmails";
-        }
+        EmailAction action = (EmailAction) actions.get(idx);
+        model.addAttribute("email", action);
         return "edit_email";
     }
 
