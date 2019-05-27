@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WebhookAction extends BaseAction {
 
     @Autowired
-    WebhookService webhookService;
+    private WebhookService webhookService;
 
     private String url;
 
