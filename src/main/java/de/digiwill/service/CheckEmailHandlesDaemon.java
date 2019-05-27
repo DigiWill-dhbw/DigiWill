@@ -45,9 +45,10 @@ public class CheckEmailHandlesDaemon {
             process(emailResponseHandle, currentTime);
             processedData++;
             progress = processedData / amountOfUsersPerc;
-            logger.trace("Progress: " + progress);
+            logger.trace("Progress: {}", progress);
         }
-        logger.info("Check finished in: " + ((Instant.now().getEpochSecond()) - currentTime));
+        long executionDuration = ((Instant.now().getEpochSecond()) - currentTime);
+        logger.info("Check finished in: {} seconds", executionDuration);
         running = false;
     }
 

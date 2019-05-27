@@ -32,17 +32,18 @@ public class AuthoritySet {
         authorities.remove(auth);
     }
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
     @Override
     public String toString() {
-        String out = "";
+
+        StringBuilder stringBuilder = new StringBuilder();
         for (GrantedAuthority a : authorities) {
-            out += a.getAuthority() + "\n";
+            stringBuilder.append(a.getAuthority() + "\n");
         }
-        return out;
+        return stringBuilder.toString();
     }
 
     public static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {

@@ -48,7 +48,6 @@ public class ResetPasswordService {
             emailDispatcher.sendResetEmail(emailResetHandle, userHandle);
         } catch (EmailException e) {
             emailResponseHandleManager.deleteEmailResponseHandle(emailResetHandle);
-        } catch (Exception e) {
         }
     }
 

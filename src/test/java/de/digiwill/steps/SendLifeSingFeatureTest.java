@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class SendLifeSingFeatureTest {
     @Autowired
@@ -40,7 +41,7 @@ public class SendLifeSingFeatureTest {
             item.submit();
             Thread.sleep(100);
         } else {
-            assertEquals(0, 1);
+            fail("Unexpected button name: " + buttonName);
         }
     }
 

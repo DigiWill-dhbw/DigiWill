@@ -56,8 +56,8 @@ public class EmailAction extends BaseAction {
         return isHTMLContent;
     }
 
-    public void setHTMLContent(boolean HTMLContent) {
-        isHTMLContent = HTMLContent;
+    public void setHTMLContent(boolean isHTMLContent) {
+        isHTMLContent = isHTMLContent;
     }
 
     public String getContent() {
@@ -69,12 +69,11 @@ public class EmailAction extends BaseAction {
     }
 
     public String getRecipientString() {
-        String str = "";
-        for (String s :
-                this.recipients) {
-            str += s + " ";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : this.recipients) {
+            stringBuilder.append(s + " ");
         }
-        return str;
+        return stringBuilder.toString();
     }
 
     public String getSkipedContent() {
@@ -95,17 +94,17 @@ public class EmailAction extends BaseAction {
     }
 
     public static EmailAction generateEmailAction(@RequestParam(name = "recipients", required = true) String recipients, @RequestParam(name = "subject", required = true) String subject, @RequestParam(name = "content", required = true) String content) throws EmailException {
-        List<String> recipient_list = new ArrayList<>();
-        String[] recipient_array = recipients.split(" ");
-        for (String recipient : recipient_array) {
+        List<String> recipientList = new ArrayList<>();
+        String[] recipientArray = recipients.split(" ");
+        for (String recipient : recipientArray) {
             if (RegexMatcher.isValidEmailAddress(recipient)) {
-                recipient_list.add(recipient);
+                recipientList.add(recipient);
             } else {
                 throw new EmailException("Recipient List contains invalid Email Address");
             }
 
         }
-        return new EmailAction(recipient_list, subject, false, content);
+        return new EmailAction(recipientList, subject, false, content);
     }
 
     @Override
