@@ -54,7 +54,7 @@ public abstract class EmailResponseHandle {
 
     public  String getLinkSuffix(){
         return "callback?id=" + getUID().toString() +"&token=" + token;
-    };
+    }
 
     public boolean verifyToken(String compareToken){
         return compareToken.contentEquals(token);

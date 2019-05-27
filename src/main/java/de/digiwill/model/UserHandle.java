@@ -63,7 +63,7 @@ public class UserHandle implements UserDetails {
 
         this.emailAddress = emailAddress;
         this.password = password;
-        this.authorities = authorities;//Collections.unmodifiableSet(AuthoritySet.sortAuthorities(authorities));
+        this.authorities = authorities;
         this.userBooleans = userBooleans;
         this.timestamps = timestamps;
         this.deltaTimes = deltaTimes;

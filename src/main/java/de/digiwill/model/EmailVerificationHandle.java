@@ -11,7 +11,7 @@ import java.time.Instant;
 public class EmailVerificationHandle extends EmailResponseHandle {
 
     // Time to timeout in minutes
-    private final static int VERIFICATION_TIMEOUT = 10;
+    private static final int VERIFICATION_TIMEOUT = 10;
 
     @PersistenceConstructor
     public EmailVerificationHandle(ObjectId UID, String emailAddress, String token, long timeout){

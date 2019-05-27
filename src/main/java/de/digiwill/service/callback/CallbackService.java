@@ -14,9 +14,6 @@ public class CallbackService {
     @Autowired
     private EmailResponseHandleManager emailResponseHandleManager;
 
-    //CallbackService(){
-    //
-    //}
 
     public CallbackResponse getCallbackResponse(String id, String token) {
         EmailResponseHandle emailResponseHandle = getEmailResponseHandle(id, token);

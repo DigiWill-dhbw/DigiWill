@@ -53,12 +53,12 @@ public class SignOfLifeDaemon {
             }
             processedUsers++;
             progress = processedUsers / amountOfUsersPerc;
-            logger.trace("Progress: " + progress);
+            logger.trace("Progress: {}", progress);
         }
         long executionDuration = ((Instant.now().getEpochSecond()) - currentTime);
-        logger.info("Check finished in: " + executionDuration + " seconds");
+        logger.info("Check finished in: {} seconds", executionDuration);
         if(executionDuration > checkInterval * 60000){
-            logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: " + (executionDuration / 60000) + " minutes");
+            logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: {} minutes", (executionDuration / 60000));
         }
         running = false;
     }

@@ -50,9 +50,9 @@ public class UserHandleManager implements UserDetailsManager {
     @Override
     public void deleteUser(String emailAddress) {
         long usersDeleted = userHandleRepository.deleteUserHandleByEmailAddress(emailAddress);
-        logger.debug("Deleted "+ usersDeleted + " user(s) with emailAdress: "+emailAddress);
+        logger.debug("Deleted {} user(s) with emailAdress: {}", usersDeleted, emailAddress);
         if(usersDeleted > 1){
-            logger.error(usersDeleted + " users deleted. Should have been only one.");
+            logger.error("{} users deleted. Should have been only one.", usersDeleted);
         }
     }
 

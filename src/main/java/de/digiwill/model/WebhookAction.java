@@ -2,8 +2,12 @@ package de.digiwill.model;
 
 
 import de.digiwill.service.WebhookService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class WebhookAction extends BaseAction {
+
+    @Autowired
+    private WebhookService webhookService;
 
     private String url;
 
@@ -21,7 +25,7 @@ public class WebhookAction extends BaseAction {
 
     public ActionSuccess executeAction() {
         try {
-            WebhookService.sendGet(this.url);
+            webhookService.sendGet(this.url);
             return ActionSuccess.SUCCESS;
         } catch (Exception e) {
             return ActionSuccess.FAILURE;
