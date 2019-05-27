@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/header :: head (title='DigiWill - Homepage')"></th:block>
+</head>
+<body>
+<div th:include="fragments/header :: header"></div>
+</div>
+<div id="content">
+    <!--<img src="../images/cemetery.jpg" class="big-image">-->
+    <div class="panel">
+        <h1 >${status} - ${error}</h1>
+        <p>Please <a href="${#httpServletRequest.requestURI}">reload</a> the page and try again in a few seconds.</p>
+    </div>
+</div>
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>
