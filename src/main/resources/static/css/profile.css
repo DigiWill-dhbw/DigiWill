@@ -1,0 +1,8 @@
+#profile-listing {
+    width:calc(100% - 10px);
+    margin-bottom: 10px;
+}
+
+#editProfileButton {
+    margin-top: 10px;
+}
