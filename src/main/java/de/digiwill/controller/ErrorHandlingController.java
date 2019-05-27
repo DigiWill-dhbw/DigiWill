@@ -10,22 +10,14 @@ public class ErrorHandlingController {
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)  // 500
     @ExceptionHandler(Exception.class)
     public String internalServerError() {
-        return "errorpage";
+        return "error";
     }
 
     // user fucked up
     @ResponseStatus(value= HttpStatus.BAD_REQUEST)  // 400
     @ExceptionHandler(Exception.class)
     public String badRequest() {
-        return "errorpage";
+        return "error";
     }
-
-    // Convert a predefined exception to an HTTP Status code
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)  // 404
-    @ExceptionHandler(Exception.class)
-    public String pageNotFound() {
-        return "errorpage";
-    }
-
 
 }
