@@ -70,7 +70,7 @@ public class SignOfLifeDaemon {
         if (isUser) {
             if (user.getLastSignOfLife() != -1 && !user.areAllActionsCompleted() && userPresumedDead) {
                 user.setDead();
-                user.executeActions();
+                user.executeActions(emailDispatcher);
                 returnValue = true;
             } else if (!user.isDead() && user.getLastInteractionWithUser() + user.getDeltaReminder() > currentTime) {
                 try {
