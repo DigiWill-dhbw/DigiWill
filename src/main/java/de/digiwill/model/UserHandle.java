@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -136,6 +137,39 @@ public class UserHandle implements UserDetails {
         } else {
             return null;
         }
+    }
+
+    public List<EmailAction> getEmailActions() {
+        List<BaseAction> actions = this.getActions();
+        List<EmailAction> emails = new ArrayList<>();
+        for (BaseAction action : actions
+        ) {
+            try {
+                emails.add((EmailAction) action);
+            }
+            catch(Exception e) {
+                continue;
+            }
+        }
+        return emails;
+    }
+
+    public List<Integer> getEmailActionsIdx() {
+        List<BaseAction> actions = this.getActions();
+        List<Integer> idxs = new ArrayList<>();
+        Integer counter = 0;
+        for (BaseAction action : actions
+        ) {
+            if(action instanceof EmailAction) {
+                idxs.add(counter);
+            }
+            counter++;
+        }
+        return idxs;
+    }
+
+    public int getTotalActionIdxFromEmailIdx(int idx) {
+        return getEmailActionsIdx().get(idx);
     }
 
     public boolean areAllActionsCompleted() {
