@@ -33,7 +33,6 @@ public class WebhookController {
 
     @PostMapping(value="/webhook")
     public RedirectView updateWebhook(@RequestParam(name = "url", required = true) String url, Model model, Principal principal) {
-        logger.info(url);
         if (RegexMatcher.isIFTTTUrl(url)) {
             UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
             WebhookAction webhookAction = new WebhookAction(url);
