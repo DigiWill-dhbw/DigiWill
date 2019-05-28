@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.util.SecurityHelper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -247,7 +248,7 @@ public class UserHandle implements UserDetails {
         timestamps.sendLifeSign();
     }
 
-    public void executeActions() {
-        actionSet.executeActions();
+    public void executeActions(EmailDispatcher emailDispatcher) {
+        actionSet.executeActions(emailDispatcher);
     }
 }

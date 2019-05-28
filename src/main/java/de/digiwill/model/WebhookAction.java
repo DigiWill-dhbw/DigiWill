@@ -1,13 +1,10 @@
 package de.digiwill.model;
 
 
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.service.WebhookService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class WebhookAction extends BaseAction {
-
-    @Autowired
-    private WebhookService webhookService;
 
     private String url;
 
@@ -23,9 +20,9 @@ public class WebhookAction extends BaseAction {
         this.url = url;
     }
 
-    public ActionSuccess executeAction() {
+    public ActionSuccess executeAction(EmailDispatcher emailDispatcher) {
         try {
-            webhookService.sendGet(this.url);
+            WebhookService.sendGet(this.url);
             return ActionSuccess.SUCCESS;
         } catch (Exception e) {
             return ActionSuccess.FAILURE;
