@@ -1,5 +1,7 @@
 package de.digiwill.model;
 
+import de.digiwill.service.EmailDispatcher;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +42,11 @@ public class ActionSet {
         actions.add(action);
     }
 
-    public void executeActions() {
+    public void executeActions(EmailDispatcher emailDispatcher) {
         boolean allCompleted = true;
         for (BaseAction action : actions) {
             if (!action.wasCompleted()) {
-                allCompleted = action.execute().wasSuccessful() && allCompleted;
+                allCompleted = action.execute(emailDispatcher).wasSuccessful() && allCompleted;
             }
         }
         if(allCompleted) {
