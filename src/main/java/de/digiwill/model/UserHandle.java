@@ -139,6 +139,20 @@ public class UserHandle implements UserDetails {
         }
     }
 
+    public List<EmailAction> getEmailActions() {
+        return actionSet.getEmailActions();
+    }
+
+    public List<Integer> getEmailActionsIdx() {
+        return actionSet.getEmailActionsIdx();
+    }
+
+
+
+    public int getTotalActionIdxFromEmailIdx(int idx) {
+        return getEmailActionsIdx().get(idx);
+    }
+
     public boolean areAllActionsCompleted() {
         return actionSet.areAllActionsCompleted();
     }

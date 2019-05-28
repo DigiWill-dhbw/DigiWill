@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,12 +44,7 @@ public class EmailController {
     @GetMapping("/getEmails")
     public String getEmails(Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        List<BaseAction> actions = user.getActions();
-        List<EmailAction> emails = new ArrayList<>();
-        for (BaseAction action : actions
-        ) {
-            emails.add((EmailAction) action);
-        }
+        List<EmailAction> emails = user.getEmailActions();
         model.addAttribute("emails", emails);
         return "get_emails";
     }
@@ -60,7 +54,7 @@ public class EmailController {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         List<BaseAction> actions = user.getActions();
-        EmailAction action = (EmailAction) actions.get(idx);
+        EmailAction action = (EmailAction) actions.get(user.getTotalActionIdxFromEmailIdx(idx));
         model.addAttribute("email", action);
         return "edit_email";
     }
@@ -82,7 +76,7 @@ public class EmailController {
     public RedirectView deleteEmail(@RequestParam(name = "idx", required = true) String index, Principal principal) {
         int idx = Integer.parseInt(index);
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        user.removeAction(idx);
+        user.removeAction(user.getTotalActionIdxFromEmailIdx(idx));
         userHandleManager.updateUser(user);
         return new RedirectView("getEmails");
     }
