@@ -1,5 +1,7 @@
 package de.digiwill;
 
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.ServerSetup;
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import de.digiwill.repository.UserHandleRepository;
@@ -21,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureDataMongo
 public abstract class SpringBootBaseIntegrationTest {
 
@@ -63,6 +65,16 @@ public abstract class SpringBootBaseIntegrationTest {
                     break;
             }
             return webdriver;
+        }
+
+        @Bean
+        public GreenMail getGreenMail(){
+            ServerSetup serverSetup = ServerSetup.SMTP;
+            serverSetup.setVerbose(true);
+            GreenMail greenMail = new GreenMail(serverSetup);
+            greenMail.setUser("digiwill", "password");
+            greenMail.start();
+            return greenMail;
         }
     }
 
