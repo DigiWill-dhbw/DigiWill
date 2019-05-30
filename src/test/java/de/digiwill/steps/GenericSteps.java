@@ -31,4 +31,10 @@ public class GenericSteps {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + url, driver.getCurrentUrl());
     }
+
+    @Then("I'm on page with url containing {string}")
+    public void iMOnPageWithUrlContaining(String urlPart) {
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        assertEquals(true, driver.getCurrentUrl().contains(urlPart));
+    }
 }
