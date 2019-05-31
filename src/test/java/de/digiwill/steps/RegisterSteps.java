@@ -23,7 +23,7 @@ public class RegisterSteps {
 
     @And("I open verification mail with account {string}")
     public void iEnterIntoFieldWithId(String email) throws Exception {
-        if(greenMail.waitForIncomingEmail(5000,1)) {
+        if (greenMail.waitForIncomingEmail(5000, 1)) {
             //check if user is not verified
             UserHandle userHandle = userHandleManager.loadUserByEmailAddress(email);
             assertEquals(false, userHandle.isVerified());
@@ -32,14 +32,14 @@ public class RegisterSteps {
             assertEquals(1, messages.length);
             MimeMessage message = messages[0];
             assertEquals(EmailDispatcher.REGISTRATION_EMAIL_SUBJECT, message.getSubject());
-            String content = (String)message.getContent();
+            String content = (String) message.getContent();
             webDriver.get(content.split("\"")[1]);
 
             //check if user is verified
             userHandle = userHandleManager.loadUserByEmailAddress(email);
             assertEquals(true, userHandle.isVerified());
 
-        }else{
+        } else {
             fail("No registration mail received!");
         }
     }
