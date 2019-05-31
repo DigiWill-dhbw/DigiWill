@@ -69,7 +69,7 @@ public abstract class SpringBootBaseIntegrationTest {
 
         @Bean
         public GreenMail getGreenMail(){
-            ServerSetup serverSetup = ServerSetup.SMTP;
+            ServerSetup serverSetup = new ServerSetup(3025, "localhost", "smtp");
             serverSetup.setVerbose(true);
             GreenMail greenMail = new GreenMail(serverSetup);
             greenMail.setUser("digiwill", "password");
