@@ -14,12 +14,14 @@ public class RegexMatcher {
 
     public static boolean isValidMultipleEmailAddress(@NonNull String emails){
         String[] emailsArray = emails.split(",");
+        if(emailsArray.length <= 0){
+            return false;
+        }
 
         for (String email : emailsArray) {
-            if(isValidEmailAddress(email)){
-                continue;
+            if(!isValidEmailAddress(email)){
+                return false;
             }
-            return false;
         }
 
         return true;
