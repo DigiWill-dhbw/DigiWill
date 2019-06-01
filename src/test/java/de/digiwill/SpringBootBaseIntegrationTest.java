@@ -2,6 +2,7 @@ package de.digiwill;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.icegreen.greenmail.util.ServerSetupTest;
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import de.digiwill.repository.UserHandleRepository;
@@ -69,7 +70,7 @@ public abstract class SpringBootBaseIntegrationTest {
 
         @Bean
         public GreenMail getGreenMail(){
-            ServerSetup serverSetup = ServerSetup.SMTP;
+            ServerSetup serverSetup = ServerSetupTest.SMTP;
             serverSetup.setVerbose(true);
             GreenMail greenMail = new GreenMail(serverSetup);
             greenMail.setUser("digiwill", "password");
