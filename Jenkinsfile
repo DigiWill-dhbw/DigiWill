@@ -15,7 +15,7 @@ pipeline {
          }
       }
       steps {
-        sh '''sudo mvn test -Dtest=!CucumberTest jacoco:report'''
+        sh '''mvn test -Dtest=!CucumberTest jacoco:report'''
       }
     }
     stage('Selenium tests') {
@@ -27,12 +27,12 @@ pipeline {
       parallel {
         stage('Chrome') {
           steps {
-            sh '''sudo mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
+            sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
           }
         }
         stage('Firefox') {
           steps {
-            sh '''sudo mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
+            sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
           }
         }
       }
