@@ -70,19 +70,6 @@ public abstract class SpringBootBaseIntegrationTest {
         public GreenMailBean getGreenMail() {
             return new GreenMailBean();
         }
-
-        /*
-        @Bean
-        public GreenMail getGreenMail(){
-            ServerSetup serverSetup = ServerSetupTest.SMTP;
-            serverSetup.setVerbose(true);
-            serverSetup.setServerStartupTimeout(1000L);
-            GreenMail greenMail = new GreenMail(serverSetup);
-            greenMail.setUser("digiwill", "password");
-            greenMail.start();
-            return greenMail;
-        }
-        */
     }
 
     public void dropUsers() {
