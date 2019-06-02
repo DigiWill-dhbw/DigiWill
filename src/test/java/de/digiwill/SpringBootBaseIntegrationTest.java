@@ -74,7 +74,7 @@ public abstract class SpringBootBaseIntegrationTest {
         /*
         @Bean
         public GreenMail getGreenMail(){
-            ServerSetup serverSetup = ServerSetup.SMTP;
+            ServerSetup serverSetup = ServerSetupTest.SMTP;
             serverSetup.setVerbose(true);
             serverSetup.setServerStartupTimeout(1000L);
             GreenMail greenMail = new GreenMail(serverSetup);
