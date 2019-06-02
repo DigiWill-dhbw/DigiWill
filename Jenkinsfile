@@ -9,9 +9,7 @@ pipeline {
       }
     }
     stage('Unit tests') {
-      agent {
-        label { 'maven:3.6.1-jdk-11' }
-      }
+      agent { label 'maven:3.6.1-jdk-11' }
       when {
         not {
           branch 'release'
