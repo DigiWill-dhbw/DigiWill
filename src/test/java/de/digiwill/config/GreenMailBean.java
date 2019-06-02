@@ -407,6 +407,10 @@ public class GreenMailBean implements InitializingBean, DisposableBean, BeanName
         name = pName;
     }
 
+    public String getBeanName() {
+        return name;
+    }
+
     /**
      * Timeout to wait for server startup in millis
      *
