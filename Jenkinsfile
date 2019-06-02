@@ -11,6 +11,7 @@ pipeline {
     stage('Unit tests') {
       agent {
         docker {
+          label 'docker-agent'
           image 'maven:3.6.1-jdk-11'
         }
       }
