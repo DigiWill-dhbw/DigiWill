@@ -9,7 +9,9 @@ pipeline {
       }
     }
     stage('Unit tests') {
-      docker { image 'maven:3.6.1-jdk-11' }
+      agent {
+        docker { image 'maven:3.6.1-jdk-11' }
+      }
       when {
         not {
           branch 'release'
