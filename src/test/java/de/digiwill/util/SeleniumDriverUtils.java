@@ -39,6 +39,7 @@ public class SeleniumDriverUtils {
         if (SystemUtils.IS_OS_LINUX) {
             options.addArguments("--headless");
         }
+        options.addArguments("--headless");
         return options;
     }
 
