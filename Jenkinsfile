@@ -1,7 +1,9 @@
 pipeline {
-  agent any
   stages {
     stage('Build') {
+      agent {
+        label 'master'
+      }
       steps {
         sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./src/test/resources/secrets-test.properties'''
         sh '''cp /var/jenkins_home/workspace/secrets-deploy.properties ./src/main/resources/secrets-deploy.properties'''
