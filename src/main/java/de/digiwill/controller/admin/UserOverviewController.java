@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserOverviewController {
 
-    private static final String redirectTarget = "redirect:/admin/overview/users";
+    private static final String REDIRECT_TARGET = "redirect:/admin/overview/users";
 
     @Autowired
     private UserHandleManager userHandleManager;
@@ -31,7 +31,7 @@ public class UserOverviewController {
     @PostMapping(value = "/admin/overview/users/delete", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String delete(@RequestBody MultiValueMap<String, String> formData, Model model) {
             userHandleManager.deleteUser(formData.getFirst("delete"));
-            return redirectTarget;
+            return REDIRECT_TARGET;
     }
 
     @PostMapping(value = "/admin/overview/users/toggleAdmin", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -45,13 +45,13 @@ public class UserOverviewController {
             }
             userHandleManager.updateUser(userHandle);
 
-            return redirectTarget;
+            return REDIRECT_TARGET;
     }
 
     @PostMapping(value = "/admin/overview/users/requestPasswordReset", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String requestPasswordReset(@RequestBody MultiValueMap<String, String> formData) {
         resetPasswordService.requestPasswordReset(formData);
-        return redirectTarget;
+        return REDIRECT_TARGET;
     }
 
 }
