@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -36,7 +37,7 @@ public class UserHandleRepositoryTest {
     public static List<UserHandle> createUserHandles(int amount, List<BaseAction> actions) {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
+            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1), Address.getInitial());
             UserBooleans userBooleans = new UserBooleans(true, true, true, true);
             UserHandle userHandle = UserHandleFactory.createCompleteUserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                     userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,

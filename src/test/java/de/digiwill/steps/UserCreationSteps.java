@@ -25,7 +25,7 @@ public class UserCreationSteps {
 
 
     private void setUpUser(String email, String password) {
-        PersonalData personalData = new PersonalData("FirstName", "SurName", new Date(1970, 1, 1));
+        PersonalData personalData = new PersonalData("FirstName", "SurName", new Date(1970, 1, 1), Address.getInitial());
         setUpUser(email, password, personalData);
     }
 

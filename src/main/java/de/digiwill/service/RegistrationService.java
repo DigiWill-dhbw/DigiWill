@@ -86,7 +86,7 @@ public class RegistrationService {
 
         PersonalData personalData = new PersonalData(formData.getFirst("firstName"),
                 formData.getFirst("surName"),
-                birthdayDate);
+                birthdayDate, Address.getInitial());
         AuthoritySet authorities = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER"));
 
         UserHandle userHandle = UserHandleFactory.createUserHandleWithEmailPasswordAuthoritiesPersonalData(

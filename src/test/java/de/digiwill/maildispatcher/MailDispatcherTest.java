@@ -85,7 +85,7 @@ public class MailDispatcherTest {
 
     @Test
     public void sendRegistrationConfirmationEmailTest() throws Exception {
-        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null, Address.getInitial());
         UserHandle userHandle = UserHandleFactory.createUserHandleWithEmailPasswordAuthoritiesPersonalData("user@name.de", "test", personalData, null);
         userHandle.setVerified(false);
         EmailResponseHandle emailResponseHandle = new EmailVerificationHandle(new ObjectId("abcdefabcdefabcdefabcdef"), userHandle.getEmailAddress() , "token" , 10 );
@@ -114,7 +114,7 @@ public class MailDispatcherTest {
 
     @Test
     public void sendReminderEmailTest() throws Exception {
-        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null);
+        PersonalData personalData = new PersonalData("TestFirstName", "TestSurname", null, Address.getInitial());
         UserHandle uh = UserHandleFactory.createUserHandleWithEmailPasswordAuthoritiesPersonalData("user@name.de", "test", personalData, null);
         String[] recipient = {uh.getEmailAddress()};
 

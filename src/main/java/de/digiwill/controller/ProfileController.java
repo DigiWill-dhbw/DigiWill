@@ -38,7 +38,7 @@ public class ProfileController {
     public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {
 
 
-        return response.getRedirectTarget();
+        return "";
     }
 
 }

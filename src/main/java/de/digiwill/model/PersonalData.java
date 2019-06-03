@@ -13,15 +13,10 @@ public class PersonalData {
     private Address address;
 
     @PersistenceConstructor
-    public PersonalData(String firstName, String surname, Date dateOfBirth) {
+    public PersonalData(String firstName, String surname, Date dateOfBirth, Address address) {
         this.firstName = firstName;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
-    }
-
-    @PersistenceConstructor
-    public PersonalData(String firstName, String surname, Date dateOfBirth, Address address) {
-        this(firstName, surname, dateOfBirth);
         this.address = address;
     }
 
