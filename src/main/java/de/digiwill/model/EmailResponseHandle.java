@@ -46,8 +46,6 @@ public abstract class EmailResponseHandle {
         return sb.toString();
     }
 
-    protected abstract void initialize();
-
     public abstract CallbackResponse executeCallback(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager);
 
     public abstract void executeTimeout(UserHandleManager userHandleManager, EmailResponseHandleManager emailResponseHandleManager);

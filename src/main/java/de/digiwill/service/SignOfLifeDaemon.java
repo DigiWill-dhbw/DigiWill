@@ -20,7 +20,7 @@ public class SignOfLifeDaemon {
     /**
      * Check interval in minutes
      */
-    private static final int checkInterval = 10;
+    private static final int CHECK_INTERVAL = 10;
 
     @Autowired
     private UserHandleRepository userHandleRepository;
@@ -40,7 +40,7 @@ public class SignOfLifeDaemon {
     private Logger logger = LoggerFactory.getLogger(SignOfLifeDaemon.class);
 
     @Async
-    @Scheduled(fixedRate = checkInterval * 60000)
+    @Scheduled(fixedRate = CHECK_INTERVAL * 60000)
     public void check() {
         running = true;
         long currentTime = Instant.now().getEpochSecond();
@@ -57,7 +57,7 @@ public class SignOfLifeDaemon {
         }
         long executionDuration = ((Instant.now().getEpochSecond()) - currentTime);
         logger.info("Check finished in: {} seconds", executionDuration);
-        if(executionDuration > checkInterval * 60000){
+        if(executionDuration > CHECK_INTERVAL * 60000){
             logger.error("SignOfLifeDaemon EXECUTION TOOK TO LONG: {} minutes", (executionDuration / 60000));
         }
         running = false;

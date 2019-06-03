@@ -22,14 +22,7 @@ public class EmailVerificationHandle extends EmailResponseHandle {
         super(userHandle, Instant.now().getEpochSecond() + VERIFICATION_TIMEOUT*60);
         if (userHandle.isVerified()) {
             throw new IllegalArgumentException("User already verified");
-        }else{
-            initialize();
         }
-    }
-
-    @Override
-    protected void initialize() {
-        //TODO what? what should be done while initilazing
     }
 
     @Override

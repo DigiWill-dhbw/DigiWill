@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class BirthdayValidator extends RegistrationValidator {
-    private static final int minimumAge = 13;
+    private static final int MINIMUM_AGE = 13;
     private DateFormat dateFormat;
 
     public BirthdayValidator(DateFormat dateFormat) {
@@ -39,7 +39,7 @@ public class BirthdayValidator extends RegistrationValidator {
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
-        today.add(Calendar.YEAR, -minimumAge);
+        today.add(Calendar.YEAR, -MINIMUM_AGE);
         return today.getTime().compareTo(date) >= 0;
     }
 }
