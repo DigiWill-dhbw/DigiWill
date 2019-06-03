@@ -15,6 +15,7 @@ Feature: Register
     And I enter "<surName>" into field with id "surName"
     And I enter "<birthday>" into field with id "birthday"
     And I click on element with id "registerButton"
+    Then I'm on page "/"
     And I open verification mail with account "<email>"
     Then I'm on page with url containing "<result>"
 
