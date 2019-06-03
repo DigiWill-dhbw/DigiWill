@@ -39,7 +39,9 @@ public class WebhookController {
         WebhookAction webhook = new WebhookAction(apiKey);
         String[] events = eventNames.split(";");
         for (int i = 0; i<events.length; i++) {
-            webhook.addEvent(events[i]);
+            if(!events[i].equals("")) {
+                webhook.addEvent(events[i]);
+            }
         }
         int idx = user.getWebhookActionIdx();
         if(idx == -1) {
