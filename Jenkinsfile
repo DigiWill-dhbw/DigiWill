@@ -1,10 +1,7 @@
 pipeline {
-  agent none
+  agent any
   stages {
     stage('Build') {
-      agent {
-        label 'master'
-      }
       steps {
         sh '''cp /var/jenkins_home/workspace/secrets-test.properties ./src/test/resources/secrets-test.properties'''
         sh '''cp /var/jenkins_home/workspace/secrets-deploy.properties ./src/main/resources/secrets-deploy.properties'''
@@ -12,11 +9,6 @@ pipeline {
       }
     }
     stage('Unit tests') {
-      agent {
-        docker {
-          image 'maven:3.6.1-jdk-11'
-        }
-      }
       when {
         not {
           branch 'release'
