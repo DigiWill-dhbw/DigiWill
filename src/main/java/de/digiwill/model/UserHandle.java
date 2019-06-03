@@ -130,7 +130,7 @@ public class UserHandle implements UserDetails {
         return idx;
     }
 
-    public WebhookAction getWebhook() {
+    public WebhookAction getWebhookAction() {
         int idx = getWebhookActionIdx();
         if(idx != -1) {
             return (WebhookAction) this.getActions().get(idx);
