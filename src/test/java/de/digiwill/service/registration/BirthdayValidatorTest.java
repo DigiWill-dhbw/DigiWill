@@ -7,9 +7,6 @@ import org.junit.Test;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import static org.junit.Assert.*;
 
 public class BirthdayValidatorTest {
@@ -27,6 +24,7 @@ public class BirthdayValidatorTest {
         formData.add("birthday", "1990-01-01");
         assertTrue(birthdayValidator.validate(formData));
     }
+
     @Test
     public void tooYoung() {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
@@ -34,6 +32,7 @@ public class BirthdayValidatorTest {
         assertFalse(birthdayValidator.validate(formData));
         assertEquals(ValidationResponse.TO_YOUNG, birthdayValidator.getResponse());
     }
+
     @Test
     public void wrongFormat() {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();

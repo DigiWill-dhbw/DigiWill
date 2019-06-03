@@ -13,9 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +49,8 @@ public class RegistrationService {
         try {
             userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
             return ValidationResponse.EMAIL_ALREADY_IN_USE;
-        }catch(UsernameNotFoundException ignore){}
+        } catch (UsernameNotFoundException ignore) {
+        }
 
         for (Validator validator : validators) {
             if (!validator.validate(formData)) {
@@ -67,7 +66,7 @@ public class RegistrationService {
             emailResponseHandleRepository.insert(emailVerificationHandle);
 
             emailDispatcher.sendRegistrationConfirmationEmail(emailVerificationHandle, userHandle);
-        }catch(EmailException e){
+        } catch (EmailException e) {
             userHandleManager.deleteUser(userHandle.getEmailAddress());
             logger.error(e.getMessage());
             return ValidationResponse.INTERNAL_ERROR;
