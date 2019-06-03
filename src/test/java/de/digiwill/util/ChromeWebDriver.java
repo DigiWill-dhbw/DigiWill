@@ -5,8 +5,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.util.concurrent.TimeUnit;
-
 public class ChromeWebDriver extends EventFiringWebDriver {
 
     private static final WebDriver webdriver;
@@ -23,7 +21,6 @@ public class ChromeWebDriver extends EventFiringWebDriver {
 
         ChromeOptions capabilities = SeleniumDriverUtils.getChromeOptions();
         webdriver = new ChromeDriver(capabilities);
-        webdriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }

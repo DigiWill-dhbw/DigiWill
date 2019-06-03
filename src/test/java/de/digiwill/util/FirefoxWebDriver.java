@@ -5,8 +5,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.util.concurrent.TimeUnit;
-
 public class FirefoxWebDriver extends EventFiringWebDriver {
 
     private static final WebDriver webdriver;
@@ -23,7 +21,6 @@ public class FirefoxWebDriver extends EventFiringWebDriver {
 
         FirefoxOptions capabilities = SeleniumDriverUtils.getFirefoxOptions();
         webdriver = new FirefoxDriver(capabilities);
-        webdriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }

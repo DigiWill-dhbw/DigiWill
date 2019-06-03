@@ -5,7 +5,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +21,7 @@ public class GenericSteps {
     }
 
     @And("I click on element with id {string}")
-    public void iClickOnElementWithId(String id) throws TimeoutException {
+    public void iClickOnElementWithId(String id) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         driver.findElement(By.id(id)).click();
     }
