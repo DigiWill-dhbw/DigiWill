@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.service.EmailDispatcher;
 import de.digiwill.util.SecurityHelper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -138,6 +139,20 @@ public class UserHandle implements UserDetails {
         }
     }
 
+    public List<EmailAction> getEmailActions() {
+        return actionSet.getEmailActions();
+    }
+
+    public List<Integer> getEmailActionsIdx() {
+        return actionSet.getEmailActionsIdx();
+    }
+
+
+
+    public int getTotalActionIdxFromEmailIdx(int idx) {
+        return getEmailActionsIdx().get(idx);
+    }
+
     public boolean areAllActionsCompleted() {
         return actionSet.areAllActionsCompleted();
     }
@@ -233,7 +248,7 @@ public class UserHandle implements UserDetails {
         timestamps.sendLifeSign();
     }
 
-    public void executeActions() {
-        actionSet.executeActions();
+    public void executeActions(EmailDispatcher emailDispatcher) {
+        actionSet.executeActions(emailDispatcher);
     }
 }

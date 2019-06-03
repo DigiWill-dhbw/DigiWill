@@ -18,7 +18,7 @@ public enum CallbackResponse {
         this.responseText = responseText;
         this.redirect = redirect;
         if(success){
-            this.longText = "Callback successful! Jannik möchte hier eine lustige Nachricht!";
+            this.longText = "Verification was successful, you can now log in!";
         }else{
             this.longText = "Callback error. Link could have been already used and is invalid.";
         }

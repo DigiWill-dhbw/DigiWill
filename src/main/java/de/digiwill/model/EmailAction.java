@@ -18,8 +18,6 @@ import java.util.List;
 @TypeAlias("EmailAction")
 public class EmailAction extends BaseAction {
 
-    @Autowired
-    private EmailDispatcher emailDispatcher;
 
     @Transient
     private Logger logger = LoggerFactory.getLogger(EmailAction.class);
@@ -108,7 +106,7 @@ public class EmailAction extends BaseAction {
     }
 
     @Override
-    public ActionSuccess executeAction() {
+    public ActionSuccess executeAction(EmailDispatcher emailDispatcher) {
         try {
             emailDispatcher.sendEmail(recipients, subject, isHTMLContent, content);
         } catch (EmailException e) {
