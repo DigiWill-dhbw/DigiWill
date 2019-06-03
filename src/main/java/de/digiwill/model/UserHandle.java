@@ -37,13 +37,6 @@ public class UserHandle implements UserDetails {
 
     private ActionSet actionSet;
 
-   /* @PersistenceConstructor
-    public UserHandle(ObjectId UID, String emailAddress, PersonalData personalData, String alias, long lastSignOfLife, long lastReminder, long deltaReminder, long deltaDeathTime, boolean isDead, boolean isVerified, Iterable<BaseAction> actions) {
-        this(emailAddress, personalData, alias, lastSignOfLife, lastReminder, deltaReminder, deltaDeathTime, isDead, isVerified, actions);
-        this.UID = UID;
-    }
-*/
-
     public UserHandle() {
 
     }
