@@ -4,32 +4,42 @@
     <th:block th:include="fragments/header :: head (title='DigiWill - Your Profile')"></th:block>
     <link rel="stylesheet" type="text/css" href="css/listings.css"/>
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
 <div th:include="fragments/header :: header"></div>
 <div id="content">
     <div class="panel">
-        <table class="listing" id="profile-listing">
-            <tr>
-                <td>Email: </td>
-                <td th:text="${email}"></td>
-            </tr>
-            <tr>
-                <td>First Name: </td>
-                <td th:text="${personalData.getFirstName()}"></td>
-            </tr>
-            <tr>
-                <td>Surname: </td>
-                <td th:text="${personalData.getSurname()}"></td>
-            </tr>
-            <tr>
-                <td>Birthday: </td>
-                <td
-                        th:text="${personalData.getDateOfBirth().getDate() + '.' + personalData.getDateOfBirth().getMonth() + '.' + personalData.getDateOfBirth().getYear()}"></td>
-            </tr>
-        </table>
-        <a href="/editProfile" class="button" id="editProfileButton">Edit profile</a>
+        <div class="form">
+            <form th:action="@{/saveProfile}" method="post">
+                <table>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input id="emailInput" type="text" class="input-fields" th:value="${email}"/></td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input id="firstNameInput" type="text" class="input-fields"
+                                   th:value="${personalData.getFirstName()}"/></td>
+                    </tr>
+                    <tr>
+                        <td>Surname:</td>
+                        <td><input id="sureNameInput" type="text" class="input-fields"
+                                   th:value="${personalData.getSurname()}"/></td>
+                    </tr>
+                    <tr>
+                        <td>Birthday:</td>
+                        <td><input id="birthdayInput" type="date" class="input-fields"
+                                   th:value="${dateOfBirth}"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input id="saveProfileButton" type="submit" value="Save Changes" class="button"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 </div>
 <div th:include="fragments/footer :: footer"></div>
