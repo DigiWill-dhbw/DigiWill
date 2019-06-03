@@ -1,7 +1,7 @@
 package de.digiwill.steps;
 
+import com.icegreen.greenmail.util.GreenMail;
 import cucumber.api.java.en.And;
-import de.digiwill.config.GreenMailBean;
 import de.digiwill.model.UserHandle;
 import de.digiwill.service.EmailDispatcher;
 import de.digiwill.service.UserHandleManager;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RegisterSteps {
     @Autowired
-    private GreenMailBean greenMail;
+    private GreenMail greenMail;
     @Autowired
     private WebDriver webDriver;
     @Autowired
@@ -23,12 +23,12 @@ public class RegisterSteps {
 
     @And("I open verification mail with account {string}")
     public void iEnterIntoFieldWithId(String email) throws Exception {
-        if (greenMail.getGreenMail().waitForIncomingEmail(5000, 1)) {
+        if (greenMail.waitForIncomingEmail(5000, 1)) {
             //check if user is not verified
             UserHandle userHandle = userHandleManager.loadUserByEmailAddress(email);
             assertEquals(false, userHandle.isVerified());
 
-            MimeMessage[] messages = greenMail.getGreenMail().getReceivedMessages();
+            MimeMessage[] messages = greenMail.getReceivedMessages();
             assertEquals(1, messages.length);
             MimeMessage message = messages[0];
             assertEquals(EmailDispatcher.REGISTRATION_EMAIL_SUBJECT, message.getSubject());

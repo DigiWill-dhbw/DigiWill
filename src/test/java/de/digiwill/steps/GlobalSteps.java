@@ -1,9 +1,9 @@
 package de.digiwill.steps;
 
 import com.icegreen.greenmail.store.FolderException;
+import com.icegreen.greenmail.util.GreenMail;
 import cucumber.api.java.After;
 import de.digiwill.SpringBootBaseIntegrationTest;
-import de.digiwill.config.GreenMailBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class GlobalSteps {
@@ -12,7 +12,7 @@ public class GlobalSteps {
     private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
     @Autowired
-    private GreenMailBean greenMailBean;
+    private GreenMail greenMail;
 
     @After("@uitest")
     public void afterUITest() {
@@ -22,6 +22,6 @@ public class GlobalSteps {
 
     @After("@mailtest")
     public void afterMailTest() throws FolderException {
-        greenMailBean.getGreenMail().purgeEmailFromAllMailboxes();
+        greenMail.purgeEmailFromAllMailboxes();
     }
 }

@@ -1,8 +1,10 @@
 package de.digiwill;
 
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.ServerSetup;
+import com.icegreen.greenmail.util.ServerSetupTest;
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
-import de.digiwill.config.GreenMailBean;
 import de.digiwill.repository.UserHandleRepository;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.ChromeWebDriver;
@@ -67,8 +69,13 @@ public abstract class SpringBootBaseIntegrationTest {
         }
 
         @Bean
-        public GreenMailBean getGreenMail() {
-            return new GreenMailBean();
+        public GreenMail getGreenMail() {
+            ServerSetup serverSetup = ServerSetupTest.SMTP;
+            serverSetup.setVerbose(true);
+            GreenMail greenMail = new GreenMail(serverSetup);
+            greenMail.setUser("digiwill", "password");
+            greenMail.start();
+            return greenMail;
         }
     }
 
