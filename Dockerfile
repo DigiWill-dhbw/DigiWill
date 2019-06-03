@@ -1,5 +1,4 @@
 FROM openjdk:8-jdk-alpine
-LABEL io.portainer.uac.public=true
 
 ENV envTarget=deploy
 ENV VIRTUAL_HOST=digiwill.robinkuck.de,www.digiwill.robinkuck.de

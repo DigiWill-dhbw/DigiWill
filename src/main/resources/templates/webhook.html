@@ -14,7 +14,7 @@
         <form th:action="@{/webhook}" method="post" id="gui">
             <h2>Connect your IFTTT applet with digiwill</h2>
             IFTTT webhook url: <input class="input-fields" id="url" name="url" type="text"
-                                      th:value="${webhook?.getUrl()}">
+                                      th:value="${webhookAction?.getUrl()}">
             <input type="submit" class="button" id="submitButton" value="Set webhook">
             <button type="button" class="button" id="deleteButton"
                     onclick="onWebhookDelete()"><i class="fas fa-trash-alt"></i></button>

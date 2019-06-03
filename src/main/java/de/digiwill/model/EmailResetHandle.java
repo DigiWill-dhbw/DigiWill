@@ -20,12 +20,6 @@ public class EmailResetHandle extends EmailResponseHandle {
 
     public EmailResetHandle(UserHandle userHandle) {
         super(userHandle, Instant.now().getEpochSecond() + PASSWORD_RESET_TIMEOUT*60);
-        initialize();
-    }
-
-    @Override
-    protected void initialize() {
-        //TODO what should happen when it is initialized?
     }
 
     @Override
