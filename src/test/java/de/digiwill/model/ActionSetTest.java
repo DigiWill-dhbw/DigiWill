@@ -70,7 +70,6 @@ public class ActionSetTest {
         ActionSet actionSet = ActionSet.getInitial();
         EmailAction emailAction1 = new EmailAction(Collections.singletonList("example@mail.com"), "THIS IS A SUBJECT", false, "Oh hi, content content");
         EmailAction emailAction2 = new EmailAction(Collections.singletonList("example1@mail.com"), "SUBJECT", false, "This is content");
-        WebhookAction webhookAction = new WebhookAction("url.com");
         actionSet.add(emailAction1);
         actionSet.replace(0, emailAction2);
         assertEquals(1, actionSet.getActions().size());
