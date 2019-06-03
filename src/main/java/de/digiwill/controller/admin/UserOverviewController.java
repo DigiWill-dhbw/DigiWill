@@ -9,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserOverviewController {
@@ -31,15 +28,13 @@ public class UserOverviewController {
             return "admin/overview/users";
     }
 
-    @RequestMapping(value = "/admin/overview/users/delete", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/admin/overview/users/delete", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String delete(@RequestBody MultiValueMap<String, String> formData, Model model) {
             userHandleManager.deleteUser(formData.getFirst("delete"));
             return redirectTarget;
     }
 
-    @RequestMapping(value = "/admin/overview/users/toggleAdmin", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/admin/overview/users/toggleAdmin", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String toggleAdmin(@RequestBody MultiValueMap<String, String> formData, Model model) {
             UserHandle userHandle = userHandleManager.loadUserByEmailAddress(formData.getFirst("emailAddress"));
             GrantedAuthority auth = userHandle.getAuthorityByRoleName("ROLE_ADMIN");
@@ -53,8 +48,7 @@ public class UserOverviewController {
             return redirectTarget;
     }
 
-    @RequestMapping(value = "/admin/overview/users/requestPasswordReset", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/admin/overview/users/requestPasswordReset", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String requestPasswordReset(@RequestBody MultiValueMap<String, String> formData) {
         resetPasswordService.requestPasswordReset(formData);
         return redirectTarget;
