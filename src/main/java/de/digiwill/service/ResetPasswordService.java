@@ -6,10 +6,10 @@ import de.digiwill.model.EmailResetHandle;
 import de.digiwill.model.UserHandle;
 import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.callback.CallbackService;
-import de.digiwill.service.registration.PasswordMatchValidator;
-import de.digiwill.service.registration.PasswordRequirementValidator;
-import de.digiwill.service.registration.RegistrationResponse;
-import de.digiwill.service.registration.RegistrationValidator;
+import de.digiwill.service.validation.PasswordMatchValidator;
+import de.digiwill.service.validation.PasswordRequirementValidator;
+import de.digiwill.service.validation.ValidationResponse;
+import de.digiwill.service.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -31,7 +31,7 @@ public class ResetPasswordService {
     @Autowired
     private CallbackService callbackService;
 
-    private List<RegistrationValidator> validators = new ArrayList<>();
+    private List<Validator> validators = new ArrayList<>();
 
     public ResetPasswordService() {
         validators.add(new PasswordMatchValidator());
@@ -51,10 +51,10 @@ public class ResetPasswordService {
         }
     }
 
-    public RegistrationResponse resetPassword(MultiValueMap<String, String> formData) {
+    public ValidationResponse resetPassword(MultiValueMap<String, String> formData) {
 
         if (formData == null) {
-            return RegistrationResponse.FORM_DATA_DOESNT_EXIST;
+            return ValidationResponse.FORM_DATA_DOESNT_EXIST;
         }
 
         String id = formData.getFirst("id");
@@ -62,7 +62,7 @@ public class ResetPasswordService {
         EmailResetHandle emailResetHandle = (EmailResetHandle) callbackService.getEmailResponseHandle(id, token);
 
 
-        for (RegistrationValidator validator : validators) {
+        for (Validator validator : validators) {
             if (!validator.validate(formData)) {
                 return validator.getResponse();
             }
@@ -73,9 +73,9 @@ public class ResetPasswordService {
             userHandle.setPassword(formData.getFirst("password"));
             userHandleManager.updateUser(userHandle);
             emailResponseHandleManager.deleteEmailResponseHandle(emailResetHandle);
-            return RegistrationResponse.REGISTRATION_SUCCESSFUL;
+            return ValidationResponse.REGISTRATION_SUCCESSFUL;
         }
-        return RegistrationResponse.INTERNAL_ERROR;
+        return ValidationResponse.INTERNAL_ERROR;
 
     }
 }

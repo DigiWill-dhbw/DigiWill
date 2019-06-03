@@ -4,6 +4,7 @@ import de.digiwill.exception.EmailException;
 import de.digiwill.model.*;
 import de.digiwill.repository.EmailResponseHandleRepository;
 import de.digiwill.service.EmailDispatcher;
+import de.digiwill.service.validation.*;
 import de.digiwill.util.SecurityHelper;
 import de.digiwill.service.UserHandleManager;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @Service
 public class RegistrationService {
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     @Autowired
@@ -33,29 +34,29 @@ public class RegistrationService {
     @Autowired
     private EmailResponseHandleRepository emailResponseHandleRepository;
 
-    private List<RegistrationValidator> validators = new ArrayList<>();
+    private List<Validator> validators = new ArrayList<>();
 
     public RegistrationService() {
         validators.add(new PasswordMatchValidator());
         validators.add(new PasswordRequirementValidator());
         validators.add(new EmailAddressValidator());
-        validators.add(new NonEmptyStringValidator("firstName", RegistrationResponse.NO_FIRST_NAME));
-        validators.add(new NonEmptyStringValidator("surName", RegistrationResponse.NO_SURNAME));
+        validators.add(new NonEmptyStringValidator("firstName", ValidationResponse.NO_FIRST_NAME));
+        validators.add(new NonEmptyStringValidator("surName", ValidationResponse.NO_SURNAME));
         validators.add(new BirthdayValidator(dateFormat));
     }
 
-    public RegistrationResponse addNewUser(final MultiValueMap<String, String> formData) {
+    public ValidationResponse addNewUser(final MultiValueMap<String, String> formData) {
 
         if (formData == null) {
-            return RegistrationResponse.FORM_DATA_DOESNT_EXIST;
+            return ValidationResponse.FORM_DATA_DOESNT_EXIST;
         }
 
         try {
             userHandleManager.loadUserByEmailAddress(formData.getFirst("email"));
-            return RegistrationResponse.EMAIL_ALREADY_IN_USE;
+            return ValidationResponse.EMAIL_ALREADY_IN_USE;
         }catch(UsernameNotFoundException ignore){}
 
-        for (RegistrationValidator validator : validators) {
+        for (Validator validator : validators) {
             if (!validator.validate(formData)) {
                 return validator.getResponse();
             }
@@ -72,10 +73,10 @@ public class RegistrationService {
         }catch(EmailException e){
             userHandleManager.deleteUser(userHandle.getEmailAddress());
             logger.error(e.getMessage());
-            return RegistrationResponse.INTERNAL_ERROR;
+            return ValidationResponse.INTERNAL_ERROR;
         }
 
-        return RegistrationResponse.REGISTRATION_SUCCESSFUL;
+        return ValidationResponse.REGISTRATION_SUCCESSFUL;
     }
 
     private UserHandle generateUserHandleFromFormData(MultiValueMap<String, String> formData) {

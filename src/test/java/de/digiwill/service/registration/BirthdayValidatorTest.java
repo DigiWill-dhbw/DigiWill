@@ -1,5 +1,7 @@
 package de.digiwill.service.registration;
 
+import de.digiwill.service.validation.BirthdayValidator;
+import de.digiwill.service.validation.ValidationResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.util.LinkedMultiValueMap;
@@ -33,13 +35,13 @@ public class BirthdayValidatorTest {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("birthday", "2019-01-01");
         assertFalse(birthdayValidator.validate(formData));
-        assertEquals(RegistrationResponse.TO_YOUNG, birthdayValidator.getResponse());
+        assertEquals(ValidationResponse.TO_YOUNG, birthdayValidator.getResponse());
     }
     @Test
     public void wrongFormat() {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("birthday", "1990-aa-60");
         assertFalse(birthdayValidator.validate(formData));
-        assertEquals(RegistrationResponse.BIRTHDAY_INVALID, birthdayValidator.getResponse());
+        assertEquals(ValidationResponse.BIRTHDAY_INVALID, birthdayValidator.getResponse());
     }
 }

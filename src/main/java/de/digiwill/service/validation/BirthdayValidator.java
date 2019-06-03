@@ -1,4 +1,4 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import org.springframework.util.MultiValueMap;
 
@@ -7,12 +7,12 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-public class BirthdayValidator extends RegistrationValidator {
+public class BirthdayValidator extends Validator {
     private static final int minimumAge = 13;
     private DateFormat dateFormat;
 
     public BirthdayValidator(DateFormat dateFormat) {
-        super(RegistrationResponse.BIRTHDAY_INVALID);
+        super(ValidationResponse.BIRTHDAY_INVALID);
         this.dateFormat = dateFormat;
     }
 
@@ -22,11 +22,11 @@ public class BirthdayValidator extends RegistrationValidator {
         try {
             birthdayDate = dateFormat.parse(formData.getFirst("birthday"));
             if (!isOldEnough(birthdayDate)) {
-                setResponse(RegistrationResponse.TO_YOUNG);
+                setResponse(ValidationResponse.TO_YOUNG);
                 return false;
             }
         } catch (ParseException e) {
-            setResponse(RegistrationResponse.BIRTHDAY_INVALID);
+            setResponse(ValidationResponse.BIRTHDAY_INVALID);
             return false;
         }
         return true;

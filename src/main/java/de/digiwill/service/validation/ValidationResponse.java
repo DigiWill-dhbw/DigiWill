@@ -1,8 +1,8 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import org.springframework.ui.Model;
 
-public enum RegistrationResponse {
+public enum ValidationResponse {
 
     REGISTRATION_SUCCESSFUL(true, null),
     PASSWORD_MISMATCH(false,  "The entered passwords don't match"),
@@ -19,7 +19,7 @@ public enum RegistrationResponse {
     private boolean success;
     private String failureMessage;
 
-    RegistrationResponse(boolean success, String failureMessage) {
+    ValidationResponse(boolean success, String failureMessage) {
         this.success = success;
         this.failureMessage = failureMessage;
     }
