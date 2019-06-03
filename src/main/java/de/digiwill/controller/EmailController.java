@@ -19,6 +19,8 @@ import java.util.List;
 @Controller
 public class EmailController {
 
+    public static final String EMAIL_OVERVIEW_URL = "getEmails";
+
     @Autowired
     private UserHandleManager userHandleManager;
 
@@ -35,9 +37,9 @@ public class EmailController {
             EmailAction action = EmailAction.generateEmailAction(recipients, subject, content);
             user.addAction(action);
             userHandleManager.updateUser(user);
-            return new RedirectView("getEmails");
+            return new RedirectView(EMAIL_OVERVIEW_URL);
         }catch(EmailException e){
-            return new RedirectView("getEmails");
+            return new RedirectView(EMAIL_OVERVIEW_URL);
         }
     }
 
@@ -66,9 +68,9 @@ public class EmailController {
         try {
             user.replaceAction(idx, EmailAction.generateEmailAction(recipients, subject, content));
             userHandleManager.updateUser(user);
-            return new RedirectView("getEmails");
+            return new RedirectView();
         }catch(EmailException e){
-            return new RedirectView("getEmails");
+            return new RedirectView(EMAIL_OVERVIEW_URL);
         }
     }
 
@@ -78,7 +80,7 @@ public class EmailController {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         user.removeAction(user.getTotalActionIdxFromEmailIdx(idx));
         userHandleManager.updateUser(user);
-        return new RedirectView("getEmails");
+        return new RedirectView(EMAIL_OVERVIEW_URL);
     }
 
 
