@@ -18,6 +18,7 @@ pipeline {
         sh '''mvn test -Dtest=!CucumberTest jacoco:report'''
       }
     }
+    /*
     stage('Selenium tests') {
       when {
         not {
@@ -37,6 +38,28 @@ pipeline {
         }
       }
     }
+    */
+    stage('Chrome') {
+      when {
+        not {
+          branch 'release'
+        }
+      }
+      steps {
+        sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
+      }
+    }
+    /*
+    stage('Firefox') {
+      when {
+        not {
+          branch 'release'
+        }
+      }
+      steps {
+        sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
+      }
+    }*/
     stage('Deploy') {
       when {
         branch 'release'
