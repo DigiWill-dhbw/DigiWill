@@ -2,6 +2,7 @@ package de.digiwill.model;
 
 
 import de.digiwill.service.EmailDispatcher;
+import de.digiwill.service.WebhookService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,22 @@ public class WebhookAction extends BaseAction {
     }
 
     public ActionSuccess executeAction(EmailDispatcher emailDispatcher) {
-        return ActionSuccess.SUCCESS;
+        boolean fail = false;
+        for (int i = 0; i < this.getEventNames().size(); i++) {
+            String event = this.getEventNames().get(i);
+            String url = "https://maker.ifttt.com/trigger/eventName/with/key/apiKey";
+            url = url.replaceAll("eventName", event);
+            url = url.replaceAll("apiKey", this.getApiKey());
+            try {
+                WebhookService.sendGet(url);
+            } catch(Exception e) {
+                fail = true;
+            }
+        }
+        if (fail) {
+            return ActionSuccess.FAILURE;
+        } else {
+            return ActionSuccess.SUCCESS;
+        }
     }
 }
