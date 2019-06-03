@@ -5,19 +5,24 @@ function onWebhookDelete() {
     });
 }
 
-function onDeleteEvent(idx) {
-    var event = document.getElementsByTagName("tr")[idx];
-    document.getElementById("eventList").removeChild(event);
-}
-
 function onAddEvent() {
     var event = document.createElement("tr");
-    var index = document.getElementById("sizeField").value;
-    document.getElementById("sizeField").value = Number(index) + 1;
     event.innerHTML = "<td>Event name:</td>\n" +
-        "                    <td><input type=\"text\" class=\"input-fields\"></td>\n" +
-        "                    <td><a onclick=\"onDeleteEvent(" + index + ")\" class=\"button\"><i" +
-        " class=\"fas" +
-        " fa-trash-alt\"></i></a></td>"
+        "                    <td><input type=\"text\" class=\"input-fields\"></td>\n";
     document.getElementById("eventList").appendChild(event);
+}
+
+function onSetWebhook() {
+    var csrfToken = document.getElementsByName("_csrf")[0].value;
+    var events = document.getElementsByTagName("tr");
+    var eventNames = [];
+    for (var i=0; i< events.length; i++) {
+        var event = events[i];
+        eventNames.push(event.getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
+    }
+    var eventString = eventNames.join(";");
+    var apiKey = document.getElementById("apikey").value;
+    postAjax("/webhook", "_csrf=" + csrfToken + "&apiKey=" + apiKey + "&eventNames=" + eventString, function (data) {
+        location.reload();
+    });
 }

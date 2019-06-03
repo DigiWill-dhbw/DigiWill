@@ -32,22 +32,21 @@ public class WebhookController {
     }
 
     @PostMapping(value="/webhook")
-    public RedirectView updateWebhook(@RequestParam(name = "url", required = true) String url, Model model, Principal principal) {
-        if (RegexMatcher.isIFTTTUrl(url)) {
-            UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-            WebhookAction webhookAction = new WebhookAction(url);
-            int idx = user.getWebhookActionIdx();
-            if(idx == -1) {
-                user.addAction(webhookAction);
-            } else {
-                user.replaceAction(idx, webhookAction);
-            }
+    public RedirectView updateWebhook(@RequestParam(name = "apiKey", required = true) String apiKey, @RequestParam(name=
+            "eventNames", required = true) String eventNames,
+            Model model, Principal principal) {
+        UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
+        WebhookAction webhook = new WebhookAction(apiKey);
+        String[] events = eventNames.split(";");
+        for (int i = 0; i<events.length; i++) {
+            webhook.addEvent(events[i]);
+        }
+        int idx = user.getWebhookActionIdx();
+        if(idx == -1) {
+            user.addAction(webhook);
             userHandleManager.updateUser(user);
-            model.addAttribute("hasToast", false);
-            model.addAttribute("webhook", user.getWebhook());
         } else {
-            model.addAttribute("hasToast", true);
-            model.addAttribute("responseText", "Not valid IFTTT webhook URL");
+            user.replaceAction(idx, webhook);
         }
         return new RedirectView("webhook");
     }
