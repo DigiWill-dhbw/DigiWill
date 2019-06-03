@@ -19,7 +19,7 @@ import java.util.List;
 @Controller
 public class EmailController {
 
-    public static final String EMAIL_OVERVIEW_URL = "getEmails";
+    private static final String EMAIL_OVERVIEW_URL = "getEmails";
 
     @Autowired
     private UserHandleManager userHandleManager;
