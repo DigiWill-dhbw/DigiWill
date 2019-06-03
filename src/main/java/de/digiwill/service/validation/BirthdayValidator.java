@@ -4,23 +4,24 @@ import org.springframework.util.MultiValueMap;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class BirthdayValidator extends Validator {
-    private static final int minimumAge = 13;
-    private DateFormat dateFormat;
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public BirthdayValidator(DateFormat dateFormat) {
+    private static final int minimumAge = 13;
+
+    public BirthdayValidator() {
         super(ValidationResponse.BIRTHDAY_INVALID);
-        this.dateFormat = dateFormat;
     }
 
     @Override
     public boolean validate(final MultiValueMap<String, String> formData) {
         Date birthdayDate;
         try {
-            birthdayDate = dateFormat.parse(formData.getFirst("birthday"));
+            birthdayDate = DATE_FORMAT.parse(formData.getFirst("birthday"));
             if (!isOldEnough(birthdayDate)) {
                 setResponse(ValidationResponse.TO_YOUNG);
                 return false;

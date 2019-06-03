@@ -2,6 +2,7 @@ package de.digiwill.controller;
 
 import de.digiwill.model.UserHandle;
 import de.digiwill.service.ProfileService;
+import de.digiwill.service.validation.ValidationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -35,10 +36,20 @@ public class ProfileController {
 
     @RequestMapping(value = "/saveProfile", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {
+    public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
+        ValidationResponse response = profileService.editUser(formData, principal.getName());
+        response.adjustModel(model);
+        return response.getSaveProfileRedirectTarget();
+    }
 
-
-        return "";
+    @GetMapping("/saveProfile")
+    public String save(Model model, Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
+        model.addAttribute("hasToast", false);
+        model.addAttribute("responseText", "No error occured");
+        return "profile";
     }
 
 }

@@ -19,17 +19,17 @@
                     </tr>
                     <tr>
                         <td>First Name:</td>
-                        <td><input id="firstNameInput" type="text" class="input-fields"
+                        <td><input id="firstNameInput" name="firstNameInput" type="text" class="input-fields"
                                    th:value="${personalData.getFirstName()}"/></td>
                     </tr>
                     <tr>
                         <td>Surname:</td>
-                        <td><input id="sureNameInput" type="text" class="input-fields"
+                        <td><input id="sureNameInput" name="surNameInput" type="text" class="input-fields"
                                    th:value="${personalData.getSurname()}"/></td>
                     </tr>
                     <tr>
                         <td>Birthday:</td>
-                        <td><input id="birthdayInput" type="date" class="input-fields"
+                        <td><input id="birthday" name="birthday" type="date" class="input-fields"
                                    th:value="${dateOfBirth}"/></td>
                     </tr>
                     <tr>
@@ -37,22 +37,22 @@
                     </tr>
                     <tr>
                         <td>Street/No.:</td>
-                        <td><input id="streetAddressInput" type="text" class="input-fields"
+                        <td><input id="streetAddressInput" name="streetAddressInput" type="text" class="input-fields"
                                    th:value="${personalData.getAddress().getStreetAddress()}"/></td>
                     </tr>
                     <tr>
                         <td>Postal code:</td>
-                        <td><input id="zipCodeInput" type="text" class="input-fields"
+                        <td><input id="zipCodeInput" name="zipCodeInput" type="number" class="input-fields"
                                    th:value="${personalData.getAddress().getZipCode()}"/></td>
                     </tr>
                     <tr>
                         <td>City:</td>
-                        <td><input id="cityInput" type="text" class="input-fields"
+                        <td><input id="cityInput" name="cityInput" type="text" class="input-fields"
                                    th:value="${personalData.getAddress().getCity()}"/></td>
                     </tr>
                     <tr>
                         <td>Country:</td>
-                        <td><input id="countryInput" type="text" class="input-fields"
+                        <td><input id="countryInput" name="countryInput" type="text" class="input-fields"
                                    th:value="${personalData.getAddress().getCountry()}"/></td>
                     </tr>
                     <tr>

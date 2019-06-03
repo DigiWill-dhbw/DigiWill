@@ -22,7 +22,6 @@ import java.util.List;
 
 @Service
 public class RegistrationService {
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Logger logger = LoggerFactory.getLogger(RegistrationService.class);
 
     @Autowired
@@ -40,7 +39,7 @@ public class RegistrationService {
         validators.add(new EmailAddressValidator());
         validators.add(new NonEmptyStringValidator("firstName", ValidationResponse.NO_FIRST_NAME));
         validators.add(new NonEmptyStringValidator("surName", ValidationResponse.NO_SURNAME));
-        validators.add(new BirthdayValidator(dateFormat));
+        validators.add(new BirthdayValidator());
     }
 
     public ValidationResponse addNewUser(final MultiValueMap<String, String> formData) {
@@ -80,7 +79,7 @@ public class RegistrationService {
     private UserHandle generateUserHandleFromFormData(MultiValueMap<String, String> formData) {
         Date birthdayDate = null;
         try {
-            birthdayDate = dateFormat.parse(formData.getFirst("birthday"));
+            birthdayDate = BirthdayValidator.DATE_FORMAT.parse(formData.getFirst("birthday"));
         } catch (ParseException ignored) {
         }
 

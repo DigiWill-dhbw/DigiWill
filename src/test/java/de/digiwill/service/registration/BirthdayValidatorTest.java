@@ -13,15 +13,12 @@ import java.text.SimpleDateFormat;
 import static org.junit.Assert.*;
 
 public class BirthdayValidatorTest {
-
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
     private BirthdayValidator birthdayValidator;
 
 
     @Before
     public void setUp() {
-        birthdayValidator = new BirthdayValidator(dateFormat);
-
+        birthdayValidator = new BirthdayValidator();
     }
 
     @Test
