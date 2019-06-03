@@ -24,6 +24,7 @@ function onDelete(idx) {
     modal.style.display = "block";
     if(typeof(idx) !== "undefined") {
         currentDeleteIdx = idx;
+        document.getElementById("indexField").value = idx;
     }
 }
 function onConfirmDelete() {

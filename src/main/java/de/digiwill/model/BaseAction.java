@@ -1,5 +1,6 @@
 package de.digiwill.model;
 
+import de.digiwill.service.EmailDispatcher;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,14 +11,16 @@ public abstract class BaseAction {
     protected boolean wasCompleted;
     protected ActionType type;
 
-    public ActionSuccess execute() {
+    public ActionSuccess execute(EmailDispatcher emailDispatcher) {
         if (wasCompleted) {
             return ActionSuccess.SUCCESSFUL_PREVIOUSLY;
         }
-        return executeAction();
+        ActionSuccess actionSuccess = executeAction(emailDispatcher);
+        wasCompleted = actionSuccess.success;
+        return actionSuccess;
     }
 
-    protected abstract ActionSuccess executeAction();
+    protected abstract ActionSuccess executeAction(EmailDispatcher emailDispatcher);
 
     public ObjectId getUID() {
         return UID;

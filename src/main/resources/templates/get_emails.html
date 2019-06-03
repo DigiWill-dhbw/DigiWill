@@ -35,9 +35,14 @@
             <div class="modal-content">
 
                 <p>Are you sure that you want to delete this?</p>
-                <a id="confirmDeleteButton" class="button" onclick="onConfirmDelete()"><i class="fas fa-check"></i></a><a
-                    class="button"
-                                                                                               id="cancelDeleteButton"><i class="fas fa-times"></i></a>
+                <form th:action="@{/deleteEmail}" method="post">
+                    <input type="hidden" value="" id="indexField" name="idx">
+                    <button id="confirmDeleteButton" class="button"
+                            type="submit"><i class="fas fa-check"></i></button><a
+                        class="button"
+                        id="cancelDeleteButton"><i class="fas fa-times"></i></a>
+                </form>
+
             </div>
 
         </div>
