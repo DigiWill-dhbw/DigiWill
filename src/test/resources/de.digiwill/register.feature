@@ -39,3 +39,15 @@ Feature: Register
       | example@mail.com | password       | password       | Tester    | McTest  | 01011990 | /register |
       | example@mail.com | validPa33word! | VALIDPa33word? | Tester    | McTest  | 01011990 | /register |
       | example-mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 01011990 | /register |
+
+    Scenario Outline: 03 - Registration screen redirects when logged in
+      Given "/?login" is open
+      Given A user with email "<email>" and password "<password>" exists
+      When Enter Email "<email>", password "<password>" and login
+      Then Login "succeeds"
+      When "/register" is open
+      Then I'm on page "/"
+
+      Examples:
+        | email            | password |
+        | example@mail.com | password |
