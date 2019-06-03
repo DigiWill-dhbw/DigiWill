@@ -1,5 +1,6 @@
 package de.digiwill.util;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,8 +23,9 @@ public class ChromeWebDriver extends EventFiringWebDriver {
         System.setProperty("webdriver.chrome.driver", SeleniumDriverUtils.getChromeDriverPath());
 
         ChromeOptions capabilities = SeleniumDriverUtils.getChromeOptions();
+        capabilities.setPageLoadStrategy(PageLoadStrategy.EAGER);
         webdriver = new ChromeDriver(capabilities);
-        webdriver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        webdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }

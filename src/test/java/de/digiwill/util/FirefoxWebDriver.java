@@ -23,7 +23,7 @@ public class FirefoxWebDriver extends EventFiringWebDriver {
 
         FirefoxOptions capabilities = SeleniumDriverUtils.getFirefoxOptions();
         webdriver = new FirefoxDriver(capabilities);
-        webdriver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        webdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
