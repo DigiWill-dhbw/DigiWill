@@ -68,7 +68,7 @@ public class EmailController {
         try {
             user.replaceAction(idx, EmailAction.generateEmailAction(recipients, subject, content));
             userHandleManager.updateUser(user);
-            return new RedirectView();
+            return new RedirectView(EMAIL_OVERVIEW_URL);
         }catch(EmailException e){
             return new RedirectView(EMAIL_OVERVIEW_URL);
         }
