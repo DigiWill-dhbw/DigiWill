@@ -49,6 +49,7 @@ pipeline {
         sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=chrome jacoco:report'''
       }
     }
+    /*
     stage('Firefox') {
       when {
         not {
@@ -58,7 +59,7 @@ pipeline {
       steps {
         sh '''mvn test -Dtest=CucumberTest -DenvTarget=test -Dbrowser=firefox jacoco:report'''
       }
-    }
+    }*/
     stage('Deploy') {
       when {
         branch 'release'

@@ -23,7 +23,7 @@ public class RegisterSteps {
 
     @And("I open verification mail with account {string}")
     public void iEnterIntoFieldWithId(String email) throws Exception {
-        if (greenMail.getGreenMail().waitForIncomingEmail(10000, 1)) {
+        if (greenMail.getGreenMail().waitForIncomingEmail(5000, 1)) {
             //check if user is not verified
             UserHandle userHandle = userHandleManager.loadUserByEmailAddress(email);
             assertEquals(false, userHandle.isVerified());
