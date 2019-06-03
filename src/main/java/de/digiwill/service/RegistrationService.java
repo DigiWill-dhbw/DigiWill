@@ -1,12 +1,10 @@
-package de.digiwill.service.registration;
+package de.digiwill.service;
 
 import de.digiwill.exception.EmailException;
 import de.digiwill.model.*;
 import de.digiwill.repository.EmailResponseHandleRepository;
-import de.digiwill.service.EmailDispatcher;
 import de.digiwill.service.validation.*;
 import de.digiwill.util.SecurityHelper;
-import de.digiwill.service.UserHandleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +74,7 @@ public class RegistrationService {
             return ValidationResponse.INTERNAL_ERROR;
         }
 
-        return ValidationResponse.REGISTRATION_SUCCESSFUL;
+        return ValidationResponse.SUCCESSFUL;
     }
 
     private UserHandle generateUserHandleFromFormData(MultiValueMap<String, String> formData) {

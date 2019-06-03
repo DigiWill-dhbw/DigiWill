@@ -4,7 +4,7 @@ import org.springframework.ui.Model;
 
 public enum ValidationResponse {
 
-    REGISTRATION_SUCCESSFUL(true, null),
+    SUCCESSFUL(true, null),
     PASSWORD_MISMATCH(false,  "The entered passwords don't match"),
     PASSWORD_REQUIREMENTS_NOT_MET(false, "The password requirements weren't met"),
     INVALID_EMAIL_ADDRESS(false, "Please enter a valid email address"),
@@ -31,7 +31,7 @@ public enum ValidationResponse {
         }
     }
 
-    public String getRedirectTarget() {
+    public String getRegisterRedirectTarget() {
         return success ? "redirect:/" : "register";
     }
 }

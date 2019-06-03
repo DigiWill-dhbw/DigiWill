@@ -73,7 +73,7 @@ public class ResetPasswordService {
             userHandle.setPassword(formData.getFirst("password"));
             userHandleManager.updateUser(userHandle);
             emailResponseHandleManager.deleteEmailResponseHandle(emailResetHandle);
-            return ValidationResponse.REGISTRATION_SUCCESSFUL;
+            return ValidationResponse.SUCCESSFUL;
         }
         return ValidationResponse.INTERNAL_ERROR;
 

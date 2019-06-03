@@ -1,7 +1,7 @@
 package de.digiwill.controller;
 
 import de.digiwill.service.validation.ValidationResponse;
-import de.digiwill.service.registration.RegistrationService;
+import de.digiwill.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class RegisterController {
 
         ValidationResponse response = registrationService.addNewUser(formData);
         response.adjustModel(model);
-        return response.getRedirectTarget();
+        return response.getRegisterRedirectTarget();
     }
 
     @GetMapping("/register")

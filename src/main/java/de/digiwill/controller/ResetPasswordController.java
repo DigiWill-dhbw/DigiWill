@@ -24,7 +24,7 @@ public class ResetPasswordController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String resetPassword(@RequestBody MultiValueMap<String, String> formData, Model model) {
         ValidationResponse response = resetPasswordService.resetPassword(formData);
-        if(response.equals(ValidationResponse.REGISTRATION_SUCCESSFUL)){
+        if(response.equals(ValidationResponse.SUCCESSFUL)){
             return "redirect:/";
         }else{
             response.adjustModel(model);
