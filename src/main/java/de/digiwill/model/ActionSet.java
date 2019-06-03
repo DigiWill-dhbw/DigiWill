@@ -28,7 +28,7 @@ public class ActionSet {
 
     public List<Integer> getEmailActionsIdx() {
         List<Integer> idxs = new ArrayList<>();
-        Integer counter = 0;
+        int counter = 0;
         for (BaseAction action : actions) {
             if(action instanceof EmailAction) {
                 idxs.add(counter);
