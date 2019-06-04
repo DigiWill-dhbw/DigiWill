@@ -17,14 +17,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @Ignore
-public class EmailCRUDSteps {
-
-    @Autowired
-    private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
+public class EmailCRUDSteps extends SpringBootBaseIntegrationTest{
 
     @And("^The user is on the actions overview page$")
     public void theUserIsOnActionsOverviewPage() {
-        springBootBaseIntegrationTest.getWebDriver().get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/getEmails");
+        getWebDriver().get("http://localhost:" + getPort() + "/getEmails");
     }
 
 
@@ -36,8 +33,8 @@ public class EmailCRUDSteps {
     @When("^Create new email action with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
     public void createNewEmailActionWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) throws InterruptedException {
         // Write code here that turns the phrase above into concrete actions
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/addEmail");
+        WebDriver driver = getWebDriver();
+        driver.get("http://localhost:" + getPort() + "/addEmail");
         driver.findElement(By.id("addressField")).sendKeys(recipient);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
@@ -46,7 +43,7 @@ public class EmailCRUDSteps {
 
     @Then("^The service should accept the new action$")
     public void theServiceShouldAcceptTheNewAction() {
-        assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/getEmails", springBootBaseIntegrationTest.getWebDriver().getCurrentUrl());
+        assertEquals("http://localhost:" + getPort() + "/getEmails", getWebDriver().getCurrentUrl());
     }
 
     @And("^A new item with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" should exist$")
@@ -62,8 +59,8 @@ public class EmailCRUDSteps {
     }
 
     private boolean hasItem(String recipient, String subject, String content) {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/getEmails");
+        WebDriver driver = getWebDriver();
+        driver.get("http://localhost:" + getPort() + "/getEmails");
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
         items.remove(0);
@@ -81,7 +78,7 @@ public class EmailCRUDSteps {
 
     @And("^Clicking \"([^\"]*)\"$")
     public void clicking(String button) {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = getWebDriver();
         // Write code here that turns the phrase above into concrete actions
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
@@ -95,8 +92,8 @@ public class EmailCRUDSteps {
 
     @Then("^The item shouldn't exist anymore$")
     public void theItemShouldnTExistAnymore() {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.get("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/getEmails");
+        WebDriver driver = getWebDriver();
+        driver.get("http://localhost:" + getPort() + "/getEmails");
         // Write code here that turns the phrase above into concrete actions
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
@@ -105,12 +102,12 @@ public class EmailCRUDSteps {
 
     @Then("^The service should not accept the new action$")
     public void theServiceShouldNotAcceptTheNewAction() {
-        assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + "/getEmails", springBootBaseIntegrationTest.getWebDriver().getCurrentUrl());
+        assertEquals("http://localhost:" + getPort() + "/getEmails", getWebDriver().getCurrentUrl());
     }
 
     @And("^Editing email with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
     public void editingEmailWithRecipientSubjectContentAndClick(String recipient, String subject, String content, String button) throws InterruptedException {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = getWebDriver();
         // Write code here that turns the phrase above into concrete actions
         driver.findElement(By.id("addressField")).clear();
         driver.findElement(By.id("addressField")).sendKeys(recipient);
@@ -123,7 +120,7 @@ public class EmailCRUDSteps {
 
     @And("^Click \"([^\"]*)\" on the modal$")
     public void clickOnTheModal(String button) {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = getWebDriver();
         if ("Confirm".equals(button)) {
             driver.findElement(By.id("confirmDeleteButton")).click();
         } else {
@@ -133,7 +130,7 @@ public class EmailCRUDSteps {
     }
 
     private void clickSaveOrCancelButton(String buttonLabel, boolean editing) throws InterruptedException {
-        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        WebDriver driver = getWebDriver();
         if ("Save".equals(buttonLabel)) {
             WebElement element = driver.findElement(By.id(editing ? "saveButton" : "submitButton"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
