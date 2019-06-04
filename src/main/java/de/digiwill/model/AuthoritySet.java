@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
 import java.io.Serializable;
 import java.util.*;
 
-public class AuthoritySet {
+public class AuthoritySet implements Serializable{
     private List<GrantedAuthority> authorities;
 
     public AuthoritySet(List<GrantedAuthority> authorities) {
