@@ -5,8 +5,6 @@ import de.digiwill.model.UserHandle;
 import de.digiwill.model.WebhookAction;
 import de.digiwill.service.UserHandleManager;
 import de.digiwill.util.RegexMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +17,15 @@ import java.security.Principal;
 @Controller
 public class WebhookController {
 
+    private static final String WEBHOOK_EDIT_URL = "webhook";
+
     @Autowired
     private UserHandleManager userHandleManager;
-
-    private Logger logger = LoggerFactory.getLogger(WebhookController.class);
 
     @GetMapping(value="/webhook")
     public String webhook(Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        model.addAttribute("webhook", user.getWebhook());
+        model.addAttribute("webhookAction", user.getWebhookAction());
         return "webhook";
     }
 
@@ -44,12 +42,12 @@ public class WebhookController {
             }
             userHandleManager.updateUser(user);
             model.addAttribute("hasToast", false);
-            model.addAttribute("webhook", user.getWebhook());
+            model.addAttribute("webhookAction", user.getWebhookAction());
         } else {
             model.addAttribute("hasToast", true);
             model.addAttribute("responseText", "Not valid IFTTT webhook URL");
         }
-        return new RedirectView("webhook");
+        return new RedirectView(WEBHOOK_EDIT_URL);
     }
     @PostMapping(value="/deleteWebhook")
     public RedirectView deleteWebhook(Model model,
@@ -60,6 +58,6 @@ public class WebhookController {
             user.removeAction(idx);
             userHandleManager.updateUser(user);
         }
-        return new RedirectView("webhook");
+        return new RedirectView(WEBHOOK_EDIT_URL);
     }
 }

@@ -17,7 +17,7 @@ public class CheckEmailHandlesDaemon {
     /**
      * Check interval in minutes
      */
-    private static final int checkInterval = 5;
+    private static final int CHECK_INTERVAL = 5;
 
     @Autowired
     private EmailResponseHandleManager emailResponseHandleManager;
@@ -33,7 +33,7 @@ public class CheckEmailHandlesDaemon {
     private Logger logger = LoggerFactory.getLogger(CheckEmailHandlesDaemon.class);
 
     @Async
-    @Scheduled(fixedRate = checkInterval * 60000)
+    @Scheduled(fixedRate = CHECK_INTERVAL * 60000)
     public void check() {
         running = true;
         //TODO maybe update time

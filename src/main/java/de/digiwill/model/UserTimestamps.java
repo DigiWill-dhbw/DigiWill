@@ -1,8 +1,9 @@
 package de.digiwill.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class UserTimestamps {
+public class UserTimestamps implements Serializable {
     /**
      * Unix timestamp in seconds
      */

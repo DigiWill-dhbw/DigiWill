@@ -2,10 +2,11 @@ package de.digiwill.model;
 
 import de.digiwill.service.EmailDispatcher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionSet {
+public class ActionSet implements Serializable {
     private  List<BaseAction> actions;
     private boolean allActionsCompleted;
 
@@ -15,26 +16,21 @@ public class ActionSet {
     }
 
     public List<EmailAction> getEmailActions() {
-        List<BaseAction> actions = this.getActions();
         List<EmailAction> emails = new ArrayList<>();
-        for (BaseAction action : actions
-        ) {
+        for (BaseAction action : actions) {
             try {
                 emails.add((EmailAction) action);
             }
-            catch(Exception e) {
-                continue;
+            catch(Exception ignore) {
             }
         }
         return emails;
     }
 
     public List<Integer> getEmailActionsIdx() {
-        List<BaseAction> actions = this.getActions();
         List<Integer> idxs = new ArrayList<>();
-        Integer counter = 0;
-        for (BaseAction action : actions
-        ) {
+        int counter = 0;
+        for (BaseAction action : actions) {
             if(action instanceof EmailAction) {
                 idxs.add(counter);
             }

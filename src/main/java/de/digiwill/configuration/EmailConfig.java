@@ -1,11 +1,11 @@
 package de.digiwill.configuration;
 
 public class EmailConfig {
-    private String host,
-            from,
-            port,
-            user,
-            password;
+    private String host;
+    private String from;
+    private String port;
+    private String user;
+    private String password;
 
     public EmailConfig(String host, String from, String port, String user, String password) {
         this.host = host;
