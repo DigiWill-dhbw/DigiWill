@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AdminOverviewSteps {
 
@@ -32,14 +31,20 @@ public class AdminOverviewSteps {
         assertTrue(hasUserWithNameAndEmail(fullName, email, "ROLE_USER"));
     }
 
+    @And("No user with email {string}, first name {string} and surname {string} is displayed")
+    public void noUserWithEmailFirstNameAndSurnameIsDisplayed(String email, String firstName, String surName) {
+        String fullName = firstName + " " + surName;
+        assertFalse(hasUserWithNameAndEmail(fullName, email, "ROLE_USER"));
+    }
+
     @And("An admin with email {string}, first name {string} and surname {string} is displayed")
     public void anAdminWithEmailFirstNameAndSurnameIsDisplayed(String email, String firstName, String surName) {
         String fullName = firstName + " " + surName;
         assertTrue(hasUserWithNameAndEmail(fullName, email, "ROLE_USER ROLE_ADMIN"));
     }
 
-    @And("I toggle admin role for user with email {string}")
-    public void iToggleAdminRoleForUserWithEmail(String email) {
+    @And("I click table column {int} for user with email {string}")
+    public void iClickTableColumnForUserWithEmail(int column, String email) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
@@ -48,9 +53,8 @@ public class AdminOverviewSteps {
             List<WebElement> fields = items.get(i).findElements(By.tagName("td"));
            if(email.equals(fields.get(1).getText())){
                foundItem = true;
-               fields.get(6).click();
+               fields.get(column).click();
            }
-
         }
         assertTrue(foundItem);
     }
@@ -70,6 +74,7 @@ public class AdminOverviewSteps {
         }
         return foundItem;
     }
+
 
 
 }
