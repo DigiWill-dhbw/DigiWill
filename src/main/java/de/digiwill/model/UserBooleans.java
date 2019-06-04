@@ -1,6 +1,8 @@
 package de.digiwill.model;
 
-public class UserBooleans {
+import java.io.Serializable;
+
+public class UserBooleans implements Serializable {
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

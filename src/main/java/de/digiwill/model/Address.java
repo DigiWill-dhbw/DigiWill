@@ -1,6 +1,8 @@
 package de.digiwill.model;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private final String zipCode;
     private final String city;
     private final String streetAddress;

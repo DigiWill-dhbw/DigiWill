@@ -3,10 +3,11 @@ package de.digiwill.model;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.TypeAlias;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TypeAlias("personalData")
-public class PersonalData {
+public class PersonalData implements Serializable {
     private String firstName;
     private String surname;
     private Date dateOfBirth;
