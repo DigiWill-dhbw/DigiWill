@@ -15,6 +15,7 @@ function onAddEvent() {
 function onSetWebhook() {
     var csrfToken = document.getElementsByName("_csrf")[0].value;
     var events = document.getElementsByTagName("tr");
+    events = Array.from(events);
     var eventNames = [];
     for (var i=0; i< events.length; i++) {
         eventNames.push(events[i].getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
