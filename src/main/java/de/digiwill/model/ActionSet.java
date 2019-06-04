@@ -2,10 +2,11 @@ package de.digiwill.model;
 
 import de.digiwill.service.EmailDispatcher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionSet {
+public class ActionSet implements Serializable {
     private  List<BaseAction> actions;
     private boolean allActionsCompleted;
 
