@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
-public class LoginFeatureTest {
+public class LoginSteps {
     @Autowired
     private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
