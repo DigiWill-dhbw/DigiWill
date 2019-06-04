@@ -25,6 +25,7 @@ public class ResetPasswordSteps {
             assertEquals(1, messages.length);
             MimeMessage message = messages[0];
             assertEquals(EmailDispatcher.RESET_EMAIL_SUBJECT, message.getSubject());
+            assertEquals(email, message.getAllRecipients()[0].toString());
             String content = (String) message.getContent();
             webDriver.get(content.split("\"")[1]);
 
