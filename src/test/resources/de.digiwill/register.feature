@@ -1,4 +1,5 @@
 @uitest
+@mailtest
 Feature: Register
   As a mortal
   I want to register a new account
@@ -6,7 +7,24 @@ Feature: Register
   Background:
     Given "/register" is open
 
-  Scenario Outline: 01 - Registration
+  Scenario Outline: 01 - Registration successful
+    When I enter "<email>" into field with id "emailInput"
+    And I enter "<password>" into field with id "passwordInput"
+    And I enter "<passwordRep>" into field with id "passwordInput_rep"
+    And I enter "<firstName>" into field with id "firstName"
+    And I enter "<surName>" into field with id "surName"
+    And I enter "<birthday>" into field with id "birthday"
+    And I click on element with id "registerButton"
+    Then I'm on page "/"
+    And I open verification mail with account "<email>"
+    Then I'm on page with url containing "<result>"
+
+    Examples:
+      | email             | password       | passwordRep    | firstName | surName | birthday | result    |
+      | example@127.0.0.1 | validPa33word! | validPa33word! | Tester    | McTest  | 04201990 | callback |
+      | test@127.0.0.1    | Test123$       | Test123$       | Martin    | Muller  | 01011990 | callback |
+
+  Scenario Outline: 02 - Registration unsuccessful
     When I enter "<email>" into field with id "emailInput"
     And I enter "<password>" into field with id "passwordInput"
     And I enter "<passwordRep>" into field with id "passwordInput_rep"
@@ -16,11 +34,20 @@ Feature: Register
     And I click on element with id "registerButton"
     Then I'm on page "<result>"
 
-
-
     Examples:
       | email            | password       | passwordRep    | firstName | surName | birthday | result    |
-      | example@mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 1990-01-01 | /         |
-      | example@mail.com | password       | password       | Tester    | McTest  | 1990-01-01 | /register |
-      | example@mail.com | validPa33word! | VALIDPa33word? | Tester    | McTest  | 1990-01-01 | /register |
-      | example-mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 1990-01-01 | /register |
+      | example@mail.com | password       | password       | Tester    | McTest  | 01011990 | /register |
+      | example@mail.com | validPa33word! | VALIDPa33word? | Tester    | McTest  | 01011990 | /register |
+      | example-mail.com | validPa33word! | validPa33word! | Tester    | McTest  | 01011990 | /register |
+
+    Scenario Outline: 03 - Registration screen redirects when logged in
+      Given "/?login" is open
+      Given A user with email "<email>" and password "<password>" exists
+      When Enter Email "<email>", password "<password>" and login
+      Then Login "succeeds"
+      When "/register" is open
+      Then I'm on page "/"
+
+      Examples:
+        | email            | password |
+        | example@mail.com | password |

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GenericSteps {
     @Autowired
@@ -30,5 +31,12 @@ public class GenericSteps {
     public void iMOnPage(String url) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
         assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + url, driver.getCurrentUrl());
+    }
+
+    @Then("I'm on page with url containing {string}")
+    public void iMOnPageWithUrlContaining(String urlPart) {
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        assertTrue("User is on wrong page: "+driver.getCurrentUrl()+"\n" +
+                "should contain: "+urlPart , driver.getCurrentUrl().contains(urlPart));
     }
 }

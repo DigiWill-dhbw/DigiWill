@@ -4,6 +4,7 @@ package de.digiwill.controller;
 import de.digiwill.model.UserHandle;
 import de.digiwill.model.WebhookAction;
 import de.digiwill.service.UserHandleManager;
+import de.digiwill.util.RegexMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class WebhookController {
     @GetMapping(value="/webhook")
     public String webhook(Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
-        model.addAttribute("webhook", user.getWebhook());
+        model.addAttribute("webhook", user.getWebhookAction());
         return "webhook";
     }
 
     @PostMapping(value="/webhook")
     public RedirectView updateWebhook(@RequestParam(name = "apiKey", required = true) String apiKey, @RequestParam(name=
             "eventNames", required = true) String eventNames,
-            Model model, Principal principal) {
+                                      Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());
         WebhookAction webhook = new WebhookAction(apiKey);
         String[] events = eventNames.split(";");
