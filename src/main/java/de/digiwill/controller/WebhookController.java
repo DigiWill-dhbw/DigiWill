@@ -22,7 +22,7 @@ public class WebhookController {
     @Autowired
     private UserHandleManager userHandleManager;
 
-    private Logger logger = LoggerFactory.getLogger(GreetingController.class);
+    private Logger logger = LoggerFactory.getLogger(WebhookController.class);
 
     @GetMapping(value="/webhook")
     public String webhook(Model model, Principal principal) {
