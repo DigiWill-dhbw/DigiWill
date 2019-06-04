@@ -2,11 +2,7 @@ package de.digiwill.steps;
 
 import com.icegreen.greenmail.util.GreenMail;
 import cucumber.api.java.en.And;
-import de.digiwill.model.EmailResponseHandle;
-import de.digiwill.model.UserHandle;
 import de.digiwill.service.EmailDispatcher;
-import de.digiwill.service.EmailResponseHandleManager;
-import de.digiwill.service.UserHandleManager;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,8 +17,6 @@ public class ResetPasswordSteps {
     private GreenMail greenMail;
     @Autowired
     private WebDriver webDriver;
-    @Autowired
-    private EmailResponseHandleManager emailResponseHandleManager;
 
     @And("I open password recovery mail with account {string}")
     public void iEnterIntoFieldWithId(String email) throws Exception {
