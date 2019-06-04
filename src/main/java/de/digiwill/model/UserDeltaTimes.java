@@ -1,6 +1,8 @@
 package de.digiwill.model;
 
-public class UserDeltaTimes {
+import java.io.Serializable;
+
+public class UserDeltaTimes implements Serializable {
     /**
      * Time interval in seconds
      */
