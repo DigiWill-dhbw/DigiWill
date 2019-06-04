@@ -22,8 +22,6 @@ public class WebhookController {
     @Autowired
     private UserHandleManager userHandleManager;
 
-    private Logger logger = LoggerFactory.getLogger(GreetingController.class);
-
     @GetMapping(value="/webhook")
     public String webhook(Model model, Principal principal) {
         UserHandle user = userHandleManager.loadUserByEmailAddress(principal.getName());

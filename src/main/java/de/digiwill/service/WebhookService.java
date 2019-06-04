@@ -18,8 +18,6 @@ public class WebhookService {
         // optional default is GET
         con.setRequestMethod("GET");
 
-        int responseCode = con.getResponseCode();
-
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;

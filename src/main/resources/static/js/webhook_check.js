@@ -17,8 +17,7 @@ function onSetWebhook() {
     var events = document.getElementsByTagName("tr");
     var eventNames = [];
     for (var i=0; i< events.length; i++) {
-        var event = events[i];
-        eventNames.push(event.getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
+        eventNames.push(events[i].getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
     }
     var eventString = eventNames.join(";");
     var apiKey = document.getElementById("apikey").value;
