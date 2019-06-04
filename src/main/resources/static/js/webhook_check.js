@@ -17,9 +17,9 @@ function onSetWebhook() {
     var events = document.getElementsByTagName("tr");
     events = Array.from(events);
     var eventNames = [];
-    for (var i=0; i< events.length; i++) {
-        eventNames.push(events[i].getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
-    }
+    events.forEach(function(event) {
+        eventNames.push(event.getElementsByTagName("td")[1].getElementsByClassName("input-fields")[0].value);
+    });
     var eventString = eventNames.join(";");
     var apiKey = document.getElementById("apikey").value;
     postAjax("/webhook", "_csrf=" + csrfToken + "&apiKey=" + apiKey + "&eventNames=" + eventString, function (data) {
