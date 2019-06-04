@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class RegexMatcherTest {
 
     @Test
-    public void isValidEmailAddress_Success() {
+    public void isValidEmailAddressSuccess() {
         assertTrue(RegexMatcher.isValidEmailAddress("example@mail.com"));
         assertTrue(RegexMatcher.isValidEmailAddress("example@subdomain.mail.com"));
         assertTrue(RegexMatcher.isValidEmailAddress("example@mail.ch"));
@@ -17,7 +17,7 @@ public class RegexMatcherTest {
     }
 
     @Test
-    public void isValidEmailAddress_Failure() {
+    public void isValidEmailAddressFailure() {
         assertFalse(RegexMatcher.isValidEmailAddress("example at mail.com"));
         assertFalse(RegexMatcher.isValidEmailAddress("example@mail@mail.com"));
         assertFalse(RegexMatcher.isValidEmailAddress("@mail.com"));
@@ -28,21 +28,21 @@ public class RegexMatcherTest {
     }
 
     @Test
-    public void isValidMultipleEmailAddress_Success() {
+    public void isValidMultipleEmailAddressSuccess() {
         assertTrue(RegexMatcher.isValidMultipleEmailAddress("example@mail.com"));
         assertTrue(RegexMatcher.isValidMultipleEmailAddress("example@mail.com, example1@mail.com"));
         assertTrue(RegexMatcher.isValidMultipleEmailAddress("example@mail.com,example1@mail.com"));
     }
 
     @Test
-    public void isValidMultipleEmailAddress_Failure() {
+    public void isValidMultipleEmailAddressFailure() {
         assertFalse(RegexMatcher.isValidMultipleEmailAddress(""));
         assertFalse(RegexMatcher.isValidMultipleEmailAddress("example@mail.com, "));
         assertFalse(RegexMatcher.isValidMultipleEmailAddress("example@mail.com, example@mail.com example@mail.com"));
     }
 
     @Test
-    public void isValidPassword_Success() {
+    public void isValidPasswordSuccess() {
         assertTrue(RegexMatcher.isValidPassword("Upp3ercase!"));
         assertTrue(RegexMatcher.isValidPassword("Aabcde1!"));
         assertTrue(RegexMatcher.isValidPassword("Aabcde1-"));
@@ -65,7 +65,7 @@ public class RegexMatcherTest {
     }
 
     @Test
-    public void isValidPassword_Failure() {
+    public void isValidPasswordFailure() {
         assertFalse(RegexMatcher.isValidPassword("12345678"));
         assertFalse(RegexMatcher.isValidPassword("Aa1!"));
         assertFalse(RegexMatcher.isValidPassword("Aabcd1!"));
@@ -77,13 +77,13 @@ public class RegexMatcherTest {
     }
 
     @Test
-    public void isIFTTTUrl_Success() {
+    public void isIFTTTUrlSuccess() {
         assertTrue(RegexMatcher.isIFTTTUrl("https://maker.ifttt.com/trigger/EventName/with/key/a1b2c3d4e5f6g7"));
         assertTrue(RegexMatcher.isIFTTTUrl("https://maker.ifttt.com/trigger/a/with/key/a1b2c3d4e5f6g7"));
     }
 
     @Test
-    public void isIFTTTUrl_Failure() {
+    public void isIFTTTUrlFailure() {
         assertFalse(RegexMatcher.isIFTTTUrl(""));
         assertFalse(RegexMatcher.isIFTTTUrl("example.com"));
         assertFalse(RegexMatcher.isIFTTTUrl("https://maker.ifttt.com/trigger"));
