@@ -1,48 +1,34 @@
 package de.digiwill.steps;
 
 import cucumber.api.java.en.Given;
-import de.digiwill.model.*;
-import de.digiwill.repository.UserHandleRepository;
-import de.digiwill.service.UserHandleManager;
-import de.digiwill.util.SecurityHelper;
+import de.digiwill.SpringBootBaseIntegrationTest;
+import de.digiwill.model.Address;
+import de.digiwill.model.PersonalData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class UserCreationSteps {
 
     @Autowired
-    private UserHandleManager userHandleManager;
-
-    @Autowired
-    private UserHandleRepository repository;
+    private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
     @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
     public void aUserWithEmailAndPasswordExists(String email, String password){
-        setUpUser(email, password);
+        springBootBaseIntegrationTest.setUpUser(email, password);
     }
 
-
-    private void setUpUser(String email, String password) {
-        PersonalData personalData = new PersonalData("FirstName", "SurName", new Date(1970, 1, 1));
-        setUpUser(email, password, personalData);
+    @Given("^An admin with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
+    public void anAdminWithEmailAndPasswordExists(String email, String password){
+        springBootBaseIntegrationTest.setUpAdmin(email, password);
     }
 
-    private void setUpUser(String email, String password, PersonalData personalData) {
-        AuthoritySet authoritySet = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER"));
-        setUpUser(email, password, personalData, authoritySet);
+    @Given("A user with email {string}, password {string}, first name {string} and surname {string} exists")
+    public void aUserWithEmailPasswordFirstNameAndSurnameExists(String email, String password, String firstName, String surName) {
+        PersonalData personalData = new PersonalData(firstName, surName, new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime(), Address.getInitial());
+        springBootBaseIntegrationTest.setUpUser(email, password, personalData);
     }
-
-    private void setUpUser(String email, String password, PersonalData personalData, AuthoritySet authoritySet) {
-        if (userHandleManager == null) {
-            userHandleManager = new UserHandleManager(repository);
-        }
-        UserBooleans userBooleans = new UserBooleans(true, true, true, true);
-        UserHandle userHandle = UserHandleFactory.createCompleteUserHandle(email, SecurityHelper.encodePassword(password), authoritySet,
-                userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
-                personalData, ActionSet.getInitial());
-        userHandleManager.createUser(userHandle);
-    }
-
 }
