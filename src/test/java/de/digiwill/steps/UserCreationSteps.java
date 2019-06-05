@@ -17,12 +17,7 @@ public class UserCreationSteps {
 
     @Given("^A user with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")
     public void aUserWithEmailAndPasswordExists(String email, String password){
-        setUpUser(email, password);
-    }
-
-
-    private void setUpUser(String email, String password) {
-        PersonalData personalData = new PersonalData("FirstName", "SurName", new Date(1970, 1, 1), Address.getInitial());
+        springBootBaseIntegrationTest.setUpUser(email, password);
     }
 
     @Given("^An admin with email \"([^\"]*)\" and password \"([^\"]*)\" exists$")

@@ -1,5 +1,5 @@
 @uitest
-Feature: EditProfile
+Feature: Edit Profile
   As a mortal
   I want to edit my profile information
 
