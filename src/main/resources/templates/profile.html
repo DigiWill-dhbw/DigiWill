@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
-<body>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
+
+<script th:if="${hasToast}" th:inline="javascript">
+    function onLoad() {
+        launchToast(/*[[${responseText}]]*/);
+    }
+</script>
 <div id="content">
     <div class="panel">
         <div class="form">
-            <form th:action="@{/saveProfile}" method="post">
+            <form th:action="@{/profile}" method="post">
                 <table>
                     <tr>
                         <td><h2>General</h2></td>
@@ -24,7 +30,7 @@
                     </tr>
                     <tr>
                         <td>Surname:</td>
-                        <td><input id="sureNameInput" name="surNameInput" type="text" class="input-fields"
+                        <td><input id="surNameInput" name="surNameInput" type="text" class="input-fields"
                                    th:value="${personalData.getSurname()}"/></td>
                     </tr>
                     <tr>

@@ -31,25 +31,16 @@ public class ProfileController {
         model.addAttribute("email", emailAddress);
         model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
         model.addAttribute("personalData", user.getPersonalData());
+
         return "profile";
     }
 
-    @RequestMapping(value = "/saveProfile", method = RequestMethod.POST,
+    @RequestMapping(value = "/profile", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
         ValidationResponse response = profileService.editUser(formData, principal.getName());
         response.adjustModel(model);
         return response.getSaveProfileRedirectTarget();
-    }
-
-    @GetMapping("/saveProfile")
-    public String save(Model model, Principal principal) {
-        if (principal != null) {
-            return "redirect:/";
-        }
-        model.addAttribute("hasToast", false);
-        model.addAttribute("responseText", "No error occured");
-        return "profile";
     }
 
 }

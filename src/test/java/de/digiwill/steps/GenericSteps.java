@@ -5,7 +5,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.digiwill.SpringBootBaseIntegrationTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +26,9 @@ public class GenericSteps {
     @And("I click on element with id {string}")
     public void iClickOnElementWithId(String id) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
-        driver.findElement(By.id(id)).click();
+        WebElement element = driver.findElement(By.id(id));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        element.click();
     }
 
     @Then("I'm on page {string}")
