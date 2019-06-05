@@ -31,11 +31,7 @@ public enum ValidationResponse {
         }
     }
 
-    public String getRegisterRedirectTarget() {
-        return success ? "redirect:/" : "register";
-    }
-
-    public String getSaveProfileRedirectTarget() {
-        return success ? "redirect:/" : "profile";
+    public String getRedirectTarget(String noSuccess) {
+        return success ? "redirect:/" : noSuccess;
     }
 }

@@ -27,10 +27,24 @@ public class ProfileController {
     public String profile(Principal principal, Model model) {
         String emailAddress = principal.getName();
         UserHandle user = profileService.getUserHandleByEmail(emailAddress);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        model.addAttribute("email", emailAddress);
+        model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
+        model.addAttribute("personalData", user.getPersonalData());
+        model.addAttribute("edit", false);
+
+        return "profile";
+    }
+
+    @GetMapping("/editProfile")
+    public String editProfile(Principal principal, Model model) {
+        String emailAddress = principal.getName();
+        UserHandle user = profileService.getUserHandleByEmail(emailAddress);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         model.addAttribute("email", emailAddress);
         model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
         model.addAttribute("personalData", user.getPersonalData());
+        model.addAttribute("edit", true);
 
         return "profile";
     }
@@ -40,7 +54,7 @@ public class ProfileController {
     public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
         ValidationResponse response = profileService.editUser(formData, principal.getName());
         response.adjustModel(model);
-        return response.getSaveProfileRedirectTarget();
+        return response.getRedirectTarget("profile");
     }
 
 }

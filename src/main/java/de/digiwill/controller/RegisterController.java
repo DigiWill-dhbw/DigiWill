@@ -24,7 +24,7 @@ public class RegisterController {
 
         ValidationResponse response = registrationService.addNewUser(formData);
         response.adjustModel(model);
-        return response.getRegisterRedirectTarget();
+        return response.getRedirectTarget("register");
     }
 
     @GetMapping("/register")
