@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @Ignore
-public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest {
+public class EmailCRUDSteps extends SpringBootBaseIntegrationTest{
 
     @And("^The user is on the actions overview page$")
     public void theUserIsOnActionsOverviewPage() {
@@ -86,13 +86,6 @@ public class SetupCustomEmailsFeatureTest extends SpringBootBaseIntegrationTest 
             item.findElement(By.id("editButton")).click();
         } else if ("Delete".equals(button)) {
             item.findElement(By.id("deleteButton")).click();
-        } else if ("logout".equalsIgnoreCase(button)) {
-            driver.findElement(By.className("myDropdown"));
-            listing.findElements(By.tagName("input"));
-            items.get(items.size());
-            if ("Logout".equals(button)) {
-                item.findElement(By.id("SendLifeSingFeatureTest")).click();
-            }
         }
     }
 

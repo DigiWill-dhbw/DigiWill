@@ -11,6 +11,7 @@ import de.digiwill.service.validation.PasswordRequirementValidator;
 import de.digiwill.service.validation.ValidationResponse;
 import de.digiwill.service.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
@@ -46,7 +47,9 @@ public class ResetPasswordService {
             emailResponseHandleRepository.insert(emailResetHandle);
 
             emailDispatcher.sendResetEmail(emailResetHandle, userHandle);
-        } catch (EmailException e) {
+        } catch (UsernameNotFoundException e){
+            //do nothing
+        }catch (EmailException e) {
             emailResponseHandleManager.deleteEmailResponseHandle(emailResetHandle);
         }
     }

@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class SendLifeSingFeatureTest {
+public class SendLifeSignSteps {
     @Autowired
     private SpringBootBaseIntegrationTest springBootBaseIntegrationTest;
 
