@@ -7,7 +7,6 @@ import de.digiwill.model.PersonalData;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class UserCreationSteps {
