@@ -24,37 +24,41 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping("/profile")
-    public String profile(Principal principal, Model model) {
-        String emailAddress = principal.getName();
-        UserHandle user = profileService.getUserHandleByEmail(emailAddress);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        model.addAttribute("email", emailAddress);
-        model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
-        model.addAttribute("personalData", user.getPersonalData());
-        model.addAttribute("edit", false);
+    public String profile(Principal principal, Model model, RedirectAttributes redirectAttrs) {
+        addDataToProfilePageModel(principal, model, false);
 
         return "profile";
     }
 
     @GetMapping("/editProfile")
-    public String editProfile(Principal principal, Model model) {
-        String emailAddress = principal.getName();
-        UserHandle user = profileService.getUserHandleByEmail(emailAddress);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        model.addAttribute("email", emailAddress);
-        model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
-        model.addAttribute("personalData", user.getPersonalData());
-        model.addAttribute("edit", true);
+    public String editProfile(Principal principal, Model model, RedirectAttributes redirectAttrs) {
+        addDataToProfilePageModel(principal, model, true);
 
         return "profile";
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.POST,
+    @GetMapping("/changePassword")
+    public String changePassword(Principal principal, Model model) {
+        //TODO
+        return "changePassword";
+    }
+
+    @RequestMapping(value = "/editProfile", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
         ValidationResponse response = profileService.editUser(formData, principal.getName());
         response.adjustModel(model);
-        return response.getRedirectTarget("profile");
+        return response.getRedirectTarget("redirect:/profile","redirect:/editProfile");
+    }
+
+    private void addDataToProfilePageModel(Principal principal, Model model, boolean edit) {
+        String emailAddress = principal.getName();
+        UserHandle user = profileService.getUserHandleByEmail(emailAddress);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(edit ? "yyyy-MM-dd" : "dd.MM.yyyy");
+        model.addAttribute("email", emailAddress);
+        model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
+        model.addAttribute("personalData", user.getPersonalData());
+        model.addAttribute("edit", edit);
     }
 
 }

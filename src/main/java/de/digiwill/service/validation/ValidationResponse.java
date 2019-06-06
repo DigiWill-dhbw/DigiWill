@@ -31,7 +31,7 @@ public enum ValidationResponse {
         }
     }
 
-    public String getRedirectTarget(String noSuccess) {
-        return success ? "redirect:/" : noSuccess;
+    public String getRedirectTarget(String successRedirect, String noSuccessRedirect) {
+        return success ? successRedirect : noSuccessRedirect;
     }
 }
