@@ -79,18 +79,39 @@
                         <td th:if="${edit == false}">
                             <a href="/editProfile" id="editProfileButton" class="button">Edit profile</a>
                         </td>
-                        <td th:if="${edit == false}">
-                            <a href="/changePassword" id="changePasswordButton" class="button">Change password</a>
-                        </td>
                         <td th:if="${edit == true}">
                             <input id="saveProfileButton" type="submit" value="Save Changes" class="button"/>
                         </td>
                     </tr>
                 </table>
             </form>
+            <form th:if="${edit == true}" th:action="@{/changePassword}" method="post">
+                <table>
+                    <tr>
+                        <td><h2>Change password</h2></td>
+                    </tr>
+                    <tr>
+                        <td>Current password:</td>
+                        <td><input id="oldPasswordInput" name="oldPasswordInput" type="password" class="input-fields"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New password:</td>
+                        <td><input id="newPasswordInput" name="newPasswordInput" type="password" class="input-fields"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Confirm new password:</td>
+                        <td><input id="confirmNewPasswordInput" name="confirmNewPasswordInput" type="password"
+                                   class="input-fields"/></td>
+                    </tr>
+                    <tr>
+                        <td><input id="changePasswordButton" type="submit" value="Change password" class="button"/></td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
-</div>
-<div th:include="fragments/footer :: footer"></div>
-</body>
+    <div th:include="fragments/footer :: footer"></div>
+    </body>
 </html>

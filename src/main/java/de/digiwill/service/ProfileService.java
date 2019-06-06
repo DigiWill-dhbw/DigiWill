@@ -35,6 +35,10 @@ public class ProfileService {
         return userHandleManager.loadUserByEmailAddress(email);
     }
 
+    public ValidationResponse changePassword(final MultiValueMap<String, String> formData, final String email) {
+        return null;
+    }
+
     public ValidationResponse editUser(final MultiValueMap<String, String> formData, final String email) {
         if (formData == null) {
             return ValidationResponse.FORM_DATA_DOESNT_EXIST;

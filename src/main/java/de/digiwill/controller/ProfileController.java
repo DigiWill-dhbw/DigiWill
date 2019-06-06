@@ -37,10 +37,12 @@ public class ProfileController {
         return "profile";
     }
 
-    @GetMapping("/changePassword")
-    public String changePassword(Principal principal, Model model) {
-        //TODO
-        return "changePassword";
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String changePassword(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
+        ValidationResponse response = profileService.changePassword(formData, principal.getName());
+        response.adjustModel(model);
+        return response.getRedirectTarget("redirect:/profile","redirect:/editProfile");
     }
 
     @RequestMapping(value = "/editProfile", method = RequestMethod.POST,
