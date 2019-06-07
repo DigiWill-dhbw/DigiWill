@@ -8,6 +8,7 @@ public enum ValidationResponse {
     PASSWORD_MISMATCH(false,  "The entered passwords don't match"),
     PASSWORD_REQUIREMENTS_NOT_MET(false, "The password requirements weren't met"),
     INVALID_EMAIL_ADDRESS(false, "Please enter a valid email address"),
+    INVALID_PASSWORD(false, "The entered password is not correct"),
     NO_FIRST_NAME(false, "Please enter a first name"),
     NO_SURNAME(false, "Please enter a surname"),
     TO_YOUNG(false, "You must be at least XXX years old to register for this service"),

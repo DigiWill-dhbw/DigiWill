@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
+
+<script th:if="${hasToast}" th:inline="javascript">
+    function onLoad() {
+        launchToast(/*[[${responseText}]]*/);
+    }
+</script>
 <div id="content">
     <div class="panel">
         <div class="form">
@@ -92,17 +99,17 @@
                     </tr>
                     <tr>
                         <td>Current password:</td>
-                        <td><input id="oldPasswordInput" name="oldPasswordInput" type="password" class="input-fields"/>
+                        <td><input id="oldPasswordInput" name="oldPassword" type="password" class="input-fields"/>
                         </td>
                     </tr>
                     <tr>
                         <td>New password:</td>
-                        <td><input id="newPasswordInput" name="newPasswordInput" type="password" class="input-fields"/>
+                        <td><input id="newPasswordInput" name="password" type="password" class="input-fields"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Confirm new password:</td>
-                        <td><input id="confirmNewPasswordInput" name="confirmNewPasswordInput" type="password"
+                        <td><input id="confirmNewPasswordInput" name="password_rep" type="password"
                                    class="input-fields"/></td>
                     </tr>
                     <tr>
@@ -114,4 +121,5 @@
     </div>
     <div th:include="fragments/footer :: footer"></div>
     </body>
+</div>
 </html>

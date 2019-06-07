@@ -3,10 +3,8 @@ package de.digiwill.service;
 import de.digiwill.model.Address;
 import de.digiwill.model.PersonalData;
 import de.digiwill.model.UserHandle;
-import de.digiwill.service.validation.BirthdayValidator;
-import de.digiwill.service.validation.NonEmptyStringValidator;
-import de.digiwill.service.validation.ValidationResponse;
-import de.digiwill.service.validation.Validator;
+import de.digiwill.service.validation.*;
+import de.digiwill.util.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,13 +20,18 @@ public class ProfileService {
     @Autowired
     private UserHandleManager userHandleManager;
 
-    private List<Validator> validators;
+    private List<Validator> editProfileValidators;
+    private List<Validator> changePasswordValidators;
 
     public ProfileService() {
-        validators = new ArrayList<>();
-        validators.add(new NonEmptyStringValidator("firstNameInput", ValidationResponse.NO_FIRST_NAME));
-        validators.add(new NonEmptyStringValidator("surNameInput", ValidationResponse.NO_SURNAME));
-        validators.add(new BirthdayValidator());
+        editProfileValidators = new ArrayList<>();
+        editProfileValidators.add(new NonEmptyStringValidator("firstNameInput", ValidationResponse.NO_FIRST_NAME));
+        editProfileValidators.add(new NonEmptyStringValidator("surNameInput", ValidationResponse.NO_SURNAME));
+        editProfileValidators.add(new BirthdayValidator());
+
+        changePasswordValidators = new ArrayList<>();
+        changePasswordValidators.add(new PasswordRequirementValidator());
+        changePasswordValidators.add(new PasswordMatchValidator());
     }
 
     public UserHandle getUserHandleByEmail(String email) {
@@ -36,7 +39,31 @@ public class ProfileService {
     }
 
     public ValidationResponse changePassword(final MultiValueMap<String, String> formData, final String email) {
-        return null;
+        if (formData == null) {
+            return ValidationResponse.FORM_DATA_DOESNT_EXIST;
+        }
+
+        for (Validator validator : changePasswordValidators) {
+            if (!validator.validate(formData)) {
+                return validator.getResponse();
+            }
+        }
+
+        UserHandle existingUser;
+        try {
+            existingUser = userHandleManager.loadUserByEmailAddress(email);
+        } catch (UsernameNotFoundException e) {
+            return ValidationResponse.INTERNAL_ERROR;
+        }
+
+        if(SecurityHelper.getEncoder().matches(formData.getFirst("oldPassword"), existingUser.getPassword())) {
+            existingUser.setPassword(formData.getFirst("password"));
+            userHandleManager.updateUser(existingUser);
+        } else {
+            return ValidationResponse.INVALID_PASSWORD;
+        }
+
+        return ValidationResponse.SUCCESSFUL;
     }
 
     public ValidationResponse editUser(final MultiValueMap<String, String> formData, final String email) {
@@ -44,7 +71,7 @@ public class ProfileService {
             return ValidationResponse.FORM_DATA_DOESNT_EXIST;
         }
 
-        for (Validator validator : validators) {
+        for (Validator validator : editProfileValidators) {
             if (!validator.validate(formData)) {
                 return validator.getResponse();
             }
