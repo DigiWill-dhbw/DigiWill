@@ -23,6 +23,12 @@ public class GenericSteps {
         driver.findElement(By.id(id)).sendKeys(text);
     }
 
+    @And("I clear field with id {string}")
+    public void iClearFieldWithId(String id) {
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        driver.findElement(By.id(id)).clear();
+    }
+
     @And("I click on element with id {string}")
     public void iClickOnElementWithId(String id) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
@@ -37,10 +43,16 @@ public class GenericSteps {
         assertEquals("http://localhost:" + springBootBaseIntegrationTest.getPort() + url, driver.getCurrentUrl());
     }
 
+    @Then("I'm on page with title {string}")
+    public void iMOnPageWithTitle(String title) {
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        assertEquals(title, driver.getTitle());
+    }
+
     @Then("I'm on page with url containing {string}")
     public void iMOnPageWithUrlContaining(String urlPart) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
-        assertTrue("User is on wrong page: "+driver.getCurrentUrl()+"\n" +
-                "should contain: "+urlPart , driver.getCurrentUrl().contains(urlPart));
+        assertTrue("User is on wrong page: " + driver.getCurrentUrl() + "\n" +
+                "should contain: " + urlPart, driver.getCurrentUrl().contains(urlPart));
     }
 }

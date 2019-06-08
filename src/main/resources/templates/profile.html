@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/header :: head (title='DigiWill - Your Profile')"></th:block>
+    <th:block th:if="${edit == false}" th:include="fragments/header :: head (title='DigiWill - Your Profile')"></th:block>
+    <th:block th:if="${edit == true}" th:include="fragments/header :: head (title='DigiWill - Edit Your Profile')"></th:block>
     <link rel="stylesheet" type="text/css" href="css/listings.css"/>
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
