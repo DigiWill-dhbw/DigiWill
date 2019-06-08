@@ -25,6 +25,14 @@ public enum ValidationResponse {
         this.failureMessage = failureMessage;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
     public void adjustModel(final Model model){
         if(failureMessage != null){
             model.addAttribute("hasToast", true);

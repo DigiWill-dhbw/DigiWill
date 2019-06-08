@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -39,18 +40,26 @@ public class ProfileController {
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String changePassword(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
+    public ModelAndView changePassword(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
         ValidationResponse response = profileService.changePassword(formData, principal.getName());
         response.adjustModel(model);
-        return response.getRedirectTarget("redirect:/profile","redirect:/editProfile");
+        addFlashAttributesToRedirectAttributes(redirectAttrs, response);
+        return new ModelAndView(response.isSuccess() ? "redirect:/profile" : "redirect:/editProfile");
     }
 
     @RequestMapping(value = "/editProfile", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
+    public ModelAndView saveProfile(@RequestBody MultiValueMap<String, String> formData, Model model, Principal principal, RedirectAttributes redirectAttrs) {
         ValidationResponse response = profileService.editUser(formData, principal.getName());
         response.adjustModel(model);
-        return response.getRedirectTarget("redirect:/profile","redirect:/editProfile");
+        addFlashAttributesToRedirectAttributes(redirectAttrs, response);
+        return new ModelAndView(response.isSuccess() ? "redirect:/profile" : "redirect:/editProfile");
+    }
+
+    private void addFlashAttributesToRedirectAttributes(RedirectAttributes redirectAttrs, ValidationResponse response) {
+        redirectAttrs.addFlashAttribute("edit", !response.isSuccess());
+        redirectAttrs.addFlashAttribute("hasToast", !response.isSuccess());
+        redirectAttrs.addFlashAttribute("responseText", response.getFailureMessage());
     }
 
     private void addDataToProfilePageModel(Principal principal, Model model, boolean edit) {
@@ -60,7 +69,9 @@ public class ProfileController {
         model.addAttribute("email", emailAddress);
         model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
         model.addAttribute("personalData", user.getPersonalData());
-        model.addAttribute("edit", edit);
+        if (!model.containsAttribute("edit")) {
+            model.addAttribute("edit", edit);
+        }
     }
 
 }
