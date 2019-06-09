@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_digiwill:/data/db
+  digiwill:
+    image: digiwill:latest
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      server.port: 8080
+      mail.host: mail.robinkuck.de
+      mail.port: 587
+      mail.user: digiwill@robinkuck.de
+      mail.from: no-reply@digiwill.robinkuck.de
+      mail.password: mZXnRt89S6Z4HgD
+      database.host: mongo
+      database.port: 27017
+      database.name: digiwill
+      database.collection: users
+      callback.url: http://localhost:8080/
+
+volumes:
+  mongo_digiwill:
+    external: false

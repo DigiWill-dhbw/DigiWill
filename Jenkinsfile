@@ -72,6 +72,15 @@ pipeline {
         sh '''docker run -d --name digiwill_prod digiwill_deploy'''
       }
     }
+    stage('Publish Image') {
+      steps {
+        sh '''docker rmi kucki/digiwill:latest || true'''
+        sh '''docker build --build-arg=target/*.jar -t kucki/digiwill:latest .'''
+        withDockerRegistry([ credentialsId: "test", url: "" ]) {
+          sh '''docker push kucki/digiwill:latest'''
+        }
+      }
+    }
     stage('SonarQube Report') {
       when {
         not {
