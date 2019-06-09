@@ -73,6 +73,9 @@ pipeline {
       }
     }
     stage('Publish Image') {
+      when {
+        branch 'release'
+      }
       steps {
         sh '''rm ./src/test/resources/secrets-test.properties'''
         sh '''rm ./src/main/resources/secrets-deploy.properties'''
