@@ -74,9 +74,12 @@ pipeline {
     }
     stage('Publish Image') {
       steps {
+        sh '''rm ./src/test/resources/secrets-test.properties'''
+        sh '''rm ./src/main/resources/secrets-deploy.properties'''
+        sh '''mvn install -DskipTests'''
         sh '''docker rmi kucki/digiwill:latest || true'''
         sh '''docker build --build-arg=target/*.jar -t kucki/digiwill:latest .'''
-        withDockerRegistry([ credentialsId: "test", url: "" ]) {
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
           sh '''docker push kucki/digiwill:latest'''
         }
       }
