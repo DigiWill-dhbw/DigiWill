@@ -67,9 +67,9 @@ pipeline {
       steps {
         sh '''docker stop digiwill_prod || true'''
         sh '''docker rm digiwill_prod || true'''
-        sh '''docker rmi digiwill || true'''
-        sh '''docker build --build-arg=target/*.jar -t digiwill .'''
-        sh '''docker run -d --name digiwill_prod digiwill'''
+        sh '''docker rmi digiwill_deploy || true'''
+        sh '''docker build --build-arg=target/*.jar -t digiwill_deploy -f deploy/Dockerfile .'''
+        sh '''docker run -d --name digiwill_prod digiwill_deploy'''
       }
     }
     stage('SonarQube Report') {
