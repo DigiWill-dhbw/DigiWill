@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_digiwill:/data/db
+  digiwill:
+    image: kucki/digiwill:latest
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      server.port: 8080
+      mail.host: # REPLACE WITH HOST
+      mail.port: # REPLACE WITH PORT
+      mail.user: # REPLACE WITH MAIL USER
+      mail.from: no-reply@digiwill.robinkuck.de
+      mail.password: # REPLACE WITH PASSWORD
+      database.host: mongo
+      database.port: 27017
+      database.name: digiwill
+      database.collection: users
+      callback.url: http://localhost:8080/
+
+volumes:
+  mongo_digiwill:
+    external: false

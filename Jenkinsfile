@@ -67,9 +67,24 @@ pipeline {
       steps {
         sh '''docker stop digiwill_prod || true'''
         sh '''docker rm digiwill_prod || true'''
-        sh '''docker rmi digiwill || true'''
-        sh '''docker build --build-arg=target/*.jar -t digiwill .'''
-        sh '''docker run -d --name digiwill_prod digiwill'''
+        sh '''docker rmi digiwill_deploy || true'''
+        sh '''docker build --build-arg=target/*.jar -t digiwill_deploy -f deploy/Dockerfile .'''
+        sh '''docker run -d --name digiwill_prod digiwill_deploy'''
+      }
+    }
+    stage('Publish Image') {
+      when {
+        branch 'release'
+      }
+      steps {
+        sh '''rm ./src/test/resources/secrets-test.properties'''
+        sh '''rm ./src/main/resources/secrets-deploy.properties'''
+        sh '''mvn install -DskipTests'''
+        sh '''docker rmi kucki/digiwill:latest || true'''
+        sh '''docker build --build-arg=target/*.jar -t kucki/digiwill:latest .'''
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+          sh '''docker push kucki/digiwill:latest'''
+        }
       }
     }
     stage('SonarQube Report') {
