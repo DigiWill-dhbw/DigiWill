@@ -24,10 +24,17 @@ Feature: Edit Profile
     And I enter "<country>" into field with id "countryInput"
     And I click on element with id "saveProfileButton"
     Then I'm on page with title "DigiWill - Your Profile"
+    And Text of element with id "firstNameData" equals "<firstName>"
+    And Text of element with id "surNameData" equals "<surName>"
+    And Text of element with id "birthdayData" equals "<birthdayDisplay>"
+    And Text of element with id "streetAddressData" equals "<streetAddress>"
+    And Text of element with id "zipCodeData" equals "<zipCode>"
+    And Text of element with id "cityData" equals "<city>"
+    And Text of element with id "countryData" equals "<country>"
 
     Examples:
-      | firstName | surName | birthday | streetAddress  | zipCode | city      | country |
-      | Tester    | McTest  | 04201990 | Test-Street 41 | 12345   | Test-City | Germany |
+      | firstName | surName | birthday | birthdayDisplay | streetAddress  | zipCode | city      | country |
+      | Tester    | McTest  | 04201990 | 20.04.1990      | Test-Street 41 | 12345   | Test-City | Germany |
 
   Scenario Outline: 02 - Change password successful
     When I click on element with id "userButtonHeader"

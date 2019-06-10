@@ -55,4 +55,10 @@ public class GenericSteps {
         assertTrue("User is on wrong page: " + driver.getCurrentUrl() + "\n" +
                 "should contain: " + urlPart, driver.getCurrentUrl().contains(urlPart));
     }
+
+    @Then("Text of element with id {string} equals {string}")
+    public void textOfElementWithIdEquals(String id, String content) {
+        WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        assertEquals(driver.findElement(By.id(id)).getText(), content);
+    }
 }
