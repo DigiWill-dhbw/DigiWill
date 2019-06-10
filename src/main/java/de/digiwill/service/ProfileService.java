@@ -8,9 +8,12 @@ import de.digiwill.util.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 
+import java.security.Principal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class ProfileService {
             return ValidationResponse.INTERNAL_ERROR;
         }
 
-        if(SecurityHelper.getEncoder().matches(formData.getFirst("oldPassword"), existingUser.getPassword())) {
+        if (SecurityHelper.getEncoder().matches(formData.getFirst("oldPassword"), existingUser.getPassword())) {
             existingUser.setPassword(formData.getFirst("password"));
             userHandleManager.updateUser(existingUser);
         } else {
@@ -94,6 +97,18 @@ public class ProfileService {
             return ValidationResponse.SUCCESSFUL;
         } catch (ParseException e) {
             return ValidationResponse.BIRTHDAY_INVALID;
+        }
+    }
+
+    public void configureProfilePageModel(Principal principal, Model model, boolean edit) {
+        String emailAddress = principal.getName();
+        UserHandle user = getUserHandleByEmail(emailAddress);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(edit ? "yyyy-MM-dd" : "dd.MM.yyyy");
+        model.addAttribute("email", emailAddress);
+        model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
+        model.addAttribute("personalData", user.getPersonalData());
+        if (!model.containsAttribute("edit")) {
+            model.addAttribute("edit", edit);
         }
     }
 
