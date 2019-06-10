@@ -37,6 +37,10 @@ Feature: Edit Profile
     And I enter "<repNewPassword>" into field with id "confirmNewPasswordInput"
     And I click on element with id "changePasswordButton"
     Then I'm on page with title "DigiWill - Your Profile"
+    And Clicking in header "Logout" on Mainpage
+    And I click on element with id "loginButtonHeader"
+    And Enter Email "example@mail.com", password "<newPassword>" and login
+    Then Login "succeeds"
 
     Examples:
       | oldPassword | newPassword    | repNewPassword |
