@@ -19,7 +19,7 @@ import javax.mail.Session;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:secrets-${envTarget}.properties")
+@PropertySource(value = "classpath:secrets-${envTarget}.properties", ignoreResourceNotFound = true)
 public class Config {
     @Autowired
     private Environment env;
