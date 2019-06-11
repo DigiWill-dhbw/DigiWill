@@ -1,37 +1,126 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/header :: head (title='DigiWill - Your Profile')"></th:block>
+    <th:block th:if="${edit == false}" th:include="fragments/header :: head (title='DigiWill - Your Profile')"></th:block>
+    <th:block th:if="${edit == true}" th:include="fragments/header :: head (title='DigiWill - Edit Your Profile')"></th:block>
     <link rel="stylesheet" type="text/css" href="css/listings.css"/>
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
-<body>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
+
+<script th:if="${hasToast}" th:inline="javascript">
+    function onLoad() {
+        launchToast(/*[[${responseText}]]*/);
+    }
+</script>
 <div id="content">
     <div class="panel">
-        <table class="listing" id="profile-listing">
-            <tr>
-                <td>Email: </td>
-                <td th:text="${email}"></td>
-            </tr>
-            <tr>
-                <td>First Name: </td>
-                <td th:text="${personalData.getFirstName()}"></td>
-            </tr>
-            <tr>
-                <td>Surname: </td>
-                <td th:text="${personalData.getSurname()}"></td>
-            </tr>
-            <tr>
-                <td>Birthday: </td>
-                <td
-                        th:text="${personalData.getDateOfBirth().getDate() + '.' + personalData.getDateOfBirth().getMonth() + '.' + personalData.getDateOfBirth().getYear()}"></td>
-            </tr>
-        </table>
-        <a href="/editProfile" class="button" id="editProfileButton">Edit profile</a>
+        <div class="form">
+            <form th:action="@{/editProfile}" method="post">
+                <table>
+                    <tr>
+                        <td><h2>General</h2></td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td id="firstNameData" th:if="${edit == false}" th:text="${personalData.getFirstName()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="firstNameInput" name="firstNameInput" type="text" class="input-fields"
+                                   th:value="${personalData.getFirstName()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Surname:</td>
+                        <td id="surNameData" th:if="${edit == false}" th:text="${personalData.getSurname()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="surNameInput" name="surNameInput" type="text" class="input-fields"
+                                   th:value="${personalData.getSurname()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Birthday:</td>
+                        <td id="birthdayData" th:if="${edit == false}" th:text="${dateOfBirth}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="birthday" name="birthday" type="date" class="input-fields"
+                                   th:value="${dateOfBirth}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h2>Address</h2></td>
+                    </tr>
+                    <tr>
+                        <td>Street/No.:</td>
+                        <td id="streetAddressData" th:if="${edit == false}" th:text="${personalData.getAddress().getStreetAddress()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="streetAddressInput" name="streetAddressInput" type="text" class="input-fields"
+                                   th:value="${personalData.getAddress().getStreetAddress()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Postal code:</td>
+                        <td id="zipCodeData" th:if="${edit == false}" th:text="${personalData.getAddress().getZipCode()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="zipCodeInput" name="zipCodeInput" type="text" class="input-fields"
+                                   th:value="${personalData.getAddress().getZipCode()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td id="cityData" th:if="${edit == false}" th:text="${personalData.getAddress().getCity()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="cityInput" name="cityInput" type="text" class="input-fields"
+                                   th:value="${personalData.getAddress().getCity()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td id="countryData" th:if="${edit == false}" th:text="${personalData.getAddress().getCountry()}"></td>
+                        <td th:if="${edit == true}">
+                            <input id="countryInput" name="countryInput" type="text" class="input-fields"
+                                   th:value="${personalData.getAddress().getCountry()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:if="${edit == false}">
+                            <a href="/editProfile" id="editProfileButton" class="button">Edit profile</a>
+                        </td>
+                        <td th:if="${edit == true}">
+                            <input id="saveProfileButton" type="submit" value="Save Changes" class="button"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form th:if="${edit == true}" th:action="@{/changePassword}" method="post">
+                <table>
+                    <tr>
+                        <td><h2>Change password</h2></td>
+                    </tr>
+                    <tr>
+                        <td>Current password:</td>
+                        <td><input id="oldPasswordInput" name="oldPassword" type="password" class="input-fields"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New password:</td>
+                        <td><input id="newPasswordInput" name="password" type="password" class="input-fields"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Confirm new password:</td>
+                        <td><input id="confirmNewPasswordInput" name="password_rep" type="password"
+                                   class="input-fields"/></td>
+                    </tr>
+                    <tr>
+                        <td><input id="changePasswordButton" type="submit" value="Change password" class="button"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
+    <div th:include="fragments/footer :: footer"></div>
+    </body>
 </div>
-<div th:include="fragments/footer :: footer"></div>
-</body>
 </html>

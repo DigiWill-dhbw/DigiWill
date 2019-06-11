@@ -33,7 +33,7 @@
             </li>
             <li th:if="${#httpServletRequest.remoteUser == null}"><a href="register" id="registerButtonHeader" class="button">Register</a></li>
             <!-- user logged in -->
-            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" th:text="${#httpServletRequest.remoteUser}"></a></li>
+            <li th:if="${#httpServletRequest.remoteUser != null}"><a href="profile" id="userButtonHeader" th:text="${#httpServletRequest.remoteUser}"></a></li>
             <!--<li th:if="${#httpServletRequest.remoteUser != null}"><a href="logout" class="button">Logout</a></li>-->
             <li th:if="${#httpServletRequest.remoteUser != null}">
                 <div class="dropdown">

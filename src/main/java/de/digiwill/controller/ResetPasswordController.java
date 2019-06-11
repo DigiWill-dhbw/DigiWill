@@ -1,7 +1,7 @@
 package de.digiwill.controller;
 
 import de.digiwill.service.ResetPasswordService;
-import de.digiwill.service.registration.RegistrationResponse;
+import de.digiwill.service.validation.ValidationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,8 +23,8 @@ public class ResetPasswordController {
 
     @PostMapping(value = "/resetPassword", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String resetPassword(@RequestBody MultiValueMap<String, String> formData, Model model) {
-        RegistrationResponse response = resetPasswordService.resetPassword(formData);
-        if(response.equals(RegistrationResponse.REGISTRATION_SUCCESSFUL)){
+        ValidationResponse response = resetPasswordService.resetPassword(formData);
+        if(response.equals(ValidationResponse.SUCCESSFUL)){
             return "redirect:/";
         }else{
             response.adjustModel(model);

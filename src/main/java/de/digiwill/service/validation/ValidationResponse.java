@@ -1,13 +1,14 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import org.springframework.ui.Model;
 
-public enum RegistrationResponse {
+public enum ValidationResponse {
 
-    REGISTRATION_SUCCESSFUL(true, null),
+    SUCCESSFUL(true, null),
     PASSWORD_MISMATCH(false,  "The entered passwords don't match"),
     PASSWORD_REQUIREMENTS_NOT_MET(false, "The password requirements weren't met"),
     INVALID_EMAIL_ADDRESS(false, "Please enter a valid email address"),
+    INVALID_PASSWORD(false, "The entered password is not correct"),
     NO_FIRST_NAME(false, "Please enter a first name"),
     NO_SURNAME(false, "Please enter a surname"),
     TO_YOUNG(false, "You must be at least XXX years old to register for this service"),
@@ -19,9 +20,17 @@ public enum RegistrationResponse {
     private boolean success;
     private String failureMessage;
 
-    RegistrationResponse(boolean success, String failureMessage) {
+    ValidationResponse(boolean success, String failureMessage) {
         this.success = success;
         this.failureMessage = failureMessage;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getFailureMessage() {
+        return failureMessage;
     }
 
     public void adjustModel(final Model model){
@@ -31,7 +40,7 @@ public enum RegistrationResponse {
         }
     }
 
-    public String getRedirectTarget() {
-        return success ? "redirect:/" : "register";
+    public String getRedirectTarget(String successRedirect, String noSuccessRedirect) {
+        return success ? successRedirect : noSuccessRedirect;
     }
 }

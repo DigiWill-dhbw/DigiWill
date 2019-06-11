@@ -1,12 +1,12 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import de.digiwill.util.RegexMatcher;
 import org.springframework.util.MultiValueMap;
 
-public class PasswordRequirementValidator extends RegistrationValidator {
+public class PasswordRequirementValidator extends Validator {
 
     public PasswordRequirementValidator() {
-        super(RegistrationResponse.PASSWORD_REQUIREMENTS_NOT_MET);
+        super(ValidationResponse.PASSWORD_REQUIREMENTS_NOT_MET);
     }
 
     @Override

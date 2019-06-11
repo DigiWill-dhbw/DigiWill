@@ -1,12 +1,12 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import de.digiwill.util.RegexMatcher;
 import org.springframework.util.MultiValueMap;
 
-public class EmailAddressValidator extends RegistrationValidator {
+public class EmailAddressValidator extends Validator {
 
     public EmailAddressValidator() {
-        super(RegistrationResponse.INVALID_EMAIL_ADDRESS);
+        super(ValidationResponse.INVALID_EMAIL_ADDRESS);
     }
 
     @Override
