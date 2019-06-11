@@ -37,10 +37,6 @@ public class ProfileService {
         changePasswordValidators.add(new PasswordMatchValidator());
     }
 
-    public UserHandle getUserHandleByEmail(String email) {
-        return userHandleManager.loadUserByEmailAddress(email);
-    }
-
     public ValidationResponse changePassword(final MultiValueMap<String, String> formData, final String email) {
         if (formData == null) {
             return ValidationResponse.FORM_DATA_DOESNT_EXIST;
@@ -102,7 +98,7 @@ public class ProfileService {
 
     public void configureProfilePageModel(Principal principal, Model model, boolean edit) {
         String emailAddress = principal.getName();
-        UserHandle user = getUserHandleByEmail(emailAddress);
+        UserHandle user = userHandleManager.loadUserByEmailAddress(emailAddress);
         SimpleDateFormat dateFormat = new SimpleDateFormat(edit ? "yyyy-MM-dd" : "dd.MM.yyyy");
         model.addAttribute("email", emailAddress);
         model.addAttribute("dateOfBirth", dateFormat.format(user.getPersonalData().getDateOfBirth()));
