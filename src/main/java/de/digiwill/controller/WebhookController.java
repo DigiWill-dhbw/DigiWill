@@ -41,10 +41,10 @@ public class WebhookController {
         int idx = user.getWebhookActionIdx();
         if(idx == -1) {
             user.addAction(webhook);
-            userHandleManager.updateUser(user);
         } else {
             user.replaceAction(idx, webhook);
         }
+        userHandleManager.updateUser(user);
         return new RedirectView("webhook");
     }
     @PostMapping(value="/deleteWebhook")
