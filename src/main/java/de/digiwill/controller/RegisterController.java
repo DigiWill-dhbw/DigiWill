@@ -1,7 +1,7 @@
 package de.digiwill.controller;
 
-import de.digiwill.service.registration.RegistrationResponse;
-import de.digiwill.service.registration.RegistrationService;
+import de.digiwill.service.validation.ValidationResponse;
+import de.digiwill.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,9 @@ public class RegisterController {
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String register(@RequestBody MultiValueMap<String, String> formData, Model model, RedirectAttributes redirectAttrs) {
 
-        RegistrationResponse response = registrationService.addNewUser(formData);
+        ValidationResponse response = registrationService.addNewUser(formData);
         response.adjustModel(model);
-        return response.getRedirectTarget();
+        return response.getRedirectTarget("redirect:/", "register");
     }
 
     @GetMapping("/register")

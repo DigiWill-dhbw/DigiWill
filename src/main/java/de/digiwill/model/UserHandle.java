@@ -190,6 +190,10 @@ public class UserHandle implements UserDetails {
         return personalData;
     }
 
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities.getAuthorities();

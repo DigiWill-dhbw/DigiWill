@@ -16,7 +16,7 @@ public class Address implements Serializable {
     }
 
     public static Address getInitial(){
-        return new Address("-", "-", "-", "-");
+        return new Address("", "", "", "");
     }
 
     public String getZipCode() {

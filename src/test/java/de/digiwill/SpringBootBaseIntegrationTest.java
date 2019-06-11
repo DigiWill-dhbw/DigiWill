@@ -85,7 +85,7 @@ public abstract class SpringBootBaseIntegrationTest {
     }
 
     public void setUpUser(String email, String password) {
-        PersonalData personalData = new PersonalData("FirstName", "SurName", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime());
+        PersonalData personalData = new PersonalData("FirstName", "SurName", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime(), Address.getInitial());
         setUpUser(email, password, personalData);
     }
 
@@ -95,7 +95,7 @@ public abstract class SpringBootBaseIntegrationTest {
     }
 
     public void setUpAdmin(String email, String password) {
-        PersonalData personalData = new PersonalData("Admin", "McAdminface", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime());
+        PersonalData personalData = new PersonalData("Admin", "McAdminface", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime(), Address.getInitial());
         AuthoritySet authoritySet = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN"));
         setUpUser(email, password, personalData, authoritySet);
     }
@@ -113,7 +113,7 @@ public abstract class SpringBootBaseIntegrationTest {
     }
 
     public static UserHandle generateUser(String email, String password, ActionSet actionSet) {
-        PersonalData personalData = new PersonalData("FirstName", "SurName", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime());
+        PersonalData personalData = new PersonalData("FirstName", "SurName", new GregorianCalendar(1970, Calendar.JANUARY, 1).getTime(), Address.getInitial());
         AuthoritySet authoritySet = new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER"));
         return generateUser(email, password, personalData, authoritySet, actionSet);
     }

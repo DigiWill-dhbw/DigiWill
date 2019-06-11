@@ -1,10 +1,10 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import org.springframework.util.MultiValueMap;
 
-public class PasswordMatchValidator extends RegistrationValidator {
+public class PasswordMatchValidator extends Validator {
     public PasswordMatchValidator() {
-        super( RegistrationResponse.PASSWORD_MISMATCH);
+        super( ValidationResponse.PASSWORD_MISMATCH);
     }
 
     @Override
