@@ -53,7 +53,7 @@ public class AdminOverviewSteps {
             List<WebElement> fields = items.get(i).findElements(By.tagName("td"));
            if(email.equals(fields.get(1).getText())){
                foundItem = true;
-               fields.get(column).click();
+               fields.get(column).findElement(By.className("button")).click();
            }
         }
         assertTrue(foundItem);
