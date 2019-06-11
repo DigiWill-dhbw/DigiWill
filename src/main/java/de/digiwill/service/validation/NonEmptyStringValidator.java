@@ -1,10 +1,10 @@
-package de.digiwill.service.registration;
+package de.digiwill.service.validation;
 
 import org.springframework.util.MultiValueMap;
 
-public class NonEmptyStringValidator extends RegistrationValidator {
+public class NonEmptyStringValidator extends Validator {
     private String parameterName;
-    public NonEmptyStringValidator(String parameterName, RegistrationResponse response) {
+    public NonEmptyStringValidator(String parameterName, ValidationResponse response) {
         super(response);
         this.parameterName = parameterName;
     }

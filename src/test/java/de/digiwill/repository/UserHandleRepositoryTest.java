@@ -36,11 +36,11 @@ public class UserHandleRepositoryTest {
     public static List<UserHandle> createUserHandles(int amount, List<BaseAction> actions) {
         List<UserHandle> users = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1));
+            PersonalData personalData = new PersonalData("no", "body" + i, new Date(2018, 1, 1), Address.getInitial());
             UserBooleans userBooleans = new UserBooleans(true, true, true, true);
             UserHandle userHandle = UserHandleFactory.createCompleteUserHandle("nobody" + i + "@digiwill.de", SecurityHelper.encodePassword("nobody" + i + "@digiwill.de"), new AuthoritySet(AuthorityUtils.createAuthorityList("ROLE_USER")),
                     userBooleans, UserTimestamps.getInitial(), UserDeltaTimes.getInitial(), false,
-                    personalData,   new ActionSet(actions, false));
+                    personalData, new ActionSet(actions, false));
             users.add(userHandle);
         }
         return users;
@@ -50,7 +50,6 @@ public class UserHandleRepositoryTest {
     public void findUserHandleByEmailAddressTest() {
         Assert.assertEquals("nobody1@digiwill.de", userHandleManager.loadUserByEmailAddress("nobody1@digiwill.de").getEmailAddress());
     }
-
 
 
 }
