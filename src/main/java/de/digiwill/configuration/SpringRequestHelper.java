@@ -12,8 +12,6 @@ import java.util.Map;
 @Component
 public class SpringRequestHelper {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpringRequestHelper.class);
-
     public Map<String, String> getTokenInfo(HttpServletRequest request) {
         Map<String, String> map = new HashMap<>();
         CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
