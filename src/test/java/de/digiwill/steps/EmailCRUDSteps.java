@@ -20,7 +20,10 @@ public class EmailCRUDSteps extends SpringBootBaseIntegrationTest{
 
     @And("^There are no Email Actions$")
     public void thereAreNoEmailActions() {
-        //TODO Implement
+        WebDriver driver = getWebDriver();
+        WebElement listing = driver.findElement(By.className("listing"));
+        List<WebElement> items = listing.findElements(By.tagName("tr"));
+        assertEquals(1, items.size());
     }
 
     @When("^Create new email action with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
