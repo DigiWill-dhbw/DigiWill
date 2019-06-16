@@ -18,6 +18,7 @@ public class WebhookAction extends BaseAction {
 
     public WebhookAction(String url) {
         this.url = url;
+        this.type = ActionType.WEBHOOK;
     }
 
     public ActionSuccess executeAction(EmailDispatcher emailDispatcher) {
