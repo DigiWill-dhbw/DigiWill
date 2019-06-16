@@ -8,7 +8,7 @@ Feature: Custom Emails CRUD
     Given A user with email "example@mail.com" and password "password" exists
     When Enter Email "example@mail.com", password "password" and login
     Then Login "succeeds"
-    And The user is on the actions overview page
+    And "/getEmails" is open
     And There are no Email Actions
 
   Scenario Outline: 01 - Create valid Email Action

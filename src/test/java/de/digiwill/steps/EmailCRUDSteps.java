@@ -18,12 +18,6 @@ import static org.junit.Assert.*;
 @Ignore
 public class EmailCRUDSteps extends SpringBootBaseIntegrationTest{
 
-    @And("^The user is on the actions overview page$")
-    public void theUserIsOnActionsOverviewPage() {
-        getWebDriver().get("http://localhost:" + getPort() + "/getEmails");
-    }
-
-
     @And("^There are no Email Actions$")
     public void thereAreNoEmailActions() {
         WebDriver driver = getWebDriver();
