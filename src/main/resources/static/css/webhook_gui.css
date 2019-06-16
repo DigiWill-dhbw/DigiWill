@@ -10,7 +10,7 @@ table {
     width:100%;
 }
 
-#url {
+#apiKey {
     width:calc(100% - 20px);
     margin-top: 5px;
 }
