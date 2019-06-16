@@ -59,6 +59,7 @@ public class GenericSteps {
     @Then("Text of element with id {string} equals {string}")
     public void textOfElementWithIdEquals(String id, String content) {
         WebDriver driver = springBootBaseIntegrationTest.getWebDriver();
+        System.out.println(driver.findElement(By.id(id)).getText() + "::::" + id + ":::"+ content);
         assertEquals(driver.findElement(By.id(id)).getText(), content);
     }
 }
