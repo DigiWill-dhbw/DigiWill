@@ -1,12 +1,11 @@
 package de.digiwill.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.util.Assert;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 public class AuthoritySet implements Serializable{
     private List<GrantedAuthority> authorities;
