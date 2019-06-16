@@ -23,8 +23,7 @@ public class EmailCRUDSteps extends SpringBootBaseIntegrationTest{
         WebDriver driver = getWebDriver();
         WebElement listing = driver.findElement(By.className("listing"));
         List<WebElement> items = listing.findElements(By.tagName("tr"));
-        items.remove(0);
-        assertEquals(0, items.size());
+        assertEquals(1, items.size());
     }
 
     @When("^Create new email action with recipient \"([^\"]*)\", subject \"([^\"]*)\", content \"([^\"]*)\" and click \"([^\"]*)\"$")
