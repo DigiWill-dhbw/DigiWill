@@ -113,7 +113,7 @@ public class UserHandle implements UserDetails {
         List<BaseAction> actions = this.getActions();
         for (BaseAction action : actions
         ) {
-            if (action instanceof WebhookAction) {
+            if (action.getType() == ActionType.WEBHOOK) {
                 idx = counter;
                 break;
             } else {

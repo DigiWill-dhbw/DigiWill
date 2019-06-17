@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * Only CRUD operations for UserHandle in this interface
  */
 @Repository
-public interface UserHandleRepository extends MongoRepository<UserHandle, ObjectId>, UserHandleRepositoryCustom {
+public interface UserHandleRepository extends MongoRepository<UserHandle, ObjectId> {
 
     UserHandle findUserHandleByUID(ObjectId UID);
 

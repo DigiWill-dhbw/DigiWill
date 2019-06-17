@@ -44,8 +44,9 @@ public class WebhookAction extends BaseAction {
         return eventNames.get(idx);
     }
 
-    public WebhookAction(String apiKey) {
+    public WebhookAction(String apiKey) {   
         this.apiKey = apiKey;
+        this.type = ActionType.WEBHOOK;
     }
 
     public ActionSuccess executeAction(EmailDispatcher emailDispatcher) {
