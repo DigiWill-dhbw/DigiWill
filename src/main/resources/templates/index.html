@@ -3,9 +3,14 @@
 <head>
     <th:block th:include="fragments/header :: head (title='DigiWill - Homepage')"></th:block>
 </head>
-<body>
+<body onload="onLoad()">
 <div th:include="fragments/header :: header"></div>
 </div>
+<script th:if="${hasToast}" th:inline="javascript">
+    function onLoad() {
+        launchToast(/*[[${errorText}]]*/, /*[[${errorLbl}]]*/);
+    }
+</script>
 <div id="content">
     <img src="../images/cemetery.jpg" class="big-image">
     <div class="panel">
